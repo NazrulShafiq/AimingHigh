@@ -1,0 +1,15 @@
+{
+    // LaTeX Workshop. The paper sources name this recipe in their first line
+    // (% !LW recipe = latexmk (Output folder)). Compiling Writeup.tex or Writeup_format.tex
+    // compiles both documents into 4_paper/output with the settings in 4_paper/latexmkrc,
+    // exactly as 4_paper/make.sh does. The tools run in the root file's folder, 4_paper/source.
+    "latex-workshop.latex.tools": [
+        { "name": "paper: Writeup", "command": "latexmk", "args": ["-r", "../latexmkrc", "Writeup.tex"] },
+        { "name": "paper: Writeup_format", "command": "latexmk", "args": ["-r", "../latexmkrc", "Writeup_format.tex"] }
+    ],
+    "latex-workshop.latex.recipes": [
+        { "name": "latexmk (Output folder)", "tools": ["paper: Writeup", "paper: Writeup_format"] }
+    ],
+    // where the viewer and SyncTeX find Writeup.pdf and Writeup.synctex.gz
+    "latex-workshop.latex.outDir": "%DIR%/../output"
+}

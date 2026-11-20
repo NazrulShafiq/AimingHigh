@@ -20,7 +20,7 @@ The fast modules (`1_data`, `2.2_descriptives`, under a minute each) rebuild fro
 | `2_analysis/2.1_theory/` | `generate_figures.py` computes every theory figure of the paper from the model; `static/` holds the distributions table and two figures without generating code. |
 | `2_analysis/2.2_descriptives/` | `msca_figures.py` draws the data figures of the paper (Figures 1 and 2); `msca_noise_pages.py` checks the robustness of Figure 2 to the measure of reviewer noise. |
 | `3_slides/` | Template placeholder, not yet used. |
-| `4_paper/` | LaTeX sources of the paper (`Writeup.tex`) and of its Econometrica-format version, compiled into `4_paper/output/`. |
+| `4_paper/` | `source/` holds only the LaTeX code of the paper (`Writeup.tex`) and of its Econometrica-format version (`Writeup_format.tex`); they input the figures and tables directly from `2_analysis/2.1_theory/output` and `2_analysis/2.2_descriptives/output`, and compile into `4_paper/output/` with the settings in `4_paper/latexmkrc`. |
 
 ## Running
 
@@ -43,4 +43,14 @@ figure alone. `bash 2_analysis/2.1_theory/make.sh --all` rebuilds every theory f
 scratch (about 15 minutes), and `bash 2_analysis/2.1_theory/make.sh <name> ...` just the named
 ones (`python3 generate_figures.py --list` shows the names).
 
-Generated files (`output/`) are never edited by hand: change the code that writes them.
+### The paper
+
+- **VS Code (LaTeX Workshop):** compiling `Writeup.tex` (or `Writeup_format.tex`) runs the
+  recipe in `.vscode/settings.json`, which compiles both documents into `4_paper/output/`
+  (overwriting the PDFs there), exactly as `bash 4_paper/make.sh` does.
+- **Overleaf:** the Overleaf project must keep the repository's folder layout for the paper and
+  its inputs, `4_paper/source/`, `2_analysis/2.1_theory/output/` and
+  `2_analysis/2.2_descriptives/output/`, with `4_paper/source/Writeup.tex` (or
+  `Writeup_format.tex`) as the main document. Overleaf compiles one main document at a time.
+
+Generated files (every `output/`) are never edited by hand: change the code that writes them.

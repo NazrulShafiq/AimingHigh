@@ -5,6 +5,8 @@ __pycache__/
 
 # LaTeX auxiliary files: 4_paper keeps them in output/aux/; the patterns catch other builds
 4_paper/output/aux/
+4_paper/source/*.pdf
+4_paper/source/*.log
 *.aux
 *.bbl
 *.blg

@@ -1,0 +1,14 @@
+# latexmk settings for the paper, kept out of source/ so that source/ holds only the paper.
+# 4_paper/make.sh and the VS Code recipe (.vscode/settings.json) both run, from source/,
+#     latexmk -r ../latexmkrc <document>.tex
+# and nothing else, so they run the same commands and neither forces the other to recompile.
+#   source/Writeup.tex   ->   output/Writeup.pdf (and Writeup.synctex.gz)
+# with the auxiliary files in output/aux/Writeup/. Each document has its own aux folder:
+# Writeup.tex and Writeup_format.tex both \include Appendix.tex, and a shared Appendix.aux
+# would force each to recompile after the other.
+
+$pdf_mode = 1;            # pdflatex
+set_tex_cmds('-synctex=1 -interaction=nonstopmode -file-line-error %O %S');
+$out_dir = '../output';
+my ($main) = grep { /\.tex$/ } @ARGV;       # the document named after -r on the command line
+$aux_dir = '../output/aux/' . (defined $main ? ($main =~ s{.*/}{}r) =~ s/\.tex$//r : 'Writeup');
