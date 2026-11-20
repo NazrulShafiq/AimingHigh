@@ -21,8 +21,10 @@ for each row.
 TODO: record when and how each workbook was obtained.
 
 ### Notes
-- The main workbook is 89 MB. GitHub warns above 50 MB and rejects files above 100 MB, so
-  consider tracking it with Git LFS (`git lfs track "0_raw/*.xlsx"`).
+- The workbooks are stored with Git LFS (see `.gitattributes`): the main one is 89 MB, above
+  the 50 MB file limit of Overleaf's GitHub sync, so git holds a small pointer file and GitHub
+  LFS the workbook itself. Install Git LFS before cloning (`brew install git-lfs`, then
+  `git lfs install`); without it the workbooks arrive as pointer files and `1_data` cannot run.
 - Known quirks handled by `1_data/source/build_msca_data.py`: the 2023 percentile sheet
   labels the GF environment column `GF-ENY` instead of `GF-ENV`, and row labels vary slightly
   between years.
