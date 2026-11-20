@@ -1,0 +1,142 @@
+% !LW recipe = latexmk (Output folder)
+%
+% Writeup.tex typeset in the Econometrica working-paper format: article class, Times,
+% 1-inch margins, run-in subsubsection headings, natbib author-year citations with full
+% author lists at first mention, and the Econometrica bibliography style (ecta.bst).
+%
+% This file contains no text of its own. The docmute package reads everything between
+% \begin{document} and \end{document} in Writeup.tex, so each edit to Writeup.tex appears
+% here on the next build. Edit Writeup.tex, not this file. The only content defined here is
+% the authors with their footnotes, and the keywords and JEL codes, below; items still to be
+% filled in are marked PLACEHOLDER.
+\documentclass[12pt]{article}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amsthm}
+\usepackage{newtxtext,newtxmath} % Times for text and mathematics
+\usepackage{setspace}
+\setstretch{1.1}
+\usepackage{graphicx,xcolor,etoolbox,paralist,bbm,thmtools,subcaption,marginnote,enumitem,booktabs}
+\usepackage{tikz,pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{decorations.markings,arrows.meta}
+\usepackage{titlesec}
+\usepackage{environ} % to store the abstract until \maketitle
+\usepackage{docmute} % \input{Writeup} below reads only the body of Writeup.tex
+\usepackage[authoryear,round,longnamesfirst]{natbib}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue, filecolor=black}
+
+%%%%%%%%%%%%%%%%%%%%%%% Definitions that the body of Writeup.tex relies on (as in Writeup.tex)
+\definecolor{darkgreen}{rgb}{0.0,0.45,0.13}
+\newcommand{\Hquad}{\hspace{0.5em}}
+\newtheorem{theorem}{Theorem}[]
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{conjecture}{Conjecture}
+\theoremstyle{definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{example}{Example}
+\newtheorem{remark}{Remark}
+\theoremstyle{plain} % restated results (customprop, customlemma) in the italic style of the other propositions
+\newtheorem{innercustomprop}{Proposition}
+\newenvironment{customprop}[1]{\renewcommand\theinnercustomprop{#1}\innercustomprop}{\endinnercustomprop}
+\newtheorem{innercustomlemma}{Lemma}
+\newenvironment{customlemma}[1]{\renewcommand\theinnercustomlemma{#1}\innercustomlemma}{\endinnercustomlemma}
+
+% Figures at the top of a page, as in Writeup.tex
+\let\origfigure\figure
+\let\endorigfigure\endfigure
+\renewenvironment{figure}[1][]{\origfigure[tp]}{\endorigfigure}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\floatpagefraction}{0.8}
+% The text block is shorter than in Writeup.tex (US letter, 1-inch margins), so the tallest
+% figures need a little more room to stay near their first mention
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.6}
+
+%%%%%%%%%%%%%%%%%%%%%%% Format
+% Proposition 1 is never split across pages: if it does not fit at the bottom of a page, it
+% starts on the next one. Only the first proposition in the document is treated this way (the
+% appendix restarts the proposition counter, so the rule does not test for the number 1).
+% \vspace inside it, as before its enumerate, is made unbreakable as well.
+\makeatletter
+\newif\ifecta@firstpropdone
+\newif\ifecta@keep
+\newcommand{\ecta@nobreakvspace}{\let\ecta@vspace\vspace\def\vspace{\nopagebreak\ecta@vspace}}
+\BeforeBeginEnvironment{proposition}{%
+  \ifecta@firstpropdone\global\ecta@keepfalse
+  \else\global\ecta@firstpropdonetrue\global\ecta@keeptrue\begin{samepage}\ecta@nobreakvspace\fi}
+\AfterEndEnvironment{proposition}{\ifecta@keep\end{samepage}\global\ecta@keepfalse\fi}
+\makeatother
+
+% Section headings in the standard article style; the "\subsubsection{Title}: text" headings of
+% Writeup.tex become bold run-in headings, as in the format's paragraph headings.
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}[runin]{\normalfont\bfseries}{\thesubsubsection}{0.5em}{}
+\titlespacing*{\subsubsection}{0pt}{1.5ex plus 0.5ex minus 0.2ex}{0pt}
+
+% Indented paragraphs without extra space between them. Writeup.tex starts most paragraphs with
+% \noindent; here a \noindent that starts a paragraph gives the usual indentation instead.
+\setlength{\parskip}{0pt}
+\let\orignoindent\noindent
+\renewcommand{\noindent}{\ifvmode\indent\else\orignoindent\fi}
+\makeatletter
+\renewcommand\@makefntext[1]{\parindent 1em\orignoindent\hb@xt@1.8em{\hss\@makefnmark}#1}
+\makeatother
+
+% Title page. The title, author and abstract come from Writeup.tex, where (as amsart expects) the
+% abstract is written before \maketitle. Here the abstract is stored and printed by \maketitle,
+% followed by keywords and JEL codes, on an unnumbered page; the Introduction starts on page 1.
+% An abstract written after \maketitle is printed where it appears.
+\newcommand{\paperkeywords}{Research funding, peer review, evaluation noise, proportional allocation, Mills ratio, convex transform order}
+\newcommand{\paperjel}{D82, D83, I23, O38}
+% Authors and title-page footnotes, as in the format: * acknowledgments on the title, then one
+% footnote per author with affiliation and e-mail. The authors are set here, so the \author line
+% of Writeup.tex is not used in this version.
+\newcommand{\ectaauthors}{%
+  Marco Ottaviani\thanks{Department of Economics and IGIER, Bocconi University, Via Roberto
+    Sarfatti 25, 20136 Milan, Italy. Phone: +39--02--5836--3385. E-mail:
+    \href{mailto:marco.ottaviani@unibocconi.it}{marco.ottaviani@unibocconi.it}.}
+  \and
+  Nazrul Shafiq\thanks{Stanford Institute for Economic Policy Research, Stanford University,
+    366 Galvez Street, Stanford, CA 94305, USA. Phone: +1--650--384--1279. E-mail:
+    \href{mailto:nazrul@stanford.edu}{nazrul@stanford.edu}.}}
+\newcommand{\ectatitlethanks}{}
+\makeatletter
+\renewcommand{\author}[1]{\gdef\@author{\ectaauthors}}
+\let\ecta@origtitle\title
+% (no title footnote while \ectatitlethanks is empty)
+\renewcommand{\title}[1]{\ifdefempty{\ectatitlethanks}{\ecta@origtitle{#1}}{\ecta@origtitle{#1\thanks{\ectatitlethanks}}}}
+\makeatother
+\makeatletter
+\newif\ifecta@titledone
+\newcommand{\ecta@printabstract}[1]{%
+  \begin{center}\textbf{Abstract}\end{center}\vspace{-1ex}%
+  \begin{quote}#1\par\medskip\orignoindent\textit{Keywords:} \paperkeywords\par
+  \smallskip\orignoindent\textit{JEL codes:} \paperjel\end{quote}}
+\RenewEnviron{abstract}{\ifecta@titledone\ecta@printabstract{\BODY}\else\global\let\ecta@abstract\BODY\fi}
+% Bold title, as in the format
+\renewcommand{\@maketitle}{\newpage\null\vskip 2em\begin{center}\let\footnote\thanks
+  {\LARGE\bfseries \@title\par}\vskip 1.5em
+  {\large\lineskip .5em\begin{tabular}[t]{c}\@author\end{tabular}\par}\vskip 1em
+  {\large \@date}\end{center}\par\vskip 1.5em}
+\let\ecta@maketitle\maketitle
+\renewcommand{\maketitle}{\ecta@maketitle\thispagestyle{empty}\global\ecta@titledonetrue
+  \ifdefined\ecta@abstract\ecta@printabstract{\ecta@abstract}\fi
+  \clearpage\setcounter{page}{1}}
+\makeatother
+
+% References in the Econometrica style, whatever style Writeup.tex asks for
+% (csquotes is not loaded because ecta.bst defines its own \enquote; author names are set in
+% roman rather than small capitals, as in the working-paper version of the format)
+\AtBeginEnvironment{thebibliography}{\renewcommand{\textsc}[1]{#1}}
+\let\origbibliographystyle\bibliographystyle
+\renewcommand{\bibliographystyle}[1]{\origbibliographystyle{ecta}}
+
+\begin{document}
+\input{Writeup}
+\end{document}

@@ -1,0 +1,917 @@
+% !LW recipe = latexmk (Output folder)
+\documentclass[12pt,reqno]{amsart}
+\usepackage{graphicx}
+\usepackage{indentfirst,csquotes}
+\usepackage{etoolbox}
+\usepackage{amssymb,amsthm,amsmath}
+\usepackage{xcolor,paralist,titlesec,fancyhdr,etoolbox}
+% define a dark green used across Figures
+\definecolor{darkgreen}{rgb}{0.0,0.45,0.13}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{bbm}
+\usepackage{etoolbox}
+\usepackage{thmtools}
+\usepackage{stmaryrd} % for \bigtimes
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{arrows.meta}
+\usepackage{marginnote}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage[authoryear,round]{natbib} % author-year citations; load before hyperref
+\usepackage{hyperref} % Load hyperref last
+
+%%%%%%%%%%%%%%%%%%%%%%% Margins
+\usepackage[a4paper, top = 2cm, bottom = 2cm, left = 2cm, right = 2cm]{geometry}
+
+%%%%%%%%%%%%%%%%%%%%%%% Environments
+\newtheorem{theorem}{Theorem}[]
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{conjecture}{Conjecture}
+\theoremstyle{definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{example}{Example}
+\newtheorem{remark}{Remark}
+\theoremstyle{plain} % restated results (customprop, customlemma) in the italic style of the other propositions
+\newtheorem{innercustomprop}{Proposition}
+\newenvironment{customprop}[1]{\renewcommand\theinnercustomprop{#1}\innercustomprop}{\endinnercustomprop}
+\newtheorem{innercustomlemma}{Lemma}
+\newenvironment{customlemma}[1]{\renewcommand\theinnercustomlemma{#1}\innercustomlemma}{\endinnercustomlemma}
+
+
+%%%%%%%%%%%%%%%%%%%%%%% Footnotes
+\hypersetup{colorlinks=true, linkcolor=blue, filecolor=black, urlcolor=black, citecolor=blue}
+
+%%%%%%%%%%%%%%%%%%%%%%% Line-Spacing + Spacing Between Paragraphs
+\linespread{1} 
+\setlength{\parskip}{0.5em}
+\newcommand{\Hquad}{\hspace{0.5em}} 
+
+%%%%%%%%%%%%%%%%%%%%%%% Equation Spacing
+\setlength{\abovedisplayskip}{6pt}  
+\setlength{\belowdisplayskip}{6pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{4pt}
+
+%%%%%%%%%%%%%%%%%%%%%%% Sections
+\makeatletter
+\providecommand{\@secnumpunct}{\quad} % Section title formatting
+\renewcommand{\l@section}{\@tocline{1}{0pt}{1.5em}{2.3em}{}} % Table of Content Formatting
+\renewcommand{\@secnumfont}{\bfseries} % Force amsart to display section numbers
+\makeatother
+\titleformat{\section}
+  [block]
+  {\normalfont\Large\bfseries}
+  {\thesection}
+  {1em}
+  {}
+\titleformat{\subsection}
+  [block]
+  {\normalfont\large\bfseries}
+  {\thesubsection}
+  {1em}
+  {}
+\titleformat{\subsubsection}
+  [runin]
+  {\normalfont}
+  {\bfseries\thesubsubsection.}
+  {0.5em}
+  {\itshape}
+\titlespacing*{\subsubsection}{0pt}{1.5ex plus 0.5ex minus 0.2ex}{0pt} % no gap before the ":" that follows each title
+\raggedbottom % do not stretch vertical space to fill pages
+
+%%%%%%%%%%%%%%%%%%%%%%% Figure Placement
+% Every figure goes at the top of a page (or on a page of figures if too tall),
+% whatever placement option its own file specifies.
+\let\origfigure\figure
+\let\endorigfigure\endfigure
+\renewenvironment{figure}[1][]{\origfigure[tp]}{\endorigfigure}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\floatpagefraction}{0.8}
+
+%%%%%%%%%%%%%%%%%%%%%%% Page Number Formatting
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}  % Page number at bottom center
+\renewcommand{\headrulewidth}{0pt}  % Remove header rule line
+\setlength{\footskip}{13.0pt}
+
+\begin{document}
+\title{Aiming High Under Noisy Evaluation: Sorting into Programs Across Fields in Grantmaking}
+\author{Marco Ottaviani}
+\begin{abstract}
+    In Marie Skłodowska-Curie Actions fellowships, applicants in social sciences and humanities are more likely than those in natural sciences and engineering to choose the more valuable Global rather than European Fellowship, despite equal success rates across fields within each program. To explain this pattern, we model researchers who privately know their merit and choose whether to submit costly applications to regular or top programs. Evaluation is noisy, and each program allocates funding across fields in proportion to applications. In stable interior equilibria, otherwise identical fields with noisier evaluation send a larger applicant share to the top program if the merit distribution has a convex Mills ratio because noise lowers the marginal top applicant’s expected return from the regular program. In other words, applicants in noisier fields are more likely to aim \textit{high}. Under concavity, this result reverses. We characterize Mills ratio curvature through convex transform comparisons of left truncated merit distributions. Consistent with this mechanism, reviewer disagreement correlates positively with the Global application share.
+\end{abstract}
+\maketitle
+
+\newpage
+
+\section{Introduction}
+
+\noindent Why do sociologists aim higher than chemists? The EU's flagship funding initiative for researcher training, the Marie Sk\l{}odowska-Curie Actions (MSCA), offered two postdoctoral fellowship programs with a combined budget of \texteuro 404 million in 2025 \citep[p.~39]{ec2025mscawp}: the regular European Fellowship (EF), which funds 12 to 24 months of research at a host institution in an EU Member State or an associated country, and the top Global Fellowship (GF), which adds an outgoing phase of 12 to 24 months at an institution in a non-associated third country before a 12-month return phase in Europe \citep[p.~131]{ec2025mscawp}. A Global Fellowship is also worth more: about \texteuro 370,000 on average, against \texteuro 238,000 for a European Fellowship (each program's 2025 budget divided by the number of fellowships it funded; \citealp{ec2025mscawp,msca2026results}). In 2025, 14.2\% of applicants to the social sciences and humanities panel applied to the GF rather than the EF, against only 2.8\% in chemistry, with economics in between at 5.7\% \citep{ecpercentiles2025}. As Figure \ref{fig:msca_gf_share} shows, this ranking of fields has persisted for almost a decade.
+
+\noindent The pattern is puzzling because, within each program, the MSCA implements a budget allocation rule that guarantees that every scientific field has the same average acceptance rate. A researcher may submit only one proposal per call, and the MSCA divides the budget of each program across its eight scientific panels in proportion to the number of eligible proposals that each panel receives. This rule is known as proportional allocation (PA), and it mechanically equalizes success rates across fields: in every call from 2016 to 2025, the success rates of the eight EF panels were within 1.5 percentage points of one another. Yet sociologists are five times as likely as chemists to try for the GF.
+
+\noindent We argue that the answer lies in cross-field differences in the reliability of peer review. Using data from \cite{pina2021retrospective} on reviewer scores for each MSCA submission between 2014 and 2018, we compute a chance-corrected measure of evaluation noise in each field based on the disagreement in scores among different reviewers ($1-{}$Gwet's AC). Figure \ref{fig:msca_noise_share} plots, for each field, the computed measure of evaluation noise against the percent of total applicants who applied to the GF program rather than the EF program averaged across the years 2016-2020\footnote{Application counts by program are missing for the years 2014/2015. Moreover, in 2021, the EF/GF programs underwent two major reforms: (1) The MSCA made major changes to the eligibility criteria for the EF/GF programs (e.g., imposing a new rule limiting applicants to at most 8 years post PhD) \citep[p.~86]{ec2021mscawp}, and (2) the total budget allocated to the EF/GF programs was substantially reduced from \texteuro 328 million in 2020 to \texteuro 242 million in 2021 (\citealp[p.~5]{ec2020ifguide}; \citealp[p.~21]{ec2021mscawp}). The UK was the largest beneficiary of the MSCA, and its exit from the EU in 2020 contributed towards a funding shortfall for the MSCA that had to be resolved through budget cuts across all the programs it offered \citep{rpn2021msca}. For these reasons, we focus on GF/EF application counts in the years 2016-2020 in the construction of Figure \ref{fig:msca_noise_share}.}. We observe that panels whose reviewers disagree more send a larger share of their total applicants to the GF rather than the EF. Why would less reliable evaluation push researchers towards the more desirable program?
+
+% \noindent Our answer is that evaluation noise has two opposing effects on who applies where, and that which effect prevails depends on a single property of the distribution of latent researcher merit: the curvature of its mills ratio. The explanation combines three ingredients, each of which describes a different dimension of grant allocation:
+% \vspace{-5pt}
+% \begin{enumerate}[label=(\arabic*)]
+%    \item \textit{The evaluation technology.} Peer review is noisier in some fields than in others, where we interpret evaluation noise as disagreement amongst reviewers in assessing the merit of a submission. Figure \ref{fig:msca_noise_share} suggests that evaluation is noisier in the social sciences than in chemistry.
+%    \item \textit{The allocation rule.} Under PA, each program funds the same share of applicants in every field. 
+%    \item \textit{The applicant pool, which determines the direction of the effect.} If the mills ratio of the merit distribution is convex, as it is for the normal, logistic and Gumbel distributions and for gamma and Weibull distributions with shape parameter above one, the noisier field sends a larger share of its applicants to the top program. If the mills ratio is concave, as it is for an exponential or generalized Pareto distribution truncated from above, the noisier field sends a smaller share. If the mills ratio is linear, as for the uniform distribution, evaluation noise has no effect on sorting at all.
+% \end{enumerate}
+% The first two ingredients explain why differences in evaluation noise across fields can show up as differences in program choice; the third determines whether they do, and in which direction. Through the lens of the model, the positive relation in Figure \ref{fig:msca_noise_share} is therefore consistent with a convex mills ratio and inconsistent with a concave one: were the mills ratio concave, the noisiest fields would be the ones that shy away from the GF.
+
+\noindent To answer this question, we build on the model of grantmaking in \citet{adda2024grantmaking} to allow researchers to choose between a regular program $R$ and a top program $T$. Candidates are privately informed of their merit and must choose whether to make a costly application knowing that their merit will be evaluated with noise. As in the MSCA, each candidate submits at most one application, and, within each program, grants are allocated across different scientific fields according to PA. Thus, all fields face a common success rate, also known as a payline. Within this framework, our headline result is the following.
+
+\begin{proposition}[Cross-Field Sorting to the Top Program]\label{prop:intro}
+Suppose that each program allocates its budget across fields by PA, that fields differ only in their evaluation noise, and that the latent distribution of researcher merit has a log-concave density and a strictly decreasing, convex (concave) mills ratio. Then, under regularity conditions stated in Section \ref{section:multifield}, the following holds for stable equilibria:
+\vspace{-5pt}
+\begin{enumerate}[label=(\arabic*),ref=\theproposition(\arabic*)]
+  \item The share of applicants who apply to the top program rather than the regular program is weakly larger (smaller) in the field with higher evaluation noise.
+  \item \label{prop:2}The opportunity cost of the marginal top applicant is weakly smaller (larger) in the field with higher evaluation noise.
+  \item \label{prop:3} Among funded researchers, those from the noisier field are weakly more (less) likely to hold an award from the top program.
+\end{enumerate}
+\end{proposition}
+
+\input{../../2_analysis/2.2_descriptives/output/msca_gf_share}
+
+\input{../../2_analysis/2.2_descriptives/output/msca_noise_share}
+
+\noindent Since chemistry and sociology face the same paylines in equilibrium under PA and differ in their evaluation noise, comparing them amounts to raising the evaluation noise in chemistry to that of sociology while holding both paylines fixed, the comparative static that we study in Section \ref{section:increase_noise}. We trace this change in two steps, starting from the equilibrium of chemistry. In the first step, noise rises and the top program still funds its payline share of applicants, but the regular program sets its score cutoff to hold fixed the opportunity cost of the marginal top applicant, allowing its regular program success rate to move above/below the equilibrium payline. In the second step, the regular program adjusts its score cutoff to restore a success rate equal to the equilibrium payline. 
+
+\noindent In step one, raising noise while holding fixed the marginal top applicant's opportunity cost has two conflicting effects on the regular program's success rate: On the extensive margin, it encourages regular program applicants to apply to the top program instead and induces non-applicants to apply to the regular program. On the intensive margin, to hold fixed the opportunity cost of the marginal top applicant, the regular program's score cutoff must be made more lenient after a rise in noise, thereby raising the winning probability of inframarginal regular applicants. The extensive margin effect yields a lower-quality regular applicant pool, contributing towards a fall in the regular program success rate below its original payline. In contrast, the intensive margin effect contributes towards a higher success rate. It is unclear if the resulting regular program success rate lies above or below its original equilibrium payline. 
+
+\noindent As we will show, the curvature of the merit distribution's mills ratio resolves this ambiguity: The intensive margin effect dominates when the mills ratio is convex, while the effect on the extensive margin dominates when the mills ratio is concave. The key idea lies in our central theoretical contribution (Theorem \ref{lemma:millsratio_curvature}): The mills ratio of the merit distribution is convex (concave) if and only if its left truncations are ordered in the convex transform order of \cite{vanzwet1964convex}, so that merit above a threshold becomes more (less) right-skewed as the left truncation rises:
+\begin{align*}
+    \forall \hat{\theta}_1<\hat{\theta}_2 \quad \theta|\theta>\hat{\theta}_1 \,\substack{\leq_{ct}\\ (\geq_{ct})}\,\theta|\theta>\hat{\theta}_2
+\end{align*}
+Under a convex mills ratio, the regular program ends the first step funding a larger share of its applicants than the equilibrium payline. Restoring the payline in the second step requires a more stringent score cutoff, thereby reducing the marginal top applicant's chance at a regular award (and thus his opportunity cost). Thus, in equilibrium, the marginal top applicant in the higher-noise field (sociology) has a lower opportunity cost than in the lower-noise field (chemistry). 
+
+\noindent It is precisely this fall in the opportunity cost of the marginal top applicant that encourages individuals to apply to the top rather than the regular program. The consequence is that the field with higher noise (sociology) will have a higher share of its total applicants applying to the more desirable top program than the field with lower evaluation noise (chemistry). Hence, the share of funded researchers who receive an award from the GF rather than the EF is higher in sociology than in chemistry because, within each program, the MSCA allocates budget to a field in proportion to the number of applicants from that field (PA). 
+
+\noindent Although our headline result is motivated by the MSCA, our framework is applicable to any funding institution that runs a top and regular program, and where each program's budget is allocated across fields according to PA. Apart from the MSCA, there are many national scientific funding institutions that admit two programs with overlapping eligibility, where each program commits to PA as its budget allocation mechanism\footnote{Success rate equalization is appealing because it is perceived as fair from the perspective of the individual scientific fields, and spares the funder from the need to compare merit across potentially incommensurable fields.}. For instance, the European Research Council and the National Natural Science Foundation of China both run pairs of programs that mechanically divide their budgets according to PA\footnote{For the ERC, there is overlapping eligibility between the Consolidator (regular) and Advanced (top) programs. The National Natural Science Foundation of China offers multiple programs with overlapping eligibility: For instance, the Young Scientists Fund A, B, and C, with program A offering more funding over a longer time period. For each program, budget is first administratively allocated to institutes representing different fields of STEM research (e.g., Physics I, Mechanics, Physics II, Chemistry, Engineering, Earth Sciences).  Within each institute and for each program, budget is allocated across subfields using PA.}. There are also funding institutions that have no explicitly stated allocation rule but nonetheless implement success rate equalization in practice. Examples include Japan's flagship scientific funding program (KAKENHI) and Canada's Social Sciences and Humanities Research Council\footnote{Japan's KAKENHI offers multiple programs with overlapping eligibility: Scientific Research A/B/C, with program A offering more grant funding per project. Canada's SSHRC offers two programs: The Insight Grants program and the Insight Development Grants program. The former offers more funding over a longer time period.}. Neither states a formal commitment to using PA, yet recorded success rates across fields remain practically identical each year. 
+
+\noindent The remainder of this paper is structured as follows: Section \ref{section:litreview} presents our contribution to the literature, Section \ref{section:model} describes our model in the single field case, and Section \ref{section:increase_noise} explores what happens to stable equilibria following a rise in evaluation noise. Using these results, Section \ref{section:multifield} completes the proof of our headline result when there are multiple academic fields. Proofs and technical results are relegated to the Appendix. 
+
+\section{Contribution to the Literature}\label{section:litreview}
+\noindent Our analysis brings together models of participation in grant competitions and models of application choice among vertically ranked institutions. \cite{adda2024grantmaking} study costly applications by privately informed candidates whose merit is evaluated with noise. They show that noisier evaluation increases equilibrium participation and, under proportional allocation, attracts a larger share of the funding budget. We ask how evaluation noise changes the allocation of applicants between a top and a regular program. This choice introduces an endogenous opportunity cost: applying to the top program means forgoing the expected return from the regular program. Because the two programs draw from the same population, changes in their evaluation thresholds alter both applicant pools and feed back into application incentives. \citeauthor{adda2024grantmaking} also consider choice across fields based on multidimensional comparative advantage. We study vertically ranked programs that all applicants value in the same order and characterize how differences in evaluation noise across fields translate into differences in program choice.
+
+\cite{chade2014student} provide a closely related model of application choice among ranked institutions. Students know their caliber, applications are costly, and colleges use noisy evaluations. Students can apply to both colleges, creating portfolio incentives to combine stretch and safety applications and allowing monotone sorting to fail. They also show that restricting students to one application restores sorting, with intermediate types applying to the lower-ranked college and higher types to the higher-ranked college. Our model shares this exclusive application choice and characterizes how differences in evaluation noise across fields change the share applying to the more valuable program.
+
+\noindent This curvature condition has an established interpretation in the pricing literature. With unit demand and heterogeneous consumer valuations, demand equals the survival function of the valuation distribution, and the Mills ratio measures the markup satisfying the monopolist’s first-order condition. An affine Mills ratio yields constant pass-through \citep{bulow1983note}, while convexity implies that monopoly pass-through increases with price \citep{weyl2013passthrough}. In the demand framework of \citet{mrazova2017demanding}, this condition is equivalent to inverse-demand curvature decreasing with quantity. Such variation in curvature enters sufficient conditions for the output and welfare effects of monopoly price discrimination in \citet*{aguirre2010monopoly}. Convexity of the corresponding lower-tail ratio also helps characterize screening distortions under random participation \citep{rochet2002nonlinear}.
+
+\noindent Beyond pricing, curvature restrictions on hazard rates characterize the effects of selection on observed outcomes and provide conditions for its informational benefits. \citet{noe2020comparing} shows that relative reverse hazard rates determine likelihood-ratio dominance among outcomes conditional on winning a competition. The same restriction, expressed as log-supermodularity, ensures that maximal selection improves information in \citet*{ditillio2021strategic}. For left truncation, \citeauthor*{ditillio2021strategic} show that stronger selection reduces information when, in a location experiment, the noise distribution has a log-concave hazard rate—equivalently, a log-convex Mills ratio. Log-convexity implies ordinary convexity, but the restrictions concern different primitives: their condition is on noise, whereas ours is on merit. We characterize how ordinary convexity changes the shape of the selected merit distribution and use this characterization to establish the equilibrium response of program choice to evaluation noise.
+
+\noindent The characterization builds on \cite{vanzwet1964convex}'s convex-transform order and its quantile characterization, presented in \citet[Section 4.B]{shaked2007stochastic}. \citet*{arriaza2017comparing} characterize convex-transform comparisons between two distributions through comparisons of their residual lives at corresponding quantiles. We compare truncations of a single distribution at different thresholds: its Mills ratio is convex if and only if higher thresholds increase the selected distribution in convex-transform order. This equivalence gives the curvature restriction a direct selection interpretation and supplies the link between changes in applicant-pool composition and equilibrium sorting.
+
+The MSCA provides unusually direct evidence on the evaluation process. \citet*{pina2015peer} study peer review under the Seventh Framework Programme, and \citet*{pina2021retrospective} analyze more than 75,000 Marie Curie proposals. We use the reviewer-score data to document an association between disagreement and the share applying to the Global Fellowship. This pattern is consistent with our mechanism, although it does not distinguish evaluation noise from other field characteristics. Complementary research identifies effects of receiving a fellowship: \citet*{baruffaldi2026mobility} study mobility grants under the Seventh Framework Programme, while \citet*{yildiz2024expanding} study research diversification under Horizon 2020. These studies concern outcomes after award assignment; our analysis concerns the application choices that shape the pool on which award decisions operate.
+
+\newpage
+
+\section{Model, Equilibria, and Stability}\label{section:model}
+
+\subsection{Model Setup}
+
+\noindent This section formulates a stylized model of grantmaking involving a single scientific field. In the model developed by \citet{adda2024grantmaking}, researchers can only submit a grant application to a single program. We extend their model to two programs, of which one is perceived to be more desirable than the other. Researchers still apply to at most one program, but can now choose \textit{which} program to apply to.
+
+
+% Once a researcher has made their choice and submitted their grant application to a program $P$, their submission is evaluated in two stages:
+% \vspace{-5pt}
+% \begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+%    \item First, their project is evaluated and assigned a numeric score $x$ by a panel consisting of peer reviewers. Importantly, the primary role of this review panel is to assess the merit of each submitted application, and not to decide which applicant should be awarded a grant.  
+%    \item After all applications have been assigned a score by the review panel, the distribution of scores is sent to a centralized administrator for program $P$. The administrator then chooses a score cutoff $\hat{x}^P$ so that exactly $\lambda_P$ percent of total applicants are awarded a grant, where $\lambda_P$ is a program specific average acceptance rate target that is exogenously set and publicly announced before researchers submit their applications. Henceforth, $\lambda^P$ will be known as program $P$'s payline. 
+% \end{enumerate}
+% We first discuss the choices made by researchers as a function of the score cutoff set by each program. Given these choices, we can then determine the demand for application slots within each program. 
+
+\subsubsection{Researchers and Scientific Fields}: There is a single scientific field populated by a continuum of researchers parametrized by their merit type $\theta$. Let $G$ denote the distribution of merit types, which is assumed to admit a twice continuously differentiable density $g$ with possibly unbounded connected support $(\underline{\theta},\bar{\theta})$. Each researcher knows their own merit, and must decide whether to apply to a top program $T$, a regular program $R$, or not to apply at all. If a candidate applies to either program, the researcher faces application costs $c\geq 0$ which may represent monetary submission costs or the opportunity cost from the time and effort spent preparing the submission. If his application to program $P\in \{R,T\}$ is successful, he earns a private benefit equal to $v^P$ with $c < v^R < v^T$.  
+
+\subsubsection{Reviewers and Score Assignment}: If a candidate with project merit $\theta$ chooses to apply to some program, reviewers observe a noisy signal $x$ of the project's merit drawn from a conditional density $f_{\sigma}(\cdot|\theta)$. Assume that the signal structure is location-scale:\footnote{It may be of interest to consider a signal structure that allows more (or less) precise evaluation for applicants with a higher merit. One way to tractably model this is $\wedge(x) = \wedge(\theta) + \sigma\varepsilon$ for $\wedge$ strictly increasing. Now, fix $\theta_1<\theta_2$. Let $H(\cdot|\theta)$ be the distribution of the absolute difference $|x-\theta|$ between score and merit, when the true merit of the application is $\theta$. Then if $\wedge$ is convex (concave), we have that $H(\cdot|\theta_1) \geq_{st} (\leq_{st}) H(\cdot|\theta_2)$ for $\theta_1<\theta_2$ and thus higher-merit projects are evaluated more (less) precisely than lower-merit projects. All the results in this paper hold provided that one replaces assumptions on the merit distribution $G$ with assumptions on $G\circ \wedge^{-1}$.}
+\begin{align*}
+  f_{\sigma}(x|\theta) := \dfrac{1}{\sigma}f\left(\dfrac{x-\theta}{\sigma}\right)
+\end{align*}
+where $f$ is assumed to be continuously differentiable on a connected support\footnote{Moreover, if the support is $(\underline{\varepsilon},\bar{\varepsilon})$ with $\underline{\varepsilon}>-\infty$, let us assume that $\underline{\varepsilon}$ is always sufficiently small so that no applicant (either in the regular or top program) wins with probability 1.} and $\sigma>0$ is the key parameter that captures the evaluation noise with which a project is evaluated. $\sigma \rightarrow 0$ represents perfect evaluation, while $\sigma\rightarrow +\infty$ indicates that applicants are essentially chosen by lottery. To formalize the notion that better project merit generates larger signal realizations, we assume that the signal distribution obeys the monotone likelihood ratio property (MLRP). Thus $x\mapsto f_{\sigma}(x|\theta')/f_{\sigma}(x|\theta)$ is non-decreasing for all $\theta'>\theta$\footnote{Equivalently, $f$ is assumed to be log-concave on its connected support. See \citet{saumard2014logconcavity}.}. After all applications have been assigned a score, a score cutoff $\hat{x}^{P}$ is chosen by a program administrator and a grant is awarded to all applicants whose realized score exceeds this cutoff\footnote{If an evaluator anticipates that applicants sort into a program based on their merit, a score cutoff strategy is optimal because applicant scores are drawn from a conditional density that satisfies MLRP. This is the Karlin--Rubin theorem.}. 
+
+\subsubsection{The Researcher's Optimization Problem}: All candidates first observe the score cutoff $\hat{x} = (\hat{x}^T,\hat{x}^R)$ implemented in the top and regular program. Without loss of generality, we solve for the optimal application strategy when the standard in the top program is more stringent than in the regular program $\hat{x}^R < \hat{x}^T$\footnote{As we will see, all interior equilibria with positive application counts in both programs necessarily involve $\hat{x}^R < \hat{x}^T$.}. Conditional on applying to a program $P$, a candidate with project merit $\theta$ receives a grant with probability $\bar{F}_{\sigma}(\hat{x}^P|\theta)$ and thus earns expected payoff equal to $v^P\bar{F}_{\sigma}(\hat{x}^P|\theta) - c$. If a candidate does not apply to any program, he earns a payoff of zero. Denote $\hat{\theta}^R$ the merit type that is indifferent between applying to the regular program or not applying (hereafter known as the marginal regular program applicant):
+\begin{align}\label{eq:regular_indifference}
+    v^R\bar{F}_{\sigma}(\hat{x}^R|\hat{\theta}^R) = c
+\end{align}
+This is depicted in Figure \ref{fig:sorting}, where the curve $\theta\mapsto v^R\bar{F}_{\sigma}(\hat{x}^R|\theta)$ crosses the horizontal line $c$ at the marginal regular applicant $\hat{\theta}^R$. Similarly, since the top program has a more stringent application standard, we can define a merit type $\hat{\theta}^T$ that is indifferent between applying to the regular program or the top program (henceforth known as the marginal top program applicant):
+\begin{align}\label{eq:top_indifference}
+    v^R\bar{F}_{\sigma}(\hat{x}^R|\hat{\theta}^T) - c= v^T\bar{F}_{\sigma}(\hat{x}^T|\hat{\theta}^T) - c
+\end{align}
+We refer to $v^R\bar{F}_{\sigma}(\hat{x}^R|\hat{\theta}^T)$ as the opportunity cost of this marginal top applicant. Since $\bar{F}$ is log-concave and $\hat{x}^R<\hat{x}^T$, the curve $\theta\mapsto v^T\bar{F}_{\sigma}(\hat{x}^T|\theta)$ single-crosses the curve $\theta\mapsto v^R\bar{F}_{\sigma}(\hat{x}^R|\theta)$ from below at $\hat{\theta}^T$, so all applicants with higher merit than $\hat{\theta}^T$ prefer applying to the top rather than the regular program (Figure \ref{fig:sorting}). Two cases arise. If $\hat{\theta}^R\geq \hat{\theta}^T$, every researcher whose expected value from applying exceeds the cost $c$ prefers the top program, so there are only applicants to the top program (Figure \ref{fig:sorting_a}). If $\hat{\theta}^R < \hat{\theta}^T$, we have full sorting based on applicant merit: applicants with merit below $\hat{\theta}^R$ do not apply, those with merit $\theta\in [\hat{\theta}^R, \hat{\theta}^T)$ apply to the regular program, and those with merit $\theta\geq \hat{\theta}^T$ apply to the top program (Figure \ref{fig:sorting_b}). We focus on the second case because we are interested in interior equilibria, in which both marginal applicants lie inside the support of merit, $\underline{\theta}<\hat{\theta}^R<\hat{\theta}^T<\bar{\theta}$. Thus, the researcher's optimal application strategy can be summarized by the merit of the marginal regular and top applicants.
+% We refer to $v_R\bar{F}_{\sigma}(\hat{x}^R|\hat{\theta}^T)$ as the opportunity cost of this marginal top applicant. Since the MLRP property holds, $\bar{F}$ is log-concave\footnote{Log-concavity of the density $f$ implies that its survival function $\bar{F}$ is also log-concave. See \citet{bagnoli2005logconcave}.} and all applicants with higher merit than $\hat{\theta}^T$ will prefer applying to the top rather than the regular program. This is graphically depicted in Figure \ref{fig:sorting}, where the curve $\theta\mapsto v_T\bar{F}(\hat{x}_T|\theta)$ single-crosses the curve $\theta\mapsto v_R\bar{F}(\hat{x}_R|\theta)$ from below at the marginal top program applicant $\hat{\theta}^T$. The optimal application strategy is thus given by the following rule:
+% \vspace{-5pt}
+% \begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+%    \item If $\hat{\theta}^R\geq \hat{\theta}^T$, then there will only be applicants to the top program. To see this, consider Figure \ref{fig:sorting_a}. Applicants will only apply to either the top or regular program if their expected value exceeds the fixed application cost $c$. The red shaded area thus reflects the merit of prospective applicants, while the grey area represents the merit of non-applicants. However, for any given applicant $\theta$ in the red shaded area, their expected value from applying to the top program exceeds that in the regular program:
+%    \begin{align*}
+%       v^T \bar{F}_{\sigma}(\hat{x}^T|\theta) > v^R\bar{F}_{\sigma}(\hat{x}^R|\theta)
+%    \end{align*}
+%    It thus follows that all applicants will apply to the top program, and none will apply to the regular program. 
+%    \item If $\hat{\theta}^R < \hat{\theta}^T$, then we have full sorting based on applicant merit: Applicants with merit below the marginal regular applicant $\hat{\theta}^R$ will not apply, while applicants with merit $\theta\in [\hat{\theta}^R, \hat{\theta}^T)$ will apply to the regular program, and applicants with merit above the marginal top applicant $\theta\geq \hat{\theta}^T$ will apply to the top program. This is demonstrated in Figure \ref{fig:sorting_b}. 
+% \end{enumerate}
+% We focus on case (2) because we are interested in interior equilibria. Thus, the researcher's optimal application strategy can be summarized by the merit of the top and regular marginal applicant. 
+
+
+
+
+\input{../../2_analysis/2.1_theory/output/sorting}
+
+\subsubsection{The Induced Marginal Applicants}: It will be expositionally convenient to instead answer the following inverse question: What is the score cutoff that the regular program needs to set in order to induce a given marginal regular applicant? According to equation \eqref{eq:regular_indifference}, to induce a marginal regular applicant with merit $\hat{\theta}^R$, the regular score cutoff must be set equal to:
+\begin{align}\label{eq:reg_demand}
+    \hat{x}^R_{D}(\hat{\theta}^R|\sigma) = \hat{\theta}^R + \sigma F^{-1}\left(1 - \dfrac{c}{v^R}\right)
+\end{align}
+It is increasing in the marginal regular applicant: To induce a marginal regular applicant with higher merit, the admissions standard must be made more stringent and thus the score cutoff must rise. Similarly, given a score cutoff in the regular program $\hat{x}^R$, what is the score cutoff that the top program needs to set in order to induce a given marginal top applicant? According to equation \eqref{eq:top_indifference}, to induce a marginal top applicant with merit $\hat{\theta}^T$, the top score cutoff must be set equal to:
+\begin{align}\label{eq:top_demand}
+  \hat{x}^T_{D}(\hat{\theta}^T|\hat{x}^R,\sigma) = \hat{\theta}^T + \sigma F^{-1}\left(1 - \dfrac{v^R}{v^T}\bar{F}_{\sigma}\left(\hat{x}^R|\hat{\theta}^T\right)\right)
+\end{align}
+First, note that a higher score cutoff induces a higher-merit marginal top applicant. Moreover, a rise in the regular score cutoff reduces the opportunity cost of the marginal top applicant, making him strictly prefer applying to the top program. To keep the merit of the marginal top applicant fixed, the top program must raise its score cutoff. We summarize these two results in the following proposition:
+
+% Log-concavity of $\bar{F}$ is enough to show that $\hat{x}^T_{D}(\hat{\theta}^T|\hat{x}^R,\sigma)$ is strictly increasing in the marginal top applicant. This is illustrated in Figure \ref{fig:cs_a}: To induce a higher-merit marginal top applicant, the top score cutoff must rise so that the red curve shifts downwards at a larger point of intersection with the blue curve. Moreover, a rise in the regular score cutoff reduces the opportunity cost of the marginal top applicant, making him strictly prefer applying to the top program. To keep the merit of the marginal top applicant fixed, the top program must raise its score cutoff. This is illustrated in Figure \ref{fig:cs_b}. A rise in the regular score cutoff shifts the blue curve down to the dashed blue curve, making the marginal top applicant $\hat{\theta}^T$ strictly prefer applying to the top program. To keep him indifferent between the regular and top program, the top program score cutoff must rise. We summarize these results in the following proposition:
+
+\begin{proposition}\label{prop:demand}
+The regular score cutoff $\hat{x}^R_D(\hat{\theta}^R|\sigma)$ needed to induce a given marginal regular applicant is strictly increasing in $\hat{\theta}^R$. The top score cutoff $\hat{x}^T_D(\hat{\theta}^T|\hat{x}^R,\sigma)$ needed to induce a given marginal top applicant is non-decreasing   in $\hat{\theta}^T$ and also strictly increasing in the regular score cutoff $\hat{x}^R$. 
+\end{proposition}
+
+% \input{../../2_analysis/2.1_theory/output/comparative}
+
+\subsubsection{The Score Cutoffs Chosen by the Top and Regular Programs}: 
+Given the marginal applicants $\hat{\theta}^R<\hat{\theta}^T$, the top program's applicants are researchers with merit in $(\hat{\theta}^T,\bar{\theta})$. The top program administrator chooses a score cutoff $\hat{x}^T_S(\hat{\theta}^T|\lambda^T,\sigma)$ so that the proportion of total applicants awarded a grant coincides with the exogenously set acceptance rate target $\lambda^T$, henceforth known as a \textit{payline}. It is the unique solution to:
+\begin{align}\label{eq:supply_top}
+  \dfrac{1}{\bar{G}(\hat{\theta}^T)}\int^{\bar{\theta}}_{\hat{\theta}^T} \bar{F}_{\sigma}\left(\hat{x}^T_S(\hat{\theta}^T|\lambda^T,\sigma)|\theta\right) \,dG(\theta) = \lambda^T
+\end{align}
+A rise in the merit of the marginal top applicant $\hat{\theta}^T$ raises the quality of the top applicant pool\footnote{Formally, $\theta|\theta\geq \hat{\theta}^T$ improves in stochastic dominance from a rise in $\hat{\theta}^T$.}, yielding a rise in the average acceptance rate above the payline. To restore the payline average acceptance rate, the score cutoff must be raised. Thus, it follows that $\hat{\theta}^T\mapsto \hat{x}^T_S(\hat{\theta}^T|\lambda^T,\sigma)$ is strictly increasing. Similarly, the regular program's applicants are researchers with merit in $(\hat{\theta}^R,\hat{\theta}^T)$ and its administrator chooses a score cutoff $\hat{x}_S^R(\hat{\theta}^R|\lambda^R,\hat{\theta}^T,\sigma)$ such that exactly $\lambda^R$ percent of regular program applicants are funded:
+\begin{align}\label{eq:supply_regular}
+  \dfrac{1}{G(\hat{\theta}^T) - G(\hat{\theta}^R)}\int^{\hat{\theta}^T}_{\hat{\theta}^R} \bar{F}_{\sigma}\left(\hat{x}^R_S(\hat{\theta}^R|\lambda^R, \hat{\theta}^T,\sigma)|\theta\right) \,dG(\theta) = \lambda^R
+\end{align}
+A rise in the merit of either the top or regular marginal applicant improves the quality of the regular applicant pool, therefore necessitating a rise in the regular score cutoff to restore the payline acceptance rate. We summarize these monotonicity results in the following proposition:
+\begin{proposition}\label{prop:supply}
+The score cutoff $\hat{x}_S^T(\hat{\theta}^T|\lambda^T,\sigma)$ implemented by the top program is strictly increasing in the marginal top applicant $\hat{\theta}^T$. The score cutoff $\hat{x}_S^R(\hat{\theta}^R|\lambda^R, \hat{\theta}^T,\sigma)$ implemented by the regular program is strictly increasing in the marginal top $\hat{\theta}^T$ and regular applicant $\hat{\theta}^R$. 
+\end{proposition}
+
+\subsection{Single Field: Equilibria and Stability}
+
+\input{../../2_analysis/2.1_theory/output/partial_eq}
+
+\subsubsection{Partial Equilibrium in the Top Program}: Fix the score cutoff $\hat{x}^R$ in the regular program. A partial equilibrium in the top program occurs at some marginal top applicant $\hat{\theta}^{T,*}$ when the score cutoff implemented by the top program $\hat{x}^T_S(\hat{\theta}^{T,*}|\lambda^T, \sigma)$ coincides with the score cutoff $\hat{x}^T_D(\hat{\theta}^{T,*}|\hat{x}^R,\sigma)$ needed to induce that marginal top applicant. Because both curves are increasing in the marginal top applicant, there may be multiple equilibria. This is illustrated in Figure \ref{fig:pe_a}, where there are two partial equilibria: A stable equilibrium $(ii)$ where the blue curve crosses the red curve from above, and an unstable one $(i)$ where it crosses the red curve from below.
+
+\noindent For a given regular score cutoff, $\hat{x}^R$, selecting a stable partial equilibrium yields a best response curve $\hat{\theta}^T_{top}(\hat{x}^R|\lambda^T,\sigma)$ that is strictly decreasing (in an open interval containing $\hat{x}^R$). By Proposition \ref{prop:demand}, a rise in the regular score cutoff reduces the opportunity cost of the marginal top applicant, so the top score cutoff must rise to keep him indifferent between the two programs. Consequently, the red curve in Figure \ref{fig:pe_b} shifts up, yielding a new partial equilibrium with a lower-merit marginal top applicant.
+
+\input{../../2_analysis/2.1_theory/output/regular_eq}
+
+\subsubsection{Partial Equilibrium in the Regular Program}: Fix the marginal top applicant $\hat{\theta}^T$. A partial equilibrium in the regular program is defined analogously as a marginal regular applicant $\hat{\theta}^{R,*}$ at which $\hat{x}^R_S(\hat{\theta}^{R,*}|\lambda^R,\hat{\theta}^T,\sigma) =\hat{x}^R_D(\hat{\theta}^{R,*}|\sigma)$. We again focus on stable partial equilibria, where the blue curve crosses the red curve from above (Figure \ref{fig:reg_a}).
+
+\noindent Selecting a stable partial equilibrium for each marginal top applicant defines the regular program best response curve $\hat{x}^R_{reg}(\hat{\theta}^T|\lambda^R,\sigma)$, which is strictly increasing. By Proposition \ref{prop:supply}, a rise in the marginal top applicant improves the quality of the regular applicant pool, so the regular score cutoff must be raised to keep the acceptance rate equal to the payline. The blue curve in Figure \ref{fig:reg_b} shifts up, yielding a new partial equilibrium with a higher implemented regular score cutoff.
+
+\subsubsection{General Fixed Payline Equilibrium}: The previous partial equilibrium analysis motivates the following definition of a stable equilibrium:
+
+\begin{definition}[Equilibrium and Stability]\label{def:equilibrium}
+A fixed payline equilibrium is a tuple of marginal applicant types $(\hat{\theta}^{R,*},\hat{\theta}^{T,*})$ such that, in each program $P$, the score cutoff needed to induce marginal type $\hat{\theta}^{P,*}$ coincides with the score cutoff implemented by the program administrator to keep the average acceptance rate equal to the target payline:
+\begin{align*}
+    \hat{x}_{D}^R(\hat{\theta}^{R,*}|\sigma) = \hat{x}_S^R(\hat{\theta}^{R,*}|\lambda^R,\hat{\theta}^{T,*},\sigma) \quad \hat{x}_{D}^T(\hat{\theta}^{T,*}|\hat{x}^{R,*},\sigma) = \hat{x}^{T}_S(\hat{\theta}^{T,*}|\lambda^T,\sigma)
+\end{align*}
+where $\hat{x}^{R,*}= \hat{x}_{D}^R(\hat{\theta}^{R,*}|\sigma)$. Moreover, we say that such an equilibrium is \textbf{stable} iff the following two conditions hold:
+\vspace{-5pt}
+\begin{enumerate}[label=(\arabic*),ref=\thedefinition(\arabic*)]
+  \item The curve $\hat{\theta}^R\mapsto \hat{x}_S^{R}(\hat{\theta}^R|\lambda^R,\hat{\theta}^{T,*},\sigma)$ strictly\footnote{Formally, we require that, at the point of intersection, the slopes of both curves are not equal to one another. This is sufficient to guarantee the existence of a best response function $\hat{\theta}^T\mapsto \hat{x}^R_{reg}(\hat{\theta}^T|\lambda^R,\sigma)$ that is locally defined in some open neighborhood containing $\hat{\theta}^{T,*}$.} crosses the curve $\hat{\theta}^R\mapsto \hat{x}_D^{R}(\hat{\theta}^R|\sigma)$ from above at the equilibrium marginal regular applicant $\hat{\theta}^R = \hat{\theta}^{R,*}$. 
+  \item The curve $\hat{\theta}^T\mapsto \hat{x}_S^{T}(\hat{\theta}^T|\lambda^T,\sigma)$ strictly crosses the curve $\hat{\theta}^T\mapsto \hat{x}_D^{T}(\hat{\theta}^T|\hat{x}^{R,*},\sigma)$ from above at the equilibrium marginal top applicant $\hat{\theta}^T = \hat{\theta}^{T,*}$. 
+\end{enumerate}
+\end{definition}
+
+\noindent The above definition imposes local stability on each partial equilibrium separately, holding the other program's outcome fixed. Proposition \ref{prop:local_asymptotic_stabilty} in the Appendix shows that it also guarantees local asymptotic stability when both programs adjust simultaneously according to best response dynamics.
+
+% \input{../../2_analysis/2.1_theory/output/general_eq}
+
+\subsubsection{The reaction of opportunity costs to a rise in the regular payline}: A key defining feature of stable equilibria is that a marginal rise in the regular program payline necessarily yields convergence to a new equilibrium with a larger opportunity cost for the marginal top applicant. A higher regular payline requires the regular program to reduce its score cutoff for any given applicant pool, so the curve $\hat{\theta}^R\mapsto \hat{x}^R_S(\hat{\theta}^R|\lambda^R,\hat{\theta}^{T,*}, \sigma)$ shifts down (the blue curve in Figure \ref{fig:pay_a}) and the regular program's best response curve $\hat{x}^R_{reg}(\hat{\theta}^T|\lambda^R,\sigma)$ shifts left. Since the top program's best response curve is decreasing, the new stable equilibrium has a lower regular score cutoff and a higher-merit marginal top applicant (Figure \ref{fig:pay_b}). Both changes raise the probability that the marginal top applicant would be funded in the regular program, and hence his opportunity cost. We collect this result in the following proposition:
+
+\begin{proposition}\label{prop:stable_higherpayline_oc}
+Starting at an interior stable equilibrium, a marginal rise in the regular program payline implies the existence of another stable equilibrium in which the marginal top applicant faces a (strictly) higher opportunity cost than before. 
+\end{proposition}
+
+\input{../../2_analysis/2.1_theory/output/payline_rise}
+
+\section{What happens when we increase evaluation noise?}\label{section:increase_noise}
+
+\subsection{The top and regular program acceptance rate functions}
+
+\input{../../2_analysis/2.1_theory/output/tab_dists}
+
+\subsubsection{The Headline Result}: What happens to stable fixed payline equilibria when evaluation noise $\sigma$ is increased? Let $r = \bar{G}/g$ denote the mills ratio (inverse hazard rate) of the merit distribution. Our headline result is the following:
+\begin{proposition}\label{prop:mainresult}
+Suppose that $g$ is log-concave with strictly decreasing mills ratio, and we are initially at an interior stable equilibrium. If the mills ratio of the merit distribution is convex (concave), then a marginal rise in evaluation noise implies the existence of another interior stable equilibrium in which:
+\vspace{-5pt}
+\begin{enumerate}[label=(\arabic*),ref=\theproposition(\arabic*)]
+   \item The opportunity cost of the marginal top applicant is weakly lower (higher) than before the rise in noise. 
+   \item The share of total applicants who apply to the top program $a^T/(a^T+a^R)$ will be weakly larger (smaller) than before the rise in noise.
+\end{enumerate}
+\end{proposition}
+\noindent Table \ref{tab:dists} details common parametric distributions that satisfy the aforementioned assumptions. First, note that log-concavity of $g$ is stronger than necessary for distributions with bounded upper support. As we will show in Section \ref{section:relax_logconcave} of the Appendix, we can drop the assumption of log-concavity for distributions with bounded upper support $\bar{\theta}<\infty$ and still maintain this headline result under the weaker assumption that the map $\theta\mapsto \Psi(\theta) := (\bar{\theta}-\theta)[1+r'(\theta)]/r(\theta)$ is non-decreasing (when $r$ is convex) or non-increasing (when $r$ is concave).\footnote{For instance, the $BETA(\alpha,\beta)$ distribution with $\alpha>1,\beta\in(0,1)$ has strictly increasing hazard rate, strictly convex mills ratio, and the map $\theta\mapsto \Psi(\theta)$ is strictly increasing on the interior of its support. However, it is not log-concave.} Second, distributions with a linear mills ratio\footnote{Note that a distribution admits a linear mills ratio if and only if it has a linear mean residual life, which is in turn true if and only if the distribution is an element of the family of (untruncated) generalized Pareto distributions with strictly negative shape parameter $\xi<0$. See \citet{hall1981mean} for details. } serve as an interesting edge case because both the equilibrium opportunity cost of the marginal top applicant and the equilibrium ratio of top to regular applicants remain unchanged even after an increase in evaluation noise.
+
+\subsubsection{The top program acceptance rate function}: We now turn to proving the result. The effect of a higher regular payline on opportunity costs was obtained by shifting one program's best response curve. That argument does not carry over to evaluation noise, because $\sigma$ enters all four score cutoff curves, so a rise in $\sigma$ moves them all jointly. 
+
+\noindent To resolve this ambiguity, we must first answer the following question: If the opportunity cost of any marginal top applicant is held fixed at $OC>c$, what payline must the top program implement in order to induce a given marginal top applicant $\hat{\theta}^T$? Fix some marginal top applicant $\hat{\theta}^T$. To keep him indifferent between applying to the regular and top program, the score cutoff must be set equal to:
+\begin{align}\label{eq:fixedoc_topdemand}
+  \hat{x}^T = \hat{\theta}^T + \sigma F^{-1}\left(1 - \dfrac{OC}{v^T}\right) \Longleftrightarrow v^T\bar{F}_{\sigma}(\hat{x}^T|\hat{\theta}^T) = OC
+\end{align} 
+If the top program implements this score cutoff, and the application pool has marginal top applicant $\hat{\theta}^T$, the resulting average acceptance rate in the top program is thus given by:
+\begin{align*}
+    \mathcal{T}(\hat{\theta}^T|\sigma, OC) &=  \dfrac{1}{\bar{G}(\hat{\theta}^T)}\int_{\hat{\theta}^T}^{\bar{\theta}}\bar{F}\left(-\dfrac{\theta-\hat{\theta}^T}{\sigma} + F^{-1}\left(1 - \dfrac{OC}{v^T}\right)\right) \,dG(\theta)
+\end{align*} 
+Thus, when the opportunity cost faced by the marginal top applicant is held fixed at $OC>c$, setting a top program payline equal to $\mathcal{T}(\hat{\theta}^T|\sigma, OC)$ induces a marginal top applicant equal to $\hat{\theta}^T$. We first note the following property of this function:
+
+\begin{proposition}[\citet{adda2024grantmaking}]\label{prop:topacceptance_strictlydecreasig}
+Suppose that the merit distribution $G$ admits a strictly decreasing mills ratio. Then the map $\hat{\theta}^T\mapsto \mathcal{T}(\hat{\theta}^T|\sigma, OC)$ is strictly decreasing. The top program payline must fall to induce a higher-merit marginal top applicant. 
+\end{proposition}
+
+\noindent Intuitively, inducing a lower marginal top applicant requires a lower top program score cutoff (see \eqref{eq:fixedoc_topdemand}), which raises the winning probability of all inframarginal applicants. However, the newly induced applicants have lower merit than those already applying, and thus their entry puts downwards pressure on the average acceptance rate. Under a decreasing mills ratio, the first effect dominates. We now note two additional features about this top program acceptance rate function:
+
+% \noindent Without imposing a strictly decreasing mills ratio, it is in general unclear if the curve $\hat{\theta}^T\mapsto \mathcal{T}(\hat{\theta}^T|\sigma,OC)$ is strictly decreasing. To induce a lower marginal top applicant and thus attract more top program applicants, the top program score cutoff must fall (see equation \eqref{eq:fixedoc_topdemand}), thereby raising the probability of success for all inframarginal applicants. However, a lower marginal top applicant implies a decrease in the overall quality of the application pool because the newly induced applicants have a lower merit than the current inframarginal applicants. If this extensive margin effect dominates the intensive margin rise in inframarginal winning probabilities, then a lower marginal top applicant may actually be consistent with a lower top program average acceptance rate (and thus lower top payline). 
+
+% \input{../../2_analysis/2.1_theory/output/top_acceptance}
+
+% \input{../../2_analysis/2.1_theory/output/top_tradeoff
+% \noindent However, the conclusion is unambiguous under a strictly decreasing mills ratio. Under this condition, the distribution of excess quality relative to the marginal applicant $H(\cdot|\hat{\theta}^T)\sim \theta-\hat{\theta}^T|\theta\geq \hat{\theta}^T$ improves (in the sense of strict first order stochastic dominance) following a decrease in the merit of the marginal top applicant\footnote{Formally, when $G$ has strictly decreasing (increasing) mills ratio, for all $\hat{\theta}_L < \hat{\theta}_H$, we have that:
+% \begin{align*}
+%   \theta - \hat{\theta}_L|\theta\geq \hat{\theta}_L \substack{<_{st} \\ (>_st)} \theta - \hat{\theta}_H|\theta\geq \hat{\theta}_H
+% \end{align*}}. Because the marginal top applicant's probability of success is held fixed at his cost benefit ratio $v^T/OC$, it therefore follows that the distribution of winning probabilities increases in stochastic order from a fall in the marginal top applicant because the applicant pool sees a rise in their excess quality relative to the marginal applicant:
+% \begin{align*}
+%     \hat{\theta}^T_{L} < \hat{\theta}^T_{H} \Longrightarrow \bar{F}\left(-\dfrac{\theta-\hat{\theta}^T_H}{\sigma} + F^{-1}\left(1 - \dfrac{OC}{v^T}\right)\right) <_{st}  \bar{F}\left(-\dfrac{\theta-\hat{\theta}^T_{L}}{\sigma} + F^{-1}\left(1 - \dfrac{OC}{v^T}\right)\right) 
+% \end{align*}  
+% Consequently, the map $\hat{\theta}^T\mapsto \mathcal{T}(\hat{\theta}^T|\sigma, OC)$ is strictly decreasing. 
+
+\begin{proposition}\label{prop:topmarginal_cost_noise}
+Fix a given marginal top applicant $\hat{\theta}^T$ and the opportunity cost $OC>c$ that he faces. The map $OC\mapsto \mathcal{T}(\hat{\theta}^T|\sigma,OC)$ is strictly increasing and the map $\sigma\mapsto \mathcal{T}(\hat{\theta}^T|\sigma,OC)$ is strictly decreasing. If, in addition, $G$ admits a strictly decreasing mills ratio, then at a fixed top payline the marginal top applicant, whenever it exists, falls with evaluation noise and rises with a larger opportunity cost.
+\end{proposition}
+
+\noindent Intuitively, a larger opportunity cost makes the marginal top applicant prefer the regular program, so the top score cutoff must fall to keep him indifferent. This raises the winning probability of all inframarginal applicants while keeping the number of applicants fixed at $\bar{G}(\hat{\theta}^T)$. Noise works in the opposite direction. The intuition follows what is written in \citet{adda2024grantmaking}\footnote{\citet{adda2024grantmaking} go further: They show that noise reduces the average acceptance rate at a fixed marginal applicant, even when the signal distribution is not location scale. An increase in noise is then interpreted as an experiment that is less informative in the sense of Lehmann. }. In short, a rise in evaluation noise encourages non-applicants to "give it a shot" in the hope that their project will receive a score that is higher than the score it would have received if evaluators were perfectly informed. Consequently, this yields more applicants and thus a lower-merit marginal top applicant. To keep the marginal top applicant fixed at its initial value, the top program average acceptance rate must be reduced. Consequently, $\sigma\mapsto \mathcal{T}(\hat{\theta}^T|\sigma,OC)$ is strictly decreasing. 
+
+% In short, first notice that any candidate whose merit lies above the current score cutoff sees their winning probability reduced from an increase in evaluation noise. Higher noise raises the dispersion of their signal distribution, therefore raising the likelihood that their realized score lies below the score cutoff. Conversely, any researcher whose merit lies below the score cutoff benefits from an increase in noise. There are two cases:
+% \vspace{-5pt}
+% \begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+%    \item If the marginal top applicant currently has merit above the score cutoff $\hat{x}^T < \hat{\theta}^T$, a rise in evaluation noise reduces winning probability for all applicants. The marginal type's winning probability falls below the opportunity cost from a rise in noise, and he will strictly prefer applying to the regular program. To keep him indifferent, the score cutoff must fall. However, the reduction in score cutoff needed to keep the marginal type indifferent is insufficient to keep other inframarginal types indifferent because inframarginal types have merit whose positive distance from the original score cutoff exceeds that of the marginal top applicant. The end result is a fall in the winning probability for all inframarginal applicants. 
+%    \item If the marginal top applicant has merit below the score cutoff $\hat{x}^T > \hat{\theta}^T$, his winning probability rises from higher noise and thus he would strictly prefer applying to the top program. To keep him indifferent, the score cutoff must rise. Applicants whose merit exceeded the original score cutoff obviously lose because they face higher evaluation noise and a higher score cutoff. Applicants whose merit lies between the marginal top applicant and the original score cutoff also lose.  
+% \end{enumerate}
+% In both cases, higher noise for a fixed marginal top applicant $\hat{\theta}^T$ reduces the winning probability of all inframarginal applicants. Consequently, the top program payline needed to induce the marginal top applicant $\hat{\theta}^T$ will fall from a rise in noise. 
+
+
+
+\noindent 
+
+
+\subsubsection{The regular program acceptance rate function}: Fix some top program payline $\lambda^T$ and let $c<OC<v^R$. Suppose there exists a marginal top applicant $\hat{\theta}^T_{\sigma,OC}$ that equalizes this payline with the top program acceptance rate function:
+\begin{align}\label{eq:induced_toptype}
+  \mathcal{T}(\hat{\theta}^T_{\sigma,OC}|\sigma,OC) = \lambda^T
+\end{align}
+Since $\hat{\theta}^T\mapsto \mathcal{T}(\hat{\theta}^T|\sigma,OC)$ is strictly decreasing under a strictly decreasing mills ratio, such a solution is unique. The score cutoff that keeps this marginal applicant indifferent between applying to the top and regular program is denoted by:
+\begin{align}\label{eq:top_score_cutoff}
+  \hat{x}^T_{\sigma,OC} = \hat{\theta}^T_{\sigma,OC} + \sigma F^{-1}\left(1 - \dfrac{OC}{v^T}\right)
+\end{align}
+Finally, denote $W_T(\cdot|\sigma,OC)$ the corresponding distribution of winning probabilities for all applicants $\theta\geq \hat{\theta}^T_{\sigma,OC}$:
+\begin{align}\label{eq:top_winning_distribution}
+  W_T(\cdot|\sigma,OC)\sim \bar{F}\left(\dfrac{\hat{x}^T_{\sigma,OC} - \theta}{\sigma}\right)|\theta\geq \hat{\theta}^T_{\sigma,OC}
+\end{align}
+To ensure that this marginal top applicant $\hat{\theta}^T_{\sigma,OC}$ faces opportunity cost $OC$, the regular score cutoff must satisfy:
+\begin{align}\label{eq:reg_score_cutoff}
+  v^R\bar{F}_{\sigma}(\hat{x}^R_{\sigma,OC}|\hat{\theta}^T_{\sigma,OC}) = OC \Longleftrightarrow \hat{x}^R_{\sigma,OC} = \hat{\theta}^T_{\sigma,OC} + \sigma F^{-1}\left(1 - \dfrac{OC}{v^R}\right)
+\end{align}
+At this regular score cutoff, the corresponding marginal regular applicant that is indifferent between applying at cost $c$ and not applying satisfies:
+\begin{align}\label{eq:induced_regtype}
+  v^R \bar{F}_{\sigma}\left(\hat{\theta}^T_{\sigma,OC} + \sigma F^{-1}\left(1 - \dfrac{OC}{v^R}\right)\middle |\hat{\theta}^R_{\sigma,OC}\right) = c \Longleftrightarrow \hat{\theta}^R_{\sigma,OC} = \hat{\theta}^T_{\sigma,OC} - \sigma\kappa(OC)
+\end{align}
+With:
+\begin{align*}
+  \kappa(OC) = F^{-1}\left(1-\dfrac{c}{v^R}\right) - F^{-1}\left(1-\dfrac{OC}{v^R}\right)
+\end{align*}
+Given this regular score cutoff and both marginal applicants, denote $W_R(\cdot|\sigma,OC)$ the corresponding distribution of winning probabilities for all regular program applicants, holding fixed the opportunity cost at $OC$:
+\begin{align}\label{eq:reg_winning_distribution}
+    W_R(\cdot|\sigma,OC) \sim \bar{F}\left(\dfrac{\hat{x}^R_{\sigma,OC} - \theta}{\sigma}\right)| \hat{\theta}^R_{\sigma,OC} < \theta < \hat{\theta}^T_{\sigma,OC}
+\end{align}
+Let $\mathcal{D} := \{(OC,\sigma):c<OC<v^R,\exists \theta \text{ s.t. }\mathcal{T}(\theta|\sigma,OC)=\lambda^T, \theta-\sigma \kappa(OC)>\underline{\theta}\}$.\footnote{The set $\mathcal{D}$ is open: it contains every pair $(OC',\sigma')$ sufficiently close to any of its elements $(OC,\sigma)$. To see why, take a small $\varepsilon>0$. Since $\mathcal{T}$ is strictly decreasing in the marginal top applicant (Proposition \ref{prop:topacceptance_strictlydecreasig}), we have $\mathcal{T}(\hat{\theta}^T_{\sigma,OC}-\varepsilon|\sigma,OC)>\lambda^T>\mathcal{T}(\hat{\theta}^T_{\sigma,OC}+\varepsilon|\sigma,OC)$. Since $\mathcal{T}$ is continuous, both inequalities continue to hold at $(OC',\sigma')$, so the intermediate value theorem yields a solution to \eqref{eq:induced_toptype} at $(OC',\sigma')$ within $\varepsilon$ of $\hat{\theta}^T_{\sigma,OC}$. The remaining conditions defining $\mathcal{D}$ are strict inequalities, and so they also continue to hold for $(OC',\sigma')$ close enough to $(OC,\sigma)$.} Then for any $(OC,\sigma)\in \mathcal{D}$, the resulting regular program average acceptance rate $\mathcal{R}(OC,\sigma)$ that is consistent with a marginal top applicant opportunity cost $OC$ is just the expectation of $W_R(\cdot|\sigma,OC)$. To summarize, $\mathcal{R}(OC,\sigma)$ is the regular acceptance rate that would prevail if the regular program moved its cutoff to keep the marginal top applicant's opportunity cost at $OC$.
+
+
+% To understand the construction of this regular acceptance rate function $OC\mapsto \mathcal{R}(OC,\sigma)$, one can imagine an environment with the following timing:
+% \vspace{-5pt}
+% \begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+%    \item First, the regular program commits to choosing a regular score cutoff that always adjusts so as to keep the opportunity cost of the marginal top applicant fixed at $OC>c$. 
+%    \item Given a top program payline $\lambda^T$, and the fact that the regular program commits to holding fixed the opportunity cost of the marginal top applicant at $OC>c$, we obtain the corresponding induced marginal top applicant $\hat{\theta}^T_{\sigma,OC}$ as the solution to:
+%    \begin{align*}
+%       \mathcal{T}(\hat{\theta}^T_{\sigma,OC}|\sigma,OC) = \lambda^T
+%    \end{align*}
+%    \item Given this marginal top applicant $\hat{\theta}^T_{\sigma,OC}$ and the commitment to hold fixed the opportunity cost at $OC>c$, this determines the regular score cutoff $\hat{x}_{\sigma,OC}^R$ that the regular program must implement (given by equation \eqref{eq:reg_score_cutoff}). This regular score cutoff then induces a corresponding marginal regular applicant $\hat{\theta}^T_{\sigma,OC}-\sigma\kappa(OC)$, which in turn pins down the average acceptance rate in the regular program $\mathcal{R}(OC,\sigma)$ according to \eqref{eq:reg_winning_distribution}. 
+% \end{enumerate}
+
+\subsubsection{The regular acceptance rate function and stable equilibria}: The regular acceptance rate function also has an equilibrium interpretation: $\mathcal{R}(OC,\sigma)$ is the regular payline that yields a (possibly non-unique) fixed payline equilibrium with opportunity cost $OC>c$ faced by the marginal top applicant:
+
+\begin{proposition}\label{prop:equivalence_eqm}
+Fix top and regular program paylines $\lambda^T, \lambda^R$ and assume that $G$ admits a strictly decreasing mills ratio. The following two items hold:
+\vspace{-5pt}
+\begin{enumerate}[label=(\arabic*),ref=\theproposition(\arabic*)]
+   \item If $(\hat{\theta}^{R,*},\hat{\theta}^{T,*})$ is an interior equilibrium in the sense of Definition \ref{def:equilibrium} with corresponding equilibrium opportunity cost $OC^*$, then $(OC^*,\sigma)\in\mathcal{D}$ and $\mathcal{R}(OC^*,\sigma) = \lambda^R$.\footnote{At an interior equilibrium, $\hat{\theta}^{T,*}$ solves \eqref{eq:induced_toptype} at $OC^*$, and the marginal regular applicant $\hat{\theta}^{R,*}=\hat{\theta}^{T,*}-\sigma\kappa(OC^*)$ lies above $\underline{\theta}$. Moreover, $OC^*<v^R$ because the marginal top applicant's regular winning probability is below one, and $OC^*>c$ because he has higher merit than the marginal regular applicant, who is indifferent between applying to the regular program at cost $c$ and not applying.}
+   \item Suppose there exists some $OC^*$ with $(OC^*,\sigma)\in\mathcal{D}$ such that $\mathcal{R}(OC^*,\sigma) = \lambda^R$. Then the induced marginal types $(\hat{\theta}^R_{\sigma,OC^*},\hat{\theta}^T_{\sigma,OC^*})$ defined by \eqref{eq:induced_toptype} and  \eqref{eq:induced_regtype} constitute an interior equilibrium in the sense of Definition \ref{def:equilibrium}. 
+\end{enumerate}
+\end{proposition}
+\noindent  The regular acceptance rate function $OC\mapsto \mathcal{R}(OC,\sigma)$ is in general not a monotonic function of opportunity costs. Consequently, the equation $\mathcal{R}(OC,\sigma) = \lambda^R$ may have multiple solutions, one for each equilibrium. The next natural question is which of these intersections represents a \textit{stable} equilibrium? Under Proposition \ref{prop:stable_higherpayline_oc}, a rise in the regular program payline yields a higher opportunity cost starting from a stable equilibrium. This suggests that stable equilibria are characterized by solutions to $\mathcal{R}(OC,\sigma) = \lambda^R$ at which the regular acceptance curve crosses $\lambda^R$ from below:
+
+\begin{proposition}\label{prop:reg_acceptance_stable_frombelow}
+Fix a top and regular payline $\lambda^T,\lambda^R$ and assume that $G$ admits a strictly decreasing mills ratio. If $(\hat{\theta}^{R,*},\hat{\theta}^{T,*})$ is an interior stable equilibrium in the sense of Definition \ref{def:equilibrium} with corresponding equilibrium opportunity cost $OC^*$, then we have that $\mathcal{R}(OC^*,\sigma) = \lambda^R$ and:
+\begin{align*}
+  \dfrac{\partial \mathcal{R}(OC^*,\sigma)}{\partial OC} > 0
+\end{align*}
+\end{proposition}
+
+\noindent The converse need not hold, since a crossing from below may also correspond to an unstable equilibrium. This necessary condition, however, is sufficient to prove our headline result.
+
+\subsection{Higher noise, holding the opportunity cost fixed}
+
+\subsubsection{Competing Forces}\label{section:competing_forces}: We now ask how a rise in noise shifts the regular acceptance rate function $OC\mapsto \mathcal{R}(OC,\sigma)$. Before we present the result, it is useful to explore the primary economic forces that determine the direction in which the function shifts. Take some initial opportunity cost $OC_i>c$ and suppose that, initially, the marginal top applicant is $\hat{\theta}^T_{i}$ and the regular score cutoff is $\hat{x}^R_i$. 
+
+\noindent \textbf{Higher noise in the regular program}: Consider a rise in noise from $\sigma_i$ to $\sigma_f$ in the regular program, leaving the evaluation noise in the top program unchanged. This is depicted in Figure \ref{fig:noise_rot_a}. Higher noise lowers the winning probability of researchers with merit above $\hat{x}^R_i$ and raises it for those below, so that the curve $\theta\mapsto v^R\bar{F}_{\sigma}(\hat{x}^R_i|\theta)$ rotates clockwise around $\hat{x}^R_i$ (the solid blue curve rotates to the dashed curve). Consequently, the marginal top applicant's opportunity cost falls to $OC'<OC_i$, and restoring it requires a reduction in the regular score cutoff $\hat{x}^{R'}<\hat{x}^R_i$, shifting the green curve upwards until it intersects with the red curve at the initial opportunity cost $OC_i$. This raises the winning probability of all inframarginal regular applicants (blue region), but it also draws in applications of lower merit at the extensive margin because the marginal regular applicant falls to $\hat{\theta}^{R'}<\hat{\theta}^R_i$ (grey region). 
+
+\input{../../2_analysis/2.1_theory/output/noise_rotation_a}
+
+% \input{../../2_analysis/2.1_theory/output/payline_restore}
+
+\noindent \textbf{Higher noise in the top program}: Now consider an increase in noise in the top program, with the opportunity cost held fixed at $OC_i$. By Proposition \ref{prop:topmarginal_cost_noise}, keeping the top program acceptance rate equal to its payline yields a lower marginal top applicant. This reduces his regular program winning probability, and thus his opportunity cost falls to $OC''<OC_i$. To restore his opportunity cost, the regular program must lower its score cutoff again. This draws in more applicants at the extensive margin and further raises the winning probability of the regular applicants who stay. In Figure \ref{fig:noise_rot_b}, this causes the solid green curve to shift up to the dashed one. Denote $\hat{\theta}^P_f$ the marginal applicant in program $P$ after this fall in the regular score cutoff. 
+
+\noindent Figure \ref{fig:noise_rot_c} combines the two steps. Holding fixed the opportunity cost of the marginal top applicant, two forces with opposite signs govern the effect of noise on the distribution of winning probabilities in the regular program: 
+\vspace{-5pt}
+\begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+   \item The rise in noise reduces the overall quality of the regular program applicant pool. As seen in Figure \ref{fig:noise_rot_c}, the regular program loses its best applicants to the top program (red region) and attracts new applicants with lower merit than existing inframarginal applicants (grey region).
+   \item The rise in noise necessitates a lower score cutoff in the regular program in order to hold the opportunity cost of the marginal top applicant fixed. Consequently, those regular applicants who do not switch to the top program will see a rise in their winning probabilities. Compare the blue and dashed green curves in Figure \ref{fig:noise_rot_c}, in the blue shaded region. 
+\end{enumerate}
+
+\input{../../2_analysis/2.1_theory/output/noise_rotation_b}
+\input{../../2_analysis/2.1_theory/output/noise_rotation_c}
+
+\subsubsection{Mills ratio curvature resolves the ambiguity}: As the next proposition shows, it is the curvature of the mills ratio that determines which force dominates. 
+
+\begin{proposition}\label{prop:reg_noise}
+Suppose that $g$ is log-concave with strictly decreasing mills ratio. If the mills ratio is convex (concave), holding fixed the marginal top applicant's opportunity cost at $OC>c$, higher evaluation noise weakly raises (reduces) the average acceptance rate in the regular program:
+\begin{align*}
+  \forall (OC,\sigma)\in\mathcal{D}, \quad \dfrac{\partial \mathcal{R}(OC,\sigma)}{\partial \sigma}\geq 0 \,(\leq0)
+\end{align*}
+\end{proposition}
+
+\noindent Under a convex mills ratio, Proposition \ref{prop:reg_noise} stipulates that the rise in winning probabilities for the regular applicants that remain after the rise in noise dominates the downward force on the average regular program winning probability arising from losing its best applicants to the top program, and replacing them with new low-merit applicants at the extensive margin. In contrast, the converse holds when the mills ratio is concave. Interestingly, under a linear mills ratio, both effects exactly offset each other. To understand this result, let us first consider the role of the mills ratio when the top program's evaluation noise is increased. 
+
+\subsubsection{Higher noise in the top program}: Suppose that noise rises from $\sigma_1$ to $\sigma_2$, while the regular program holds the opportunity cost of the marginal top applicant fixed at $OC>c$. By Proposition \ref{prop:topmarginal_cost_noise}, a rise in noise must be followed by a fall in the marginal top applicant to $\hat{\theta}^T_{\sigma_2,OC}<\hat{\theta}^T_{\sigma_1,OC}$ in order to keep the top average acceptance rate equal to its payline. This preserves the expectation of the top program winning probability distribution $W_T(\cdot|\sigma,OC)$. However, it fundamentally changes the distribution's \textit{shape}. Under a convex mills ratio, the rise in noise transfers winning probability from the best top program applicants to the worst (with the reverse if the mills ratio is concave):
+
+% Specifically, since the average acceptance rate is equalized before/after the rise in noise, it follows that there exists some quantile/rank $q^*$ whose winning probability is left unchanged $W_T^{-1}(q^*|\sigma_1,OC) = W_T^{-1}(q^*|\sigma_2,OC)$. 
+
+% \noindent It turns out that, under a convex mills ratio, individuals ranked below this quantile $q^*$ see a rise in their winning probabilities financed by a reduction in the winning probabilities for those applicants whose quantile lies above $q^*$, following higher evaluation noise. The rise in noise and subsequent payline restoration involves a deliberate transfer of surplus from the best applicants to the worst in the top program. Under a concave mills ratio, the conclusion reverses and instead a rise in noise paradoxically raises the meritocracy in the top program. This is summarized in the following proposition: 
+
+\begin{proposition}\label{prop:winner_redistribution}
+Suppose that $G$ admits a strictly decreasing mills ratio. Fix $c<OC<v^R$ and $\sigma_1<\sigma_2$ such that the marginal top applicant $\hat{\theta}^T_{\sigma_i,OC}$ defined by \eqref{eq:induced_toptype} exists for $i=1,2$. If the mills ratio is convex (concave), there exists a $q^*$ such that:
+\vspace{-5pt}
+\begin{enumerate}[label=(\arabic*),ref=\theproposition(\arabic*)]
+   \item The winning probability of the applicant at this quantile is unchanged after the rise in noise and restoration of the payline $W_T^{-1}(q^*|\sigma_1,OC) = W_T^{-1}(q^*|\sigma_2,OC)$. 
+   \item Applicants with rank \textit{above} this quantile see a weak fall (rise) in their winning probabilities. 
+   \item Applicants with rank \textit{below} this quantile see a weak rise (fall) in their winning probabilities. 
+\end{enumerate}
+Equivalently, the QQ plot $t\mapsto W_T^{-1}(W_T(t|\sigma_2,OC)|\sigma_1,OC)$ initially has slope at most (at least) 1 when $t\downarrow OC/v^T$, and lies weakly below (above) the 45-degree line up to rank $q^*$ and weakly above (below) it beyond, as shown in Figure \ref{fig:qq_convex} for a convex mills ratio.
+\end{proposition}
+
+
+\input{../../2_analysis/2.1_theory/output/qq_top}
+
+\noindent To see why, note that each top program applicant's winning probability depends on his merit only through his standardized excess quality relative to the marginal top applicant:
+\begin{align*}
+     \forall \theta > \hat{\theta}^T_{\sigma,OC},\quad \bar{F}_{\sigma}\left(\hat{x}^T_{\sigma,OC}|\theta\right)= \bar{F}\left(-\smash[b]{\underbrace{\dfrac{\theta - \hat{\theta}^T_{\sigma,OC}}{\sigma}}_{\makebox[0pt]{\scriptsize Standardized Excess Quality}}} + F^{-1}\left(1-\dfrac{OC}{v^T}\right)\right)\vphantom{\underbrace{\dfrac{\theta}{\sigma}}_{\text{Standardized}}}
+\end{align*}  
+The larger this standardized excess quality, the higher the applicant's probability of obtaining a grant in the top program. Let us denote $U_T(\cdot|\sigma,OC) \sim (\theta-\hat{\theta}^T_{\sigma,OC})/\sigma | \theta > \hat{\theta}^T_{\sigma,OC}$ the corresponding distribution of standardized excess quality among top program applicants. Mills ratio curvature is equivalent to an ordering of these distributions in \cite{vanzwet1964convex}'s convex transform order:
+
+\begin{restatable}{theorem}{millsratio}\label{lemma:millsratio_curvature}
+The mills ratio of $G$ is convex (concave) if and only if, for all $\hat{\theta}^T_1 < \hat{\theta}^T_2$, we have that the corresponding left-truncated distributions are ordered in the convex transform order of \citet{vanzwet1964convex}\footnote{Formally, let $F,G$ be two distributions with connected support. We say that $F\leq_{ct} G$ iff the map $x\mapsto G^{-1}(F(x))$ is convex on the support of $F$. Equivalently, the QQ plot with $F$ on the x-axis and $G$ on the y-axis is a convex function.}:
+\begin{align*}
+  \theta | \theta\geq \hat{\theta}_1^T \,\substack{\leq_{ct} \\ (\geq_{ct})}\, \theta| \theta\geq \hat{\theta}_2^T 
+\end{align*}
+Moreover, since the convex transform order is invariant to (positive) affine transformations, we have that for $\sigma_1<\sigma_2$:
+\begin{align*}
+  \dfrac{\theta - \hat{\theta}_1^T}{\sigma_2} | \theta\geq \hat{\theta}_1^T \,\substack{\leq_{ct} \\ (\geq_{ct})}\, \dfrac{\theta - \hat{\theta}_2^T}{\sigma_1} | \theta\geq \hat{\theta}_2^T 
+\end{align*}
+That is, the standardized distribution of excess quality becomes more (less) right-skewed for a larger marginal top applicant $\hat{\theta}^T$. 
+\end{restatable}
+
+\noindent When the mills ratio is convex, the fall in the marginal top applicant from higher noise causes the corresponding standardized distribution of excess quality to become less right-skewed, $U_T(\cdot|\sigma_2,OC) \leq_{ct} U_T(\cdot|\sigma_1,OC)$. Consequently, the QQ plot $t\mapsto U_T^{-1}(U_T(t|\sigma_2,OC)|\sigma_1,OC)$ is a convex function. However, there exists a quantile $q^*$ whose winning probability remains unchanged after the rise in noise. It follows that the standardized residual life of this quantile is also unchanged after the rise in noise $U_T^{-1}(q^*|\sigma_2,OC) = U_T^{-1}(q^*|\sigma_1,OC)$ because winning probabilities only depend on applicant merit through his standardized excess quality. Consequently, the convex QQ plot must intersect the 45-degree line at some point in its interior. 
+
+\noindent The resulting QQ plot is shown in Figure \ref{fig:qq_resid}, where it is immediate that applicants with rank below $q^*$ see a rise in their standardized residual life that is only made possible by a fall in the standardized residual life of applicants above this quantile. The conclusion of Proposition \ref{prop:winner_redistribution} immediately follows from this observation. 
+
+\subsubsection{Higher noise in the regular program}: When the mills ratio is convex and the regular program commits to adjusting its score cutoff to fix the opportunity cost of the marginal top applicant at some $OC>c$, higher noise and the subsequent payline restoration benefit applicants just above the marginal applicant. Under log-concavity of the merit density $g$, this winning probability advantage is propagated as we move \textit{across} the marginal top applicant, from top program applicants above the marginal top applicant to \textit{all} regular applicants below the marginal top applicant. 
+\begin{proposition}\label{prop:regwin_likelihood}
+Suppose that $g$ is log-concave and admits a strictly decreasing mills ratio. Take $\sigma_1<\sigma_2$ and an opportunity cost $OC$ such that $(OC,\sigma_1),(OC,\sigma_2)\in\mathcal{D}$. If the mills ratio is convex (concave), then we have that:
+\begin{align*}
+    W_R(\cdot|\sigma_2,OC) \substack{\geq_{st}\\ (\leq_{st})}  W_R(\cdot|\sigma_1,OC) 
+\end{align*}
+\end{proposition}
+\noindent Under a convex mills ratio, the fact that low-merit applicants in the top program benefit from a rise in noise implies that \textit{all} applicants in the regular program also benefit from higher noise. This is graphically depicted in Figure \ref{fig:qq_diag_convex}, where the graph on the top right is the QQ plot of the top program's distribution of winning probabilities $W_T(\cdot|\sigma,OC)$ (identical to Figure \ref{fig:qq_convex}), and the graph on the bottom left is the QQ plot of the regular program's distribution of winning probabilities $W_R(\cdot|\sigma,OC)$. Using the language of Section \ref{section:competing_forces}, the rise in the inframarginal probabilities of regular program applicants who do not switch to the top program (because the regular score cutoff is reduced to keep opportunity costs fixed) offsets the fall in the quality of the regular applicant pool (because the regular program loses its best applicants to the top program, and accepts new applicants at the extensive margin). 
+
+\noindent This completes the proof for Proposition \ref{prop:reg_noise}. The regular acceptance rate $\mathcal{R}(OC,\sigma)$ is just the expected value of the regular program distribution of winning probabilities $W_R(\cdot|\sigma,OC)$. A stochastic order improvement in the winning probability distribution following an increase in noise thus implies that the acceptance rate in the regular program rises. Since $\mathcal{D}$ is open, for any $(OC,\sigma)\in\mathcal{D}$, Proposition \ref{prop:regwin_likelihood} applies to the noise levels $\sigma$ and $\sigma'$ for all $\sigma'$ sufficiently close to $\sigma$, which yields the sign of $\partial\mathcal{R}(OC,\sigma)/\partial\sigma$.
+
+% \noindent The opposite conclusion holds when the mills ratio is concave: The fact that low-merit applicants in the top program lose from a rise in noise implies that all applicants in the regular program also lose from higher noise. This is graphically depicted in Figure \ref{fig:qq_diag_concave}. 
+
+% \noindent Finally, we assume log-concavity as it supplies a notion of continuity that allows the winning probability advantage of low-merit top applicants to be propagated as we move below the marginal top applicant. As we show in section \ref{section:relax_logconcave} of the appendix, for merit distributions with bounded upper support, log-concavity is stronger than necessary and the proposition remains true even under the weaker\footnote{In the sense that log-concavity of $g$ and a convex (concave) mills ratio implies that $\theta\mapsto \Psi(\theta)=(\bar{\theta}-\theta)[1+r'(\theta)]/r(\theta)$ is non-decreasing (non-increasing).} assumption that $\theta\mapsto \Psi(\theta)=(\bar{\theta}-\theta)[1+r'(\theta)]/r(\theta)$ is non-decreasing when $r$ is convex (and non-increasing when $r$ is concave). 
+
+\input{../../2_analysis/2.1_theory/output/qq_diagonal}
+
+\subsubsection{What about the application ratio?}\label{section:fixedoc_application_ratio}: Holding fixed the marginal top applicant's opportunity cost, mills ratio curvature also governs the response of the application ratio $a^T/a^R$ following a rise in noise. Higher noise lowers the marginal top applicant $\hat{\theta}^T_{\sigma_2,OC} < \hat{\theta}^T_{\sigma_1,OC}$ so the number of top applicants rises. 
+
+\noindent The effect of an increase in noise on the number of applicants in the regular program is generally ambiguous. To resolve this, recall the two opposite forces discussed in Section \ref{section:competing_forces}. Under a convex mills ratio, the regular acceptance rate rises because regular applicants who remain see a rise in their winning probability that offsets the lower quality applicant pool. This requires the inflow of low-merit applicants at the extensive margin to be sufficiently small relative to the outflow of the best regular applicants to the top program. Thus, any rise in regular applicants is small enough such that the ratio $a^T/a^R$ rises after an increase in noise. This is stated in the following proposition: 
+
+\begin{proposition}\label{prop:noiseincrease_ratioapps}
+Suppose that $g$ is log-concave with strictly decreasing mills ratio. Fix $\sigma_1<\sigma_2$ and an opportunity cost $OC$ such that $(OC,\sigma)\in\mathcal{D}$ for all $\sigma\in[\sigma_1,\sigma_2]$. If the mills ratio is convex (concave), then the share of top applicants $a^T/(a^T+a^R)$ weakly increases (decreases) following an increase in noise, when we hold fixed the opportunity cost of the marginal top applicant.
+% \begin{align*}
+%   \dfrac{1 - G(\hat{\theta}^T_{\sigma_1,OC})}{G(\hat{\theta}^T_{\sigma_1,OC}) - G(\hat{\theta}^R_{\sigma_1,OC})} \substack{\leq \\ (\geq)} \dfrac{1 - G(\hat{\theta}^T_{\sigma_2,OC})}{G(\hat{\theta}^T_{\sigma_2,OC}) - G(\hat{\theta}^R_{\sigma_2,OC})}
+% \end{align*}
+\end{proposition}
+
+\subsection{Proving the headline result}
+
+\input{../../2_analysis/2.1_theory/output/oc_noise_shift}
+
+\subsubsection{The effect of noise on opportunity costs}: We can now prove Proposition \ref{prop:mainresult}. We first show that a marginal rise in noise yields convergence to a new (stable) equilibrium with lower opportunity costs when the mills ratio is convex, and higher opportunity costs when the mills ratio is concave:
+
+\begin{proposition}\label{prop:noise_oc}
+Suppose that $g$ is log-concave with strictly decreasing mills ratio, and we are initially at an interior stable equilibrium. If the mills ratio is convex (concave), then a marginal rise in evaluation noise implies the existence of a new interior stable equilibrium in which the opportunity cost of the marginal top applicant is weakly lower (higher) than before. 
+\end{proposition}
+
+\noindent To see this, suppose we are initially at a stable fixed payline equilibrium $(\hat{\theta}^R_1, \hat{\theta}^T_1)$, with corresponding opportunity cost $OC_1$ and initial noise $\sigma_1$. By Proposition \ref{prop:reg_acceptance_stable_frombelow}, the regular acceptance rate curve $OC\mapsto \mathcal{R}(OC,\sigma_1)$ crosses $\lambda^R$ from below at $OC_1$. Figure \ref{fig:oc_noise_shift} plots the regular acceptance rate curve (the solid blue line) whose intersection with the horizontal line $\lambda^R$ at the green dot represents the original equilibrium. 
+
+\noindent Suppose that the mills ratio is convex. By Proposition \ref{prop:reg_noise}, an increase in noise from $\sigma_1$ to $\sigma_2$ holding fixed a given opportunity cost necessarily involves an increase in the regular program average acceptance rate. Graphically, this is depicted as an upwards shift in the regular acceptance rate curve from the solid blue curve to the dashed one. At the original opportunity cost $OC_1$, a rise in noise raises the regular acceptance rate above the target payline $\lambda^R$ (see the orange dot). Thus, to restore the target payline, the regular score cutoff must rise. This leads to a fall in the average acceptance rate and in the opportunity cost of the marginal top applicant. The result is a new stable equilibrium at the red dot, with a new opportunity cost $OC_2$ that is smaller than before\footnote{If for instance the initial equilibrium was unstable, it may be the case that the curve $OC\mapsto \mathcal{R}(OC,\sigma_1)$ initially crossed the horizontal line $\lambda^R$ from above. An increase in noise then shifts this curve upwards, but the new intersection of the curve with the horizontal $\lambda^R$ curve occurs at a \textit{higher} opportunity cost than before.}. 
+
+\input{../../2_analysis/2.1_theory/output/br_shift}
+
+% \input{../../2_analysis/2.1_theory/output/br_shift_arrows}
+
+\noindent This can also be understood using the best response curves that characterize a stable fixed payline equilibrium. The intersection of the solid red and blue curves in Figure \ref{fig:br_shift} at the green dot refers to the original stable equilibrium. The green curve labeled $OC_1,\sigma_1$ is a level curve that represents all combinations of $\hat{x}^R$ and $\hat{\theta}^T$ that keep the opportunity cost fixed at its initial level:
+\begin{align*}
+    v^R\bar{F}\left(\dfrac{\hat{x}^R - \hat{\theta}^T}{\sigma_1}\right) = OC_1
+\end{align*}
+A rise in noise shifts the level curve representing all combinations of points that keep the opportunity cost fixed at $OC_1$. Suppose that the regular program score cutoff is less than the marginal top applicant $\hat{x}_1^R < \hat{\theta}_1^T$ at the initial equilibrium\footnote{This is without loss of generality. If instead we have $\hat{x}_1^R \geq \hat{\theta}_1^T$, then the new level curve after the rise in noise will lie weakly below the curve labeled $OC_1,\sigma_1$. The rest of the argument in this section continues analogously with no change in its final conclusion.}. Since the level curve has slope 1, all points on this curve are such that $\hat{x}^R < \hat{\theta}^T$. The rise in noise reduces the regular probability of acceptance for any fixed marginal top applicant, thereby decreasing his opportunity cost below $OC_1$. To keep the opportunity cost fixed at $OC_1$, the regular score cutoff must fall. This yields a new green level curve labeled $OC_1,\sigma_2$ that lies above the original level curve.
+
+\noindent We now ask where the best response curves shift following an increase in noise from $\sigma_1$ to $\sigma_2$, but where we allow the regular program average acceptance rate to adjust so as to keep the opportunity cost fixed at its initial level $OC_1$. First, the intersection of these two new best response curves must lie on the new green line $OC_1,\sigma_2$ to keep the opportunity cost fixed. Moreover, this intersection must lie below $\hat{\theta}_1^T$ because higher noise yields a lower-merit marginal top applicant (see Proposition \ref{prop:topmarginal_cost_noise}). This yields the dashed red/blue best response curves intersecting at the orange dot (which also coincides with the orange dot in Figure \ref{fig:oc_noise_shift}). Thus, to keep the opportunity cost fixed following a rise in noise, the regular score cutoff falls from $\hat{x}^R_1$ to $\hat{x}^R_{\sigma_2,OC_1}$ and the marginal top applicant falls from $\hat{\theta}_1^T$ to $\hat{\theta}_{\sigma_2,OC_1}^T$. 
+
+\noindent The blue dashed line is the best response curve in the top program following a rise in noise. The red dashed line $\hat{\theta}^T\mapsto \hat{x}^R_{reg}(\hat{\theta}^T|\mathcal{R}(OC_1,\sigma_2),\sigma_2)$ is the best response curve after the rise in noise to $\sigma_2$ and a change in the payline from $\lambda^R$ to $\mathcal{R}(OC_1,\sigma_2)$. Under a convex mills ratio, the current regular acceptance rate lies above the target payline $\mathcal{R}(OC_1,\sigma_2)>\lambda^R$. Thus, since a fall in the regular acceptance rate can only be facilitated by a rise in the regular score cutoff, the best response curve $\hat{\theta}^T\mapsto \hat{x}^R_{reg}(\hat{\theta}^T|\lambda^R,\sigma_2)$ would lie below the best response curve $\hat{\theta}^T\mapsto \hat{x}^R_{reg}(\hat{\theta}^T|\mathcal{R}(OC_1,\sigma_2),\sigma_2)$. It then follows that the red point is the new stable fixed payline equilibrium following the noise increase. Importantly, this point lies below the green level curve labeled $OC_1,\sigma_2$, indicating that the opportunity cost $OC_2$ at this new equilibrium is smaller than $OC_1$. 
+
+\noindent If instead, the mills ratio were concave, then the current regular acceptance rate at the orange dot in Figure \ref{fig:br_shift} would be lower than the target payline $\mathcal{R}(OC_1,\sigma_2)<\lambda^R$. It therefore follows that the best response curve $\hat{\theta}^T\mapsto \hat{x}^R_{reg}(\hat{\theta}^T|\lambda^R,\sigma_2)$ would lie \textit{above} the best response curve $\hat{\theta}^T\mapsto \hat{x}^R_{reg}(\hat{\theta}^T|\mathcal{R}(OC_1,\sigma_2),\sigma_2)$. The new stable fixed payline equilibrium would lie above the green level curve labeled $OC_1,\sigma_2$, indicating that the opportunity cost at this new equilibrium is \textit{larger} than $OC_1$. 
+
+
+\subsubsection{The effect of noise on the application ratio $a^T/a^R$}: We now claim that the mills ratio convexity also implies a rise in the application ratio after an increase in noise:
+
+\begin{proposition}\label{prop:noise_ratio}
+Suppose that $g$ is log-concave with strictly decreasing mills ratio, and we are initially at an interior stable equilibrium. If the mills ratio is convex (concave), a marginal rise in evaluation noise implies the existence of a new interior stable equilibrium in which the application ratio $a^T/a^R$ is weakly larger (lower) than before.
+\end{proposition}
+
+\noindent To see why, start again at the green dot of Figure \ref{fig:br_shift} and raise noise from $\sigma_1$ to $\sigma_2$, holding the opportunity cost fixed at $OC_1$. The move to the orange dot lowers the marginal top applicant and, by Proposition \ref{prop:noiseincrease_ratioapps}, raises the top to regular ratio of applicants $a^T/a^R$. At the orange dot, the regular acceptance rate (weakly) exceeds the regular payline $\lambda^R$. The rise in the regular score cutoff to restore this payline deters the lowest merit regular applicants and pushes the best regular applicants to apply to the top program instead. Consequently, $a^T$ rises and $a^R$ falls. It thus follows that the new stable equilibrium after the noise increase has a higher application ratio than before. 
+
+\section{Multiple Fields: Equilibria and stability}
+
+\noindent We now turn to the problem of vertical choice with multiple fields. We may focus on 2 scientific fields without loss of generality\footnote{All our results naturally extend to the case of more than 2 fields.}. To emphasize the role of evaluation noise, let us assume for convenience that both fields are identical\footnote{That is, let us assume that both fields have an identical distribution of applicant merit $G$, the same screening technology $f$, identical application costs $c$, and each researcher earns the same benefit $v^P$ from applying to program $P\in \{R,T\}$.} except for the fact that field 2 has higher evaluation noise than field 1 $\sigma_2>\sigma_1$. For a given program $P\in\{R,T\}$, let $B^P$ denote the total budget of grants and suppose that this budget is distributed across scientific fields according to the following proportional allocation rule:
+\begin{align*}
+    B_i^P = \dfrac{a_i^P}{a_1^P+a_2^P}B^P
+\end{align*}
+That is, the budget of grants allocated to field $i$ is proportional to the number of applicants $a_i^P$ from that field. Proportional allocation can be equivalently understood as a budget rule that equalizes the average acceptance rate across different fields, while fully exhausting each program's budget:
+\begin{align*}
+    \dfrac{B_1^P}{a_1^P} = \dfrac{B_2^P}{a_2^P} \quad B_1^P + B_2^P = B^P
+\end{align*}
+We are particularly interested in an equilibrium that arises from the following iterative process:
+\vspace{-5pt}
+\begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+  \item The central administrator first commits to paylines $\lambda = (\lambda^R,\lambda^T)$ for each program. 
+  \item Given these paylines, this yields a stable fixed payline equilibrium in each field as described in Definition \ref{def:equilibrium}. Let  $\hat{\theta}_i^P(\lambda), \hat{x}^P_i(\lambda)$ be the corresponding equilibrium marginal applicants and score cutoffs. The corresponding total number of grants awarded in the regular program is:
+  \begin{align*}
+      A^R = \sum_{i=1,2}\int_{\hat{\theta}_i^R(\lambda)}^{\hat{\theta}_i^T(\lambda)}\bar{F}_{\sigma_i}(\hat{x}^R_i(\lambda)|\theta) \,dG(\theta)
+   \end{align*}
+   Similarly, the corresponding number of grants awarded in the top program is:
+   \begin{align*}
+      A^T = \sum_{i=1,2}\int_{\hat{\theta}_i^T(\lambda)}^{\bar{\theta}}\bar{F}_{\sigma_i}(\hat{x}^T_i(\lambda)|\theta) \,dG(\theta)
+   \end{align*}
+   \item If $A^P > B^P$, the demand for grants exceeds the supply for program $P$ and thus the current payline is too lenient. The administrator then reduces the payline and we go back to step (2). Conversely, if $A^P < B^P$, the administrator instead raises the payline in program $P$. 
+\end{enumerate} 
+This process repeats until the total demand for grants equals the budget for both the top and regular program. This motivates the following definition of a stable equilibrium under proportional budget allocation:
+
+\begin{definition}\label{def:multifieldequilibrium}
+A stable proportional allocation equilibrium is a tuple of target paylines $\lambda^* = (\lambda^{R,*}, \lambda^{T,*})$ and field-specific marginal types $(\hat{\theta}^{R,*}_i, \hat{\theta}^{T,*}_i),i=1,2$ such that, for each program $P\in \{R,T\}$:
+\vspace{-5pt}
+\begin{enumerate}[label=(\arabic*),ref=\thedefinition(\arabic*)]
+   \item For each field $i$, the equilibrium marginal types $(\hat{\theta}^{R,*}_i,\hat{\theta}^{T,*}_i )$ constitute a stable fixed payline equilibrium in the sense of Definition \ref{def:equilibrium} given target paylines $\lambda^{R,*},\lambda^{T,*}$.  
+   \item The total demand for grants in both programs equals the supply $B^P$. 
+\end{enumerate}
+\end{definition}
+
+\noindent Indeed, Proposition \ref{prop:multifield_stability} in the appendix shows that this definition of a stable proportional allocation equilibrium is sufficient to guarantee local stability under the aforementioned iterative process. 
+
+\section{Do fields sort in equilibrium?}\label{section:multifield}
+
+\subsubsection{The Multifield Headline Result}: In a (stable) proportional allocation equilibrium, will the higher-noise field sort into the more desirable top program or the less desirable regular program? We have the following result:
+
+\begin{customprop}{1}
+Suppose that $g$ is log-concave with strictly decreasing mills ratio. Consider some stable proportional allocation equilibrium. Under some technical regularity conditions\footnote{Formally, let $\lambda^{R,*}$ denote the common equilibrium regular program payline faced by both fields, and let $OC_i^*$ be the equilibrium opportunity cost of the marginal top applicant in field $i$. We assume that there exists a continuous map $OC^*:[\sigma_1,\sigma_2]\rightarrow (0,\infty)$ such that, for each $\sigma\in[\sigma_1,\sigma_2]$, we have that $(OC^*(\sigma),\sigma)\in \mathcal{D}$, $\mathcal{R}(OC^*(\sigma),\sigma) = \lambda^{R,*}$, and $OC^*(\sigma_i) = OC_i^*$ for $i=1,2$, where $\mathcal{D}$ is defined with top payline $\lambda^{T,*}$. We also assume that $(OC_1^*,\sigma)\in\mathcal{D}$ for all $\sigma\in[\sigma_1,\sigma_2]$, so that both marginal applicants remain interior when noise rises from $\sigma_1$ to $\sigma_2$ at field 1's opportunity cost.}, if the mills ratio of the merit distribution is convex (concave), we have that:
+\vspace{-5pt}
+\begin{enumerate}[label=(\arabic*),ref=\theinnercustomprop(\arabic*)]
+   \item The opportunity cost of the marginal top applicant is weakly lower (higher) in the field with larger noise. 
+   \item The percent of total applicants who apply to the top rather than regular program $a^T/(a^T+a^R)$ will be weakly larger (smaller) in the field with higher noise. 
+   \item The ratio of grants awarded in the top to regular program $B_i^T/B_i^R$ will be weakly larger (smaller) in the field with higher noise. 
+\end{enumerate}
+\end{customprop}
+
+\noindent That is, convexity of the mills ratio guarantees that the higher-noise field sorts into the top program, while the lower-noise field sorts into the regular program. As we will see, this outcome is a straightforward implication of the results we obtained in the single field environment. 
+
+\noindent First, fix some stable proportional allocation equilibrium consisting of target paylines $\lambda^{R,*},\lambda^{T,*}$ and field-specific marginal types in both programs $(\hat{\theta}^{R,*}_i,\hat{\theta}^{T,*}_i)$. By definition, for each field $i$, the marginal types $(\hat{\theta}^{R,*}_i,\hat{\theta}^{T,*}_i)$ are stable fixed payline equilibria given target paylines $\lambda^{R,*},\lambda^{T,*}$. Now, plot the regular acceptance rate curves for both fields $OC\mapsto \mathcal{R}(OC,\sigma_i), i=1,2$. As discussed in Proposition \ref{prop:reg_acceptance_stable_frombelow}, for each field $i$, the opportunity cost $OC_i^*$ at which the field's regular acceptance rate curve intersects the horizontal line $\lambda^{R,*}$ exactly coincides with the equilibrium opportunity cost in that field. Moreover, we know from Proposition \ref{prop:reg_acceptance_stable_frombelow} that, in both fields, the regular acceptance rate curve $OC\mapsto \mathcal{R}(OC,\sigma_i)$ crosses the horizontal line from below because the equilibria in both fields were assumed to be stable. 
+
+\noindent A natural next step is to determine whether the regular acceptance rate curve in the high-noise field lies above or below the corresponding curve in the low-noise field. Suppose that the mills ratio of the common merit distribution is convex. As discussed in Proposition \ref{prop:reg_noise}, the regular acceptance rate curve in the high-noise field $OC\mapsto \mathcal{R}(OC,\sigma_2)$ must lie above the corresponding curve in the low-noise field $OC\mapsto \mathcal{R}(OC,\sigma_1)$. This is depicted in Figure \ref{fig:field_convex}. It follows that (under the maintained regularity conditions) the equilibrium opportunity cost in field 1 is larger than that in field 2 $OC_1^*\geq OC_2^*$. Conversely, under a concave mills ratio, the regular acceptance rate curve in the high-noise field $OC\mapsto \mathcal{R}(OC,\sigma_2)$ must lie \textit{below} the corresponding curve in the low-noise field $OC\mapsto \mathcal{R}(OC,\sigma_1)$, as depicted in Figure \ref{fig:field_concave}. It then follows that the equilibrium opportunity cost in the high-noise field is \textit{larger} than in the low-noise field. 
+
+\input{../../2_analysis/2.1_theory/output/field_pair}
+
+\noindent As for the percent of total applicants applying to the top program, it is convenient to imagine the equilibrium in field 2 as originating from the following process: Noise is initially equal to that in field 1 $\sigma_1$ and we are initially at field 1's equilibrium with application ratio $a_1^{T,*}/a_1^{R,*}$. Now, increase this noise to $\sigma_2$, holding fixed the opportunity cost at $OC_1^*$. By the regularity conditions, both marginal applicants remain interior along the way. When the mills ratio is convex, we know from the discussion in Section \ref{section:fixedoc_application_ratio} that this yields an increase in the application ratio:
+\begin{align*}
+  \dfrac{a^T}{a^R} \geq \dfrac{a_1^{T,*}}{a_1^{R,*}}
+\end{align*}
+Graphically, we are at the orange dot in Figure \ref{fig:field_convex}, with a higher regular program acceptance rate than the equilibrium payline $\lambda^{R,*}$. To reach field 2's equilibrium, the regular score cutoff must rise (yielding a larger marginal regular applicant) and the opportunity cost must fall (yielding a lower marginal top applicant). Consequently, the application ratio rises to reach field 2's equilibrium. We thus have:
+\begin{align*}
+  \dfrac{a^{T,*}_2}{a^{R,*}_2} \geq \dfrac{a^T}{a^R} \geq \dfrac{a_1^{T,*}}{a_1^{R,*}}
+\end{align*}
+The converse result holds for the case where the mills ratio is concave. 
+
+\newpage
+\section{Conclusion}
+
+The allocation of research funding depends on how researchers choose among the programs available to them. With one application per researcher, the expected return from the regular program is the opportunity cost of applying to the top program. Proportional allocation links these choices to the distribution of funding across fields, while evaluation thresholds adjust to the resulting applicant pools.
+
+Our analysis shows how evaluation noise changes this allocation. Under the maintained regularity and stability assumptions, convexity of the merit distribution’s Mills ratio makes otherwise identical fields with noisier evaluation send a larger share of applicants to the top program; concavity reverses the comparison. The characterization of Mills ratio curvature through the convex-transform ordering of left truncations explains how changes in applicant-pool composition generate this response. The association between reviewer disagreement and Global Fellowship applications in the MSCA provides evidence consistent with the convex case.
+
+The welfare performance of proportional allocation mechanisms in vertically ranked institutions is a natural next question. A funder must weigh the social returns to supporting different researchers under each program against the resources spent on applications and evaluation. Program choice matters for this assessment because a change in the allocation rule changes both the distribution of applicants and the composition of funded projects. Related work shows how selection rules can improve welfare by changing behavior: Morgan, Tumlinson, and Várdy (2022) show that greater meritocracy can weaken effort incentives, and Krishna, Lychagin, Olszewski, Siegel, and Tergiman (2026) identify Pareto improvements in college-admissions contests through changes in effort incentives. In our setting, a central design question is how to direct applicants toward the program in which funding them generates the greatest social return. 
+
+A useful starting point would be to compare proportional allocation with rules that place less weight on application volumes, allowing participation, program choice, and evaluation thresholds to adjust. Another is to study where investments in evaluation precision yield the largest gains. The sorting response characterized here is relevant to both exercises: improving evaluation in one field or program changes the opportunities and incentives facing applicants elsewhere. Combining reviewer assessments and application histories with subsequent research outcomes would help quantify these adjustments and guide the design of grant allocation schemes.
+
+
+\newpage
+% Appendix numbering: sections A.1, A.2, ...; results, equations, figures and tables A1, A2, ...
+\setcounter{section}{0}
+\renewcommand{\thesection}{A.\arabic{section}}
+\renewcommand{\theHsection}{A.\arabic{section}}
+\makeatletter
+\@for\@tempa:=theorem,proposition,lemma,corollary,definition,assumption,example,remark,equation,figure,table\do{%
+  \setcounter{\@tempa}{0}%
+  \expandafter\edef\csname the\@tempa\endcsname{A\noexpand\arabic{\@tempa}}%
+  \expandafter\edef\csname theH\@tempa\endcsname{A\noexpand\arabic{\@tempa}}}
+\makeatother
+
+\include{Appendix}
+
+% \section{Characterization of Mills Ratio Curvature}
+
+% \noindent This section is dedicated to proving the main theoretical contribution that is used to prove our headline result (Proposition \ref{prop:intro}):
+
+% \millsratio*
+
+
+% \begin{proof}{[\textbf{Theorem} ~\ref{lemma:millsratio_curvature}]} 
+% Denote $H(\cdot|\hat{\theta}) \sim \theta - \hat{\theta}|\theta > \hat{\theta}$. Fix some $\underline{\theta}<\hat{\theta}_1<\hat{\theta}_2<\bar{\theta}$. Define:
+% \begin{align*}
+%     T(u|\hat{\theta}_1,\hat{\theta}_2) = H^{-1}(H(u|\hat{\theta}_1)|\hat{\theta}_2)
+% \end{align*}
+% First, notice that:
+% \begin{align*}
+%     T'(u|\hat{\theta}_1,\hat{\theta}_2) &= \dfrac{\dfrac{1-G(\hat{\theta}_2)}{1-G(\hat{\theta}_1)}g(u+\hat{\theta}_1)}{g\left(G^{-1}\left((1-G(\hat{\theta}_2))\dfrac{G(u+\hat{\theta}_1)-G(\hat{\theta}_1)}{1-G(\hat{\theta}_1)} + G(\hat{\theta}_2)\right)\right)}  = \dfrac{r(\hat{\theta}_2 + T(u|\hat{\theta}_1,\hat{\theta}_2))}{r(u+\hat{\theta}_1)}
+% \end{align*}
+% where the last equality follows because:
+% \begin{align*}
+%     \bar{G}\left(G^{-1}\left((1-G(\hat{\theta}_2))\dfrac{G(u+\hat{\theta}_1)-G(\hat{\theta}_1)}{1-G(\hat{\theta}_1)} + G(\hat{\theta}_2)\right)\right) = \dfrac{1-G(\hat{\theta}_2)}{1-G(\hat{\theta}_1)}(1-G(u+\hat{\theta}_1))
+% \end{align*}
+% Next, notice that, for all $q\in(0,1)$:
+% \begin{align*}
+%     \dfrac{\partial \log T'(H^{-1}(q|\hat{\theta}_1)|\hat{\theta}_1,\hat{\theta}_2)}{\partial q} = \dfrac{r'(G^{-1}((1-G(\hat{\theta}_2))q + G(\hat{\theta}_2)))-r'(G^{-1}((1-G(\hat{\theta}_1))q + G(\hat{\theta}_1)))}{1-q}
+% \end{align*}
+% We now prove the equivalence:
+% \vspace{-5pt}
+% \begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+%    \item Suppose that the mills ratio $r$ is convex. Then we have that $\partial \log T'(H^{-1}(q|\hat{\theta}_1))/\partial q\geq 0$ because $\hat{\theta}_2>\hat{\theta}_1$ implies $G^{-1}((1-G(\hat{\theta}_2))q + G(\hat{\theta}_2))\geq G^{-1}((1-G(\hat{\theta}_1))q + G(\hat{\theta}_1))$. Now, fix some arbitrary $u_1,u_2\in (0,\bar{\theta} - \hat{\theta}_1)$ with $u_2>u_1$. Define $q_{u_i} = H(u_i|\hat{\theta}_1)$. We then have that:
+%   \begin{align*}
+%       \log T'(u_1) = \log(T'(H^{-1}(q_{u_1}|\hat{\theta}_1))) \leq \log(T'(H^{-1}(q_{u_2}|\hat{\theta}_1))) = \log T'(u_2)
+%   \end{align*}
+%   where the inequality follows since $q_{u_1}\leq q_{u_2}$. It thus follows that $T'(u_1)\leq T'(u_2)$ for each $u_1,u_2\in (0,\bar{\theta} - \hat{\theta}_1)$ with $u_2>u_1$. Thus, $u\mapsto T(u)$ is convex on $(0,\bar{\theta}-\hat{\theta}_1)$, establishing that $H(\cdot|\hat{\theta}_1)\leq_{ct}H(\cdot|\hat{\theta}_2)$. 
+%   \item Now suppose that, for all $\hat{\theta}_1<\hat{\theta}_2$, we have that $H(\cdot|\hat{\theta}_2)\geq_{ct}H(\cdot|\hat{\theta}_1)$. Let $\tilde{\theta}_1<\tilde{\theta}_2$ be arbitrary. Define $q^* = 0.5\min\{G(\tilde{\theta}_1),G(\tilde{\theta}_2)\}$ and:
+%   \begin{align*}
+%     \hat{\theta}_i = G^{-1}\left(\dfrac{G(\tilde{\theta}_i)-q^*}{1-q^*}\right)
+%   \end{align*}
+%   Trivially, $\hat{\theta}_1<\hat{\theta}_2$ and $H(\cdot|\hat{\theta}_2)\geq_{ct}H(\cdot|\hat{\theta}_1)$. It follows that $u\mapsto T(u|\hat{\theta}_1,\hat{\theta}_2)$ is convex. Consequently:
+%   \begin{align*}
+%       \dfrac{r'(\tilde{\theta}_2) - r'(\tilde{\theta}_1)}{1-q^*}=\dfrac{\partial \log T'(H^{-1}(q^*|\hat{\theta}_1)|\hat{\theta}_1,\hat{\theta}_2)}{\partial q} \geq 0
+%   \end{align*}
+%   Thus, for all $\tilde{\theta}_1<\tilde{\theta}_2$, we have that $r'(\tilde{\theta}_2) \geq r'(\tilde{\theta}_1)$. It thus follows that $r$ is convex. 
+% \end{enumerate}
+% The proof for the case where $r$ is concave follows analogously. 
+% \end{proof}
+
+% \section{Stability of Equilibria}
+
+% \noindent The following proposition formalizes the notion that equilibria satisfying Definition \ref{def:equilibrium} are locally stable under best response dynamics:
+
+% \begin{proposition}[Single Field Stability]\label{prop:local_asymptotic_stabilty} Fix an interior stable equilibrium $(\hat{\theta}^{R,*},\hat{\theta}^{T,*})$ with corresponding equilibrium score cutoffs $(\hat{x}^{R,*},\hat{x}^{T,*} )$. Consider the following system of differential equations:
+% \begin{gather}\label{eq:ODE}
+%     \dfrac{\partial \hat{\theta}^T(t)}{\partial t} = K_T\left(\hat{\theta}^T_{top}(\hat{x}^R(t)|\lambda^T,\sigma) - \hat{\theta}^{T}(t)\right) \\
+%     \dfrac{\partial \hat{x}^R(t)}{\partial t} = K_R\left(\hat{x}^R_{reg}(\hat{\theta}^T(t)|\lambda^R,\sigma) - \hat{x}^R(t)\right) \notag
+% \end{gather}
+% where $K_T,K_R:\mathbb{R}\rightarrow \mathbb{R}$ map each program's current deviation from its best reply into a rate of adjustment. Assume that $K_T,K_R$ are both continuously differentiable and satisfy the following properties:
+% \vspace{-5pt}
+% \begin{enumerate}[label=(\arabic*),ref=\theproposition(\arabic*)]
+%   \item In equilibrium under mutual best response, the rate of adjustment is zero $K_{R}(0) = K_{T}(0) = 0$
+%   \item In each program, the rate of adjustment is an increasing function of the current deviation from its best reply (locally around the equilibrium) $K_{R}'(0),K_{T}'(0)>0$
+% \end{enumerate}
+% Then $(\hat{x}^{R,*}, \hat{\theta}^{T,*})$ is a locally asymptotically stable equilibrium of \eqref{eq:ODE}. That is, there exists an open neighborhood $U$ around $(\hat{x}^{R,*}, \hat{\theta}^{T,*})$ such that for any initial starting point $(\hat{x}^R(0),\hat{\theta}^T(0))\in U$, the unique maximal solution to \eqref{eq:ODE} with initial value $(\hat{x}^R(0),\hat{\theta}^T(0))$ both remains close to the equilibrium\footnote{Formally, the equilibrium is stable in the sense of Lyapunov.} for all $t\geq 0$ and converges to the equilibrium as $t\rightarrow \infty$.
+% \end{proposition}
+
+% \noindent The following proposition formalizes the notion that equilibria satisfying Definition \ref{def:multifieldequilibrium} are stable under the iterative process described in Section \ref{section:multifield}: 
+
+% \begin{proposition}[Multiple Field Stability]\label{prop:multifield_stability}
+% Fix a stable proportional allocation equilibrium $(\lambda^{R,*},\lambda^{T,*}, (\hat{\theta}^{R,*}_i, \hat{\theta}^{T,*}_i)_{i=1,2})$. Let $(\hat{\theta}^{R}_i(\lambda),\hat{\theta}^{T}_i(\lambda))$ denote the stable fixed payline equilibrium that we converge to if we start at $(\hat{\theta}^{R,*}_i, \hat{\theta}^{T,*}_i)_{i=1,2}$ but make a small perturbation in the payline from $\lambda^*$ to $\lambda$\footnote{Formally, by the implicit function theorem, there exists an open neighborhood $U$ containing $(\lambda^{R,*},\lambda^{T,*})$ and unique maps $\lambda\mapsto \hat{\theta}^{P}_i(\lambda),\hat{x}^{P}_i(\lambda)$ for $ P\in \{R,T\}, i=1,2$ that are well-defined and continuously differentiable on $U$ such that the following hold:
+% \vspace{-5pt}
+% \begin{enumerate}[label=(\arabic*),ref=\theproposition(\arabic*)]
+%    \item For each $P\in \{R,T\}$ and $i=1,2$, we have that $\hat{\theta}^{P}_i(\lambda^*) = \hat{\theta}_i^{P,*}, \hat{x}^P_i(\lambda^*) = \hat{x}_i^{P,*}$.
+%    \item For each $\lambda\in U$, $(\hat{\theta}^{R}_i(\lambda),\hat{\theta}^T_i(\lambda))$ constitute a stable fixed payline equilibrium in field $i$ for target payline $\lambda$ with corresponding equilibrium score cutoffs $\hat{x}^R_i(\lambda),\hat{x}^T_i(\lambda)$. 
+% \end{enumerate}}. Consider the following system of differential equations:
+% \begin{align}\label{eq:rateofadjustment}
+%   \dfrac{\partial \lambda^R(t)}{\partial t} = \mathcal{P}_R\left(B^R - \sum_{i=1,2}\int_{\hat{\theta}_i^{R}(\lambda(t))}^{\hat{\theta}_i^{T}(\lambda(t))}\bar{F}_{\sigma_i}(\hat{x}^{R}_i(\lambda(t))|\theta) \,dG(\theta)\right) \\ 
+%   \dfrac{\partial \lambda^T(t)}{\partial t} = \mathcal{P}_T\left(B^T -  \sum_{i=1,2}\int_{\hat{\theta}_i^{T}(\lambda(t))}^{\bar{\theta}}\bar{F}_{\sigma_i}(\hat{x}^T_i(\lambda(t))|\theta) \,dG(\theta)\right)
+% \end{align}
+% where $\mathcal{P}_R,\mathcal{P}_T:\mathbb{R}\rightarrow \mathbb{R}$ map each program's excess demand/supply for grants into a rate of adjustment. Assume that $\mathcal{P}_R,\mathcal{P}_T$ are continuously differentiable and satisfy the following properties:
+% \vspace{-5pt}
+% \begin{enumerate}[label=(\arabic*),ref=\theproposition(\arabic*)]
+%    \item In equilibrium when demand for grants equals supply, the rate of adjustment is zero $\mathcal{P}_R(0)=\mathcal{P}_T(0)=0$. 
+%    \item In each program, the rate of adjustment is an increasing function of the current excess demand/supply for grants (locally around the equilibrium) $\mathcal{P}_R'(0),\mathcal{P}_T'(0)>0$. 
+% \end{enumerate} 
+% Then $(\lambda^{R,*}, \lambda^{T,*})$ is a locally asymptotically stable equilibrium of \eqref{eq:rateofadjustment}. 
+% \end{proposition}
+
+% \section{Relaxing Log-Concavity in the Merit Distribution}\label{section:relax_logconcave}
+
+% \subsection{Replacing log-concavity with monotonicity in $\Psi$}
+% \noindent Most of our results are stated under the assumption that the merit distribution is log-concave. This is in general too restrictive as it rules out a large class of distributions that may be reasonable candidates for the true merit distributions. This section explores a way to relax this assumption for merit distributions with finite upper support $\bar{\theta}<\infty$. First, let us define the following object:
+% \begin{align*}
+%   \Psi(\theta) := -(\bar{\theta} - \theta)\dfrac{\partial \log g(\theta)}{\partial \theta}
+% \end{align*}
+% This coincides with the expression $\Psi(\theta)=(\bar{\theta}-\theta)[1+r'(\theta)]/r(\theta)$ used earlier, since $1+r'(\theta) = -r(\theta)\,\partial \log g(\theta)/\partial \theta$. All the results in the previous sections hold if one replaces the assumption of log-concavity with the assumption that $\Psi$ is non-decreasing (when the mills ratio is convex) or $\Psi$ is non-increasing (when the mills ratio is concave). As the next lemma shows, this is a weaker assumption than assuming log-concavity with mills ratio curvature:
+
+% \begin{lemma}\label{lemma:logconcave_implies_phi}
+% Let $g$ be a log-concave density (where we do not require that the mills ratio needs to be strictly decreasing) with bounded upper support $\bar{\theta}<+\infty$. If it admits a convex (concave) mills ratio, then $\Psi$ is non-decreasing (non-increasing). 
+% \end{lemma}
+
+% \noindent As the following examples show, there is a large class of distributions that are not log-concave but for which this weaker set of assumptions continues to hold:
+
+% \begin{example}[Convex Mills Ratio but not log-concave] Consider for instance the $BETA(\alpha,\beta)$ distribution with $\alpha>1$ and $\beta\in (0,1)$. Notice that:
+% \begin{align*}
+%   \dfrac{\partial^2 \log g(\theta)}{\partial \theta^2} = -\dfrac{\alpha-1}{\theta^2} + \dfrac{1-\beta}{(1-\theta)^2} \quad \theta_0 = \dfrac{\sqrt{\alpha-1}}{\sqrt{\alpha-1}+\sqrt{1-\beta}} 
+% \end{align*}
+% The distribution is log-concave on $(0,\theta_0)$ and log-convex on $(\theta_0,1)$. However, its mills ratio is convex and strictly decreasing. Another example is $Kumaraswamy(a,b)$ with $a>1$ and $b\in(0,1)$. We have that:
+% \begin{align*}
+%      \dfrac{\partial^2 \log g(\theta)}{\partial \theta^2} = -\dfrac{a-1}{\theta^2} + \dfrac{(1-b)a\theta^{a-2}(a-1+\theta^a)}{(1-\theta^a)^2}
+% \end{align*} 
+% This term goes to $+\infty$ as $\theta\rightarrow 1$. Thus, this distribution is not globally log-concave on the interior of its support. However, its mills ratio is convex and strictly decreasing. For both these distributions, $\Psi$ is strictly increasing. 
+% \end{example}
+
+% \begin{example}[Concave Mills Ratio but not log-concave] 
+% Consider a $BETA(1/2, 1)$ distribution left-truncated at $\underline{\theta} = 0.25$. It admits a density $g(\theta) = \theta^{-1/2}$, which is clearly log-convex. It admits mills ratio $r(\theta) = 2(\sqrt{\theta} - \theta)$, which is concave and strictly decreasing. Notice that:
+% \begin{align*}
+%   \Psi(\theta) = \dfrac{1-\theta}{2\theta}
+% \end{align*}
+% which is clearly strictly decreasing.
+% \end{example}
+
+% \begin{example}[Linear Mills Ratio but not log-concave]
+% Consider a $BETA(1,\beta)$ distribution with $\beta\in(0,1)$. It admits density $g(\theta) = (1-\theta)^{\beta-1}$ and has linear mills ratio $r(\theta) = \beta^{-1}(1-\theta)$ that is clearly strictly decreasing. However, its density is log-convex rather than log-concave. It can be verified that $\Psi(\theta) = -(1-\beta)$, which is constant. 
+% \end{example}
+
+% \subsection{Characterization using stochastic orders}
+
+% \noindent Conditions such as log-concavity, mills ratio monotonicity/curvature, and the monotonicity of $\Psi$ all admit a characterization in terms of stochastic orders. Let $U_{\hat{\theta}}\sim \theta-\hat{\theta}|\theta>\hat{\theta}$ denote the residual life distribution at left truncation $\hat{\theta}$. We restate these results below. 
+
+% \begin{lemma}
+% Fix some distribution $G$ with twice continuously differentiable Lebesgue density defined on a connected support. We have the following:
+% \vspace{-5pt}
+% \begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+%    \item The mills ratio is non-increasing (non-decreasing) if and only if, for all $\hat{\theta}_L <\hat{\theta}_H$, we have that:
+%    \begin{align*}
+%       U_{\hat{\theta}_L} \substack{\geq_{st} \\ (\leq_{st})}  U_{\hat{\theta}_H} 
+%    \end{align*}
+%    Mills ratio monotonicity is equivalent to requiring first order stochastic dominance between residual life distributions. This is a well-known result in \cite{shaked2007stochastic}. 
+%    \item The density $g$ is log-concave if and only if, for all $\hat{\theta}_L <\hat{\theta}_H$, we have that:
+%    \begin{align*}
+%       U_{\hat{\theta}_L} \geq_{lr}  U_{\hat{\theta}_H} 
+%    \end{align*}
+%    \item The mills ratio is convex (concave) if and only if, for all $\hat{\theta}_L <\hat{\theta}_H$, we have that:
+%    \begin{align*}
+%       U_{\hat{\theta}_L} \substack{\leq_{ct}\\ (\geq_{ct})} U_{\hat{\theta}_H}
+%    \end{align*}
+%    where $\geq_{ct}$ denotes \cite{vanzwet1964convex}'s convex transform order. This was stated in Theorem \ref{lemma:millsratio_curvature}. 
+% \end{enumerate}
+% \end{lemma}
+
+% \noindent The key implication of the monotonicity in $\Psi$ is that it is equivalent to requiring that the residual life distribution as a proportion of the maximum remaining life $V_{\hat{\theta}}\sim (\theta-\hat{\theta})/(\bar{\theta}-\hat{\theta})|\theta\geq \hat{\theta}$ is ordered in the likelihood ratio order. This is stated in the next lemma:
+% \begin{lemma}\label{lemma:phi_characterization}
+% Suppose that $g$ has bounded upper support $\bar{\theta}<\infty$. We have that $\Psi$ is non-decreasing (non-increasing) if and only if, for all $\hat{\theta}_L<\hat{\theta}_H$, we have that:
+% \begin{align*}
+%   V_{\hat{\theta}_L} \substack{\geq_{lr}\\(\leq_{lr})} V_{\hat{\theta}_H} 
+% \end{align*}
+% \end{lemma}
+
+
+
+
+
+% % \newpage
+% % \section{More General Evaluation Technology}
+
+% % \subsubsection{Different Accuracy for different types}: We have:
+% % \vspace{-5pt}
+% % \begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+% %    \item Extensions to allow for the possibility that higher-merit applicants are evaluated with higher noise than lower-merit applicants (or vice versa). Take:
+% %    \begin{align*}
+% %       \psi(x) = \psi(\theta) + \sigma\varepsilon
+% %    \end{align*}
+% %    With $\psi$ strictly increasing and $\varepsilon\sim f$ with $f$ log-concave. The resulting signal distribution $F_{\sigma}(x|\theta)$ still obeys MLRP. Now, fix $\theta_1<\theta_2$. We have that:
+% %    \begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+% %      \item If $\Psi$ is linear, then $F_{\sigma}(x|\theta_1) =_{disp} F_{\sigma}(x|\theta_2)$.
+% %      \item If $\Psi$ is convex, then $F_{\sigma}(x|\theta_1) \geq_{disp} F_{\sigma}(x|\theta_2)$. Higher merit leads to more precise evaluation.
+% %      \item If $\Psi$ is concave, then $F_{\sigma}(x|\theta_1) \leq_{disp} F_{\sigma}(x|\theta_2)$. Higher merit leads to less precise evaluation.
+% %    \end{enumerate}
+% %    The claim is that all results hold when one restates all requirements on the distribution of $\psi(\theta)$ rather than on the distribution of project merit $\theta$. Note that dispersive order does not translate to a order of accuracy in the sense of Lehmann. Need to rethink this. 
+% % \end{enumerate}
+
+% % \subsubsection{Non-Scale Noise}: 
+
+
+% % \subsubsection{Doom Spirals}: Consider a model in which evaluation noise changes from one period to the next. Think of a fixed pool of reviewers, where evaluation in the top program requires more reviewer resources (more of them, or more time per proposal etc...). Once the demand of reviews exceeds the supply, reviewers cut corners, they increase the noise with which they evaluate. Noise rises in the next period. Consider a convex mills ratio where we are resting at equilibrium. The idea is a sudden influx of applicants causes reviewers to cut corners, putting us in a sort of "doom spiral" when the mills ratio is convex, rather than concave where there is a self correcting mechanism.
+
+
+
+
+% % \newpage
+% % \begin{remark}[Remaining Todo (single field)] The following:
+% % \vspace{-5pt}
+% % \begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+% %    \item Finish the intuition on $a^R/a^R$. 
+% %    \item Finish the intuition showing the convergence to a new, lower cost. Again, referencing the application ratio. And exploiting stability of equilibria. 
+% %    \item Summarize and complete the single field case. 
+% %    \item Write all relevant proofs
+% % \end{enumerate}
+% % \end{remark}
+
+% % \begin{remark}[Remaining Todo (Multi field)] The following:
+% % \vspace{-5pt}
+% % \begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+% %    \item The definition and characterization of equilibria. 
+% %    \item Stability of equilibria. 
+% %    \item The new assumption (technical). 
+% %    \item Using he tools of the single field case to analyze the multi field environment. 
+% % \end{enumerate}
+% % \end{remark}
+
+% % \begin{remark}[Extensions] We have:
+% % \vspace{-5pt}
+% % \begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+% %   \item Relaxing log-concavity
+% %   \item Who wins and loses after reconvergence back to a fixed payline equilibrium? The goal is to pin down a list of insights and predictions (right now I have 2). 
+% %   \item 
+% % \end{enumerate}
+% % \end{remark}
+
+
+
+
+% % \part{Extensions}
+
+% % \section{Non-Location Scale Noise} 
+% % Inverse of the elasticity of the type distribution? Worth discussing. Not sure if it holds.
+
+% % \section{Relaxing Log-Concavity of the Merit Distribution}
+
+% % \section{A Global Condition for Uniqueness and Stability of Equilibria}
+
+% % \section{Heterogenous Merit Distributions}
+
+% % \section{Who wins and loses? Analysis of the QQ plots of winning probabilities}
+
+% % Various single/double crossing results hold for the QQ plot. In particular, we have some clean results about the upper tail behavior of the winning probability distribution. 
+
+% % \section{Fair, Subproportional Allocation Rules}: Notice that (1), all that is needed in the top program is a guarantee of one field NOT first order stochastically dominating another program, and (2) and for the regular program, notice that we have FULL FOSD (in fact, likelihood ratio ordering) from the behavior in the top program... This one is an ambitious extension...
+
+% % \section{Lotteries? $\sigma\rightarrow +\infty$}
+% \newpage
+% \section{Proofs}
+
+% \input{Proofs}
+
+\newpage
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

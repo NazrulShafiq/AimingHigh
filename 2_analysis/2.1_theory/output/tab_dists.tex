@@ -1,0 +1,44 @@
+% Parametric merit distributions with log-concave density AND strictly
+% increasing hazard rate.  Mills ratio m(x) = \bar{F}(x)/f(x) = 1/h(x), so
+% strict IHR is exactly strict decrease of m; the column records its curvature.
+% RT = right-truncated.  Every row checked numerically.
+%
+% The only common casualty of strict IHR is the untruncated exponential, whose
+% hazard is constant.  Right-truncating it restores strict IHR, which is why the
+% truncated version appears in Panel A but the untruncated one is absent from
+% Panel B.
+%
+% Panel B carries no linear or concave entries, and cannot: m > 0 everywhere, so
+% a concave (or affine strictly decreasing) m would reach zero at a finite point
+% and could not be sustained on an unbounded support.
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.45}
+\setlength{\tabcolsep}{12pt}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Distribution & Parameters & Mills ratio \\
+\midrule
+\multicolumn{3}{@{}l}{\textit{Panel A. Finite upper support}}\\[3pt]
+Beta$(\alpha,\beta)$                 & $\alpha>1,\ \beta\geq 1$     & convex  \\
+Beta$(1,\beta)$                      & $\beta\geq 1$                & linear  \\
+Kumaraswamy$(2,\beta)$               & $\beta\geq 1$                & convex  \\
+Normal$(\mu,s^2)$, RT                & $\bar{\theta}\leq \mu$       & convex  \\
+GPD$(\xi)$, natural endpoint         & $-1\leq\xi<0$                & linear  \\
+GPD$(\xi)$, RT                       & $-1<\xi<0$                   & concave \\
+Exponential$(\lambda)$, RT           & $\lambda>0$                  & concave \\
+\addlinespace[10pt]
+\multicolumn{3}{@{}l}{\textit{Panel B. Infinite upper support}}\\[3pt]
+Normal$(\mu,s^2)$                    & $\mu\in\mathbb{R},\ s>0$     & convex  \\
+Logistic$(\mu,s)$                    & $\mu\in\mathbb{R},\ s>0$     & convex  \\
+Gumbel$(\mu,\beta)$                  & $\mu\in\mathbb{R},\ \beta>0$ & convex  \\
+Gamma$(k,\vartheta)$                 & $k>1,\ \vartheta>0$          & convex  \\
+Weibull$(k,\lambda)$                 & $k>1,\ \lambda>0$            & convex  \\
+\bottomrule
+\end{tabular}
+\caption{\footnotesize Parametric merit distributions with log-concave density and strictly
+increasing hazard rate, grouped by whether the upper end of the support is
+finite. }
+\label{tab:dists}
+\end{table}

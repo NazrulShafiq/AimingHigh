@@ -1,0 +1,537 @@
+\begin{lemma}\label{lemma:existence_payline_toeqm}
+Fix some target paylines $\bar{\lambda} = (\bar{\lambda}^R,\bar{\lambda}^T)$ and let $\hat{\theta}^{R,*},\hat{\theta}^{T,*}$ denote a stable fixed payline equilibrium with corresponding score cutoffs $\hat{x}^{P,*}$ at initial evaluation noise $\bar{\sigma}$. There exist open neighborhoods $L^R, L^T, \Sigma$ containing $\bar{\lambda}^R,\bar{\lambda}^T,\bar{\sigma}$ respectively, and unique maps $(\lambda,\sigma)\mapsto \hat{\theta}^P(\lambda,\sigma),\hat{x}^P(\lambda,\sigma)$ for $P\in \{R,T\}$ well-defined and continuously differentiable on $L^R\times L^T\times \Sigma$ such that the following hold:
+\vspace{-5pt}
+\begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+  \item For each $P\in \{R,T\}$, we have that $\hat{\theta}^{P}(\bar{\lambda},\bar{\sigma}) = \hat{\theta}^{P,*}, \hat{x}^P(\bar{\lambda},\bar{\sigma}) = \hat{x}^{P,*}$.
+   \item For each $\lambda\in L^R\times L^T$ and $\sigma\in \Sigma$, $(\hat{\theta}^{R}(\lambda,\sigma),\hat{\theta}^T(\lambda,\sigma))$ constitute a stable fixed payline equilibrium for target payline $\lambda$ under evaluation noise $\sigma$ with corresponding equilibrium score cutoffs $\hat{x}^R(\lambda,\sigma),\hat{x}^T(\lambda,\sigma)$. 
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}{[\textbf{Lemma} ~\ref{lemma:existence_payline_toeqm}]} First, define:
+\begin{gather*}
+  H^T(\hat{\theta}^T|\hat{x}^R,\lambda^T,\sigma) = \hat{x}^T_D(\hat{\theta}^T|\hat{x}^R,\sigma) - \hat{x}^T_S(\hat{\theta}^T|\lambda^T,\sigma) \\
+  H^R(\hat{x}^R|\lambda^R,\hat{\theta}^T,\sigma) = \hat{x}^{R,-1}_D(\hat{x}^R|\sigma) - \hat{x}^{R,-1}_S(\hat{x}^R|\lambda^R,\hat{\theta}^T,\sigma)
+\end{gather*}
+Note that:
+\begin{gather*}
+   \dfrac{\partial H^R(\hat{x}^{R,*}|\bar{\lambda}^R,\hat{\theta}^{T,*},\bar{\sigma}) }{\partial \hat{\theta}^T} > 0 \quad \dfrac{\partial H^R(\hat{x}^{R,*}|\bar{\lambda}^R,\hat{\theta}^{T,*},\bar{\sigma}) }{\partial \hat{x}^R} < 0 \\  \dfrac{\partial H^T(\hat{\theta}^{T,*}|\hat{x}^{R,*},\bar{\lambda}^T, \bar{\sigma})}{\partial \hat{\theta}^T} > 0 \quad \dfrac{\partial H^T(\hat{\theta}^{T,*}|\hat{x}^{R,*},\bar{\lambda}^T, \bar{\sigma})}{\partial \hat{x}^R} > 0 
+\end{gather*}
+The map $(\hat{\theta}^T,\hat{x}^R)\mapsto (H^R(\hat{x}^R|\lambda^R,\hat{\theta}^T,\sigma),H^T(\hat{\theta}^T|\hat{x}^R,\lambda^T,\sigma))$ thus has a Jacobian with non-zero determinant when evaluated at the stable fixed payline equilibrium. The implicit function theorem supplies the proof for all parts except (2). Since $H^T,H^R$ are continuously differentiable, we can choose $L^T,L^R,\Sigma$ sufficiently small such that:
+\begin{align*}
+  \forall (\lambda,\sigma)\in L^R\times L^T\times \Sigma,\quad \dfrac{\partial H^T(\hat{\theta}^{T}(\lambda,\sigma)|\hat{x}^{R}(\lambda,\sigma),\lambda^T,\sigma)}{\partial \hat{\theta}^T} > 0 \quad \dfrac{\partial H^R(\hat{x}^{R}(\lambda,\sigma)|\lambda^R,\hat{\theta}^{T}(\lambda,\sigma),\sigma) }{\partial \hat{x}^R} < 0
+\end{align*}
+This provides the proof for (2). 
+\end{proof}
+
+\begin{lemma}\label{lemma:best_responsefunctions}
+Consider the setting as in Lemma \ref{lemma:existence_payline_toeqm}. Then there exist open sets $\mathcal{X}^R, \tilde{\mathcal{X}}^R$ containing $\hat{x}^R(L^R\times L^T\times \Sigma)$ and open sets $U^T,\tilde{U}^T$ containing $\hat{\theta}^T(L^R\times L^T\times \Sigma)$, and maps $\hat{\theta}^T_{top}:\mathcal{X}^R\times L^T\times \Sigma\rightarrow \tilde{U}^T$ and $\hat{x}^R_{reg}:U^T\times L^R\times \Sigma\rightarrow \tilde{\mathcal{X}}^R$ such that:
+\vspace{-5pt}
+\begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+   \item For each $(\hat{x}^R,\lambda^T,\sigma)\in \mathcal{X}^R\times L^T\times \Sigma$, we have that $H^T(\hat{\theta}^T_{top}(\hat{x}^R|\lambda^T,\sigma)|\hat{x}^R,\lambda^T,\sigma)=0$. Moreover, if there exists $\hat{\theta}^T\in \tilde{U}^T$ such that $H^T(\hat{\theta}^T|\hat{x}^R,\lambda^T,\sigma) = 0$, then necessarily we have $\hat{\theta}^T = \hat{\theta}^T_{top}(\hat{x}^R|\lambda^T,\sigma)$. 
+   \item For each $(\hat{\theta}^T,\lambda^R,\sigma)\in U^T\times L^R\times \Sigma$, we have that $H^R(\hat{x}^R_{reg}(\hat{\theta}^T|\lambda^R,\sigma)|\lambda^R,\hat{\theta}^T,\sigma) = 0$. Moreover, if there exists $\hat{x}^R\in \tilde{\mathcal{X}}^R$ such that $H^R(\hat{x}^R|\lambda^R,\hat{\theta}^T,\sigma) = 0$, then necessarily we have $\hat{x}^R = \hat{x}^R_{reg}(\hat{\theta}^T|\lambda^R,\sigma)$. 
+   \item For each $\lambda\in L^R\times L^T$ and $\sigma\in \Sigma$, we have that $\hat{\theta}^T(\lambda,\sigma) = \hat{\theta}^T_{top}(\hat{x}^R(\lambda,\sigma)|\lambda^T,\sigma)$ and $\hat{x}^R(\lambda,\sigma) = \hat{x}^R_{reg}(\hat{\theta}^T(\lambda,\sigma)|\lambda^R,\sigma)$. 
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}{[\textbf{Lemma} ~\ref{lemma:best_responsefunctions}]} Follows from a simple application of the implicit function theorem. 
+\end{proof}
+
+\begin{lemma}
+Consider the setting in Lemmas \ref{lemma:existence_payline_toeqm} and \ref{lemma:best_responsefunctions}. We have that the following hold:
+\vspace{-5pt}
+\begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+   \item\label{lemma:xR_thetaT} We have that for all $(\hat{x}^R,\lambda^T,\sigma)\in \mathcal{X}^R\times L^T\times \Sigma$:
+   \begin{align*}
+      \dfrac{\partial \hat{\theta}^T_{top}(\hat{x}^R|\lambda^T,\sigma)}{\partial \hat{x}^R} < 0
+   \end{align*}
+   \item\label{lemma:thetaT_xR} We have that for all $(\hat{\theta}^T,\lambda^R,\sigma)\in U^T\times L^R\times \Sigma$:
+   \begin{align*}
+      \dfrac{\partial \hat{x}^R_{reg}(\hat{\theta}^T|\lambda^R,\sigma)}{\partial \hat{\theta}^T} > 0
+   \end{align*}
+   \item\label{lemma:lbdaT_thetaT} We have that for all $(\hat{x}^R,\lambda^T,\sigma)\in \mathcal{X}^R\times L^T\times \Sigma$:
+   \begin{align*}
+      \dfrac{\partial \hat{\theta}^T_{top}(\hat{x}^R|\lambda^T,\sigma)}{\partial \lambda^T} < 0
+   \end{align*}
+   \item\label{lemma:lbdaR_xR} We have that for all $(\hat{\theta}^T,\lambda^R,\sigma)\in U^T\times L^R\times \Sigma$:
+   \begin{align*}
+      \dfrac{\partial \hat{x}^R_{reg}(\hat{\theta}^T|\lambda^R,\sigma)}{\partial \lambda^R} < 0
+   \end{align*}
+\end{enumerate}
+\end{lemma}
+
+\begin{lemma}\label{lemma:stable_fixedpayline_eqm}
+Consider the setting in Lemmas \ref{lemma:existence_payline_toeqm} and \ref{lemma:best_responsefunctions}. We have that the following hold:
+\vspace{-5pt}
+\begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+   \item\label{lemma:lbdaR_increase} We have that for all $\lambda\in L^R\times L^T$ and $\sigma\in \Sigma$:
+   \begin{align*}
+      \dfrac{\partial \hat{\theta}^T(\lambda,\sigma) }{\partial \lambda^R} > 0 \quad \dfrac{\partial \hat{\theta}^R(\lambda,\sigma) }{\partial \lambda^R} < 0
+   \end{align*}
+   \item\label{lemma:lbdaT_increase} We have that for all $\lambda\in L^R\times L^T$ and $\sigma\in \Sigma$:
+   \begin{align*}
+      \dfrac{\partial \hat{\theta}^T(\lambda,\sigma) }{\partial \lambda^T} <0 \quad \dfrac{\partial \hat{\theta}^R(\lambda,\sigma) }{\partial \lambda^T} < 0 
+   \end{align*}
+   \item\label{lemma:OC_lbdaR} Moreover, let $OC(\lambda,\sigma) := v^R\bar{F}_{\sigma}(\hat{x}^R(\lambda,\sigma)|\hat{\theta}^T(\lambda,\sigma))$. We have that for all $\lambda\in L^R\times L^T$ and $\sigma\in \Sigma$:
+  \begin{align*}
+    \dfrac{\partial OC(\lambda,\sigma)}{\partial \lambda^R} > 0 
+  \end{align*}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}{[\textbf{Lemma} ~\ref{lemma:stable_fixedpayline_eqm}]}
+Fix $\lambda\in L^R\times L^T$ and $\sigma\in \Sigma$. Throughout, the partial derivatives of the best response functions are evaluated at $(\hat{x}^R(\lambda,\sigma),\hat{\theta}^T(\lambda,\sigma))$. By Lemmas \ref{lemma:xR_thetaT}, \ref{lemma:thetaT_xR}, \ref{lemma:lbdaT_thetaT} and \ref{lemma:lbdaR_xR}, we have that:
+\begin{align*}
+  \dfrac{\partial \hat{\theta}^T_{top}}{\partial \hat{x}^R} < 0, \quad \dfrac{\partial \hat{x}^R_{reg}}{\partial \hat{\theta}^T} > 0, \quad \dfrac{\partial \hat{\theta}^T_{top}}{\partial \lambda^T} < 0, \quad \dfrac{\partial \hat{x}^R_{reg}}{\partial \lambda^R} < 0
+\end{align*}
+In particular, $1 - \dfrac{\partial \hat{\theta}^T_{top}}{\partial \hat{x}^R}\dfrac{\partial \hat{x}^R_{reg}}{\partial \hat{\theta}^T} > 0$. By Lemma \ref{lemma:best_responsefunctions}, we have that $\hat{\theta}^T(\lambda,\sigma) = \hat{\theta}^T_{top}(\hat{x}^R(\lambda,\sigma)|\lambda^T,\sigma)$ and $\hat{x}^R(\lambda,\sigma) = \hat{x}^R_{reg}(\hat{\theta}^T(\lambda,\sigma)|\lambda^R,\sigma)$. Differentiating both identities with respect to $\lambda^R$ and solving yields:
+\begin{align*}
+  \dfrac{\partial \hat{x}^R(\lambda,\sigma)}{\partial \lambda^R} = \left[1 - \dfrac{\partial \hat{\theta}^T_{top}}{\partial \hat{x}^R}\dfrac{\partial \hat{x}^R_{reg}}{\partial \hat{\theta}^T}\right]^{-1}\dfrac{\partial \hat{x}^R_{reg}}{\partial \lambda^R} < 0, \quad \dfrac{\partial \hat{\theta}^T(\lambda,\sigma)}{\partial \lambda^R} = \dfrac{\partial \hat{\theta}^T_{top}}{\partial \hat{x}^R}\dfrac{\partial \hat{x}^R(\lambda,\sigma)}{\partial \lambda^R} > 0
+\end{align*}
+Similarly, differentiating both identities with respect to $\lambda^T$ yields:
+\begin{align*}
+  \dfrac{\partial \hat{\theta}^T(\lambda,\sigma)}{\partial \lambda^T} = \left[1 - \dfrac{\partial \hat{\theta}^T_{top}}{\partial \hat{x}^R}\dfrac{\partial \hat{x}^R_{reg}}{\partial \hat{\theta}^T}\right]^{-1}\dfrac{\partial \hat{\theta}^T_{top}}{\partial \lambda^T} < 0, \quad \dfrac{\partial \hat{x}^R(\lambda,\sigma)}{\partial \lambda^T} = \dfrac{\partial \hat{x}^R_{reg}}{\partial \hat{\theta}^T}\dfrac{\partial \hat{\theta}^T(\lambda,\sigma)}{\partial \lambda^T} < 0
+\end{align*}
+Finally, by \eqref{eq:reg_demand}, the marginal regular applicant satisfies $\hat{\theta}^R(\lambda,\sigma) = \hat{x}^R(\lambda,\sigma) - \sigma F^{-1}(1-c/v^R)$, so that $\partial \hat{\theta}^R(\lambda,\sigma)/\partial \lambda^P = \partial \hat{x}^R(\lambda,\sigma)/\partial \lambda^P$ for $P\in\{R,T\}$. This establishes Lemmas \ref{lemma:lbdaR_increase} and \ref{lemma:lbdaT_increase}. As for Lemma \ref{lemma:OC_lbdaR}, \eqref{eq:reg_demand} also gives:
+\begin{align*}
+  OC(\lambda,\sigma) = v^R\bar{F}\left(-\dfrac{\hat{\theta}^T(\lambda,\sigma)-\hat{\theta}^R(\lambda,\sigma)}{\sigma} + F^{-1}\left(1-\dfrac{c}{v^R}\right)\right)
+\end{align*}
+Differentiating with respect to $\lambda^R$, we have that:
+\begin{align*}
+  \dfrac{\partial OC(\lambda,\sigma)}{\partial \lambda^R} = \dfrac{v^R}{\sigma}f\left(F^{-1}\left(1-\dfrac{OC(\lambda,\sigma)}{v^R}\right)\right)\left[\dfrac{\partial \hat{\theta}^T(\lambda,\sigma)}{\partial \lambda^R} - \dfrac{\partial \hat{\theta}^R(\lambda,\sigma)}{\partial \lambda^R}\right] > 0
+\end{align*}
+where the inequality follows from Lemma \ref{lemma:lbdaR_increase}, and since $f$ is strictly positive on the interior of its support and $0<OC(\lambda,\sigma)<v^R$.
+\end{proof}
+
+% \begin{proof}{[\textbf{Lemma} ~\ref{lemma:lbdaR_increase}]}
+% First, fix $\lambda^T\in L^T$ and $\sigma\in \Sigma$ arbitrary and let $\lambda_1^R<\lambda_2^R$ with $\lambda_1^R,\lambda_2^R\in L^R$. Denote $\hat{\theta}_i^T = \hat{\theta}^T(\lambda^R_i,\lambda^T,\sigma)$, $\hat{\theta}_i^R = \hat{\theta}^R(\lambda^R_i,\lambda^T,\sigma)$ and $\hat{x}^R_i = \hat{x}^R(\lambda^R_i,\lambda^T,\sigma)$ for $i=1,2$. Suppose by contradiction that $\hat{\theta}_2^T\leq \hat{\theta}_1^T$. We have that:
+% \begin{align*}
+%   \hat{x}^R_1 = \hat{x}^R_{reg}(\hat{\theta}_1^T|\lambda_1^R,\sigma) > \hat{x}_{reg}^R(\hat{\theta}_1^T|\lambda_2^R,\sigma) \geq \hat{x}_{reg}^R(\hat{\theta}_2^T|\lambda_2^R,\sigma) = \hat{x}_2^R
+% \end{align*}
+% Where the first strict inequality follows by Lemma \ref{lemma:lbdaR_xR}, and the second inequality follows by Lemma \ref{lemma:thetaT_xR}. We thus have that:
+% \begin{align*}
+%   \hat{\theta}_1^T = \hat{\theta}_{top}^T(\hat{x}_1^R|\lambda^T,\sigma) < \hat{\theta}^T_{top}(\hat{x}_2^R|\lambda^T,\sigma) = \hat{\theta}_2^T
+% \end{align*}
+% The inequality follows by Lemma \ref{lemma:xR_thetaT}. This yields a contradiction. Thus we have that $\hat{\theta}_2^T>\hat{\theta}_1^T$. It follows that for each fixed $\lambda^T\in L^T$ and $\sigma\in \Sigma$, we have that $\lambda^R\mapsto \hat{\theta}^T(\lambda^R,\lambda^T,\sigma)$ is strictly increasing on $L^R$. Moreover, notice that $\hat{\theta}_2^T>\hat{\theta}_1^T$ implies that:
+% \begin{align*}
+%   \hat{\theta}_{top}^T(\hat{x}_1^R|\lambda^T,\sigma) = \hat{\theta}_1^T < \hat{\theta}_2^T = \hat{\theta}_{top}^T(\hat{x}_2^R|\lambda^T,\sigma)
+% \end{align*}
+% Since $\hat{x}^R\mapsto \hat{\theta}^T_{top}(\hat{x}^R|\lambda^T,\sigma)$ is strictly decreasing on $\mathcal{X}^R$ by Lemma \ref{lemma:xR_thetaT}, it follows that $\hat{x}_2^R < \hat{x}^R_1$. This implies that:
+% \begin{align*}
+%   \hat{x}^R_D(\hat{\theta}_1^R|\sigma) = \hat{x}^R_1 > \hat{x}^R_2 = \hat{x}^R_D(\hat{\theta}_2^R|\sigma) 
+% \end{align*}
+% Since $\hat{\theta}^R\mapsto \hat{x}^R_D(\hat{\theta}^R|\sigma)$ is stricrly increasing, it follows that $\hat{\theta}_1^R>\hat{\theta}_2^R$. Thus, for each fixed $\lambda^T\in L^T$ and $\sigma\in \Sigma$, we have that $\lambda^R\mapsto \hat{\theta}^R(\lambda^R,\lambda^T,\sigma)$ is strictly decreasing. 
+% \end{proof}
+
+% \begin{proof}{[\textbf{Lemma} ~\ref{lemma:lbdaT_increase}]} Now fix $\lambda^R\in L^R$ and $\sigma\in \Sigma$, and let $\lambda_1^T<\lambda_2^T$. Denote $\hat{\theta}_i^T = \hat{\theta}^T(\lambda^R,\lambda^T_i,\sigma)$, $\hat{\theta}_i^R = \hat{\theta}^R(\lambda^R,\lambda^T_i,\sigma)$ and $\hat{x}^R_i = \hat{x}^R(\lambda^R,\lambda^T_i,\sigma)$ for $i=1,2$. Suppose by contradiction that $\hat{x}_2^R \geq \hat{x}_1^R$. We have that:
+% \begin{align*}
+%   \hat{\theta}_1^T = \hat{\theta}_{top}^T(\hat{x}_1^R|\lambda_1^T,\sigma) > \hat{\theta}_{top}^T(\hat{x}_1^R|\lambda_2^T,\sigma) \geq \hat{\theta}_{top}^T(\hat{x}_2^R|\lambda_2^T,\sigma) = \hat{\theta}_2^T
+% \end{align*}
+% Where the first inequality follows by Lemma \ref{lemma:lbdaT_thetaT} and the second by Lemma \ref{lemma:xR_thetaT}. This implies that:
+% \begin{align*}
+%   \hat{x}_1^R = \hat{x}_{reg}^R(\hat{\theta}_1^T|\lambda^R,\sigma) > \hat{x}^R_{reg}(\hat{\theta}_2^T|\lambda^R,\sigma) = \hat{x}_2^R
+% \end{align*}
+% Yielding a contradiction. Thus, we have that $\hat{x}_2^R < \hat{x}_1^R$ and:
+% \begin{align*}
+%   \hat{x}_{reg}^R(\hat{\theta}_1^T|\lambda^R,\sigma) = \hat{x}_1^R > \hat{x}_2^R = \hat{x}_{reg}^R(\hat{\theta}_2^T|\lambda^R,\sigma)
+% \end{align*}
+% Since $\hat{\theta}^T\mapsto \hat{x}_{reg}^R(\hat{\theta}^T|\lambda^R,\sigma)$ is strictly increasing, it follows that $\hat{\theta}_1^T>\hat{\theta}_2^T$. It follows that for each fixed $\lambda^R\in L^R$ and $\sigma\in \Sigma$, the map $\lambda^T\mapsto \hat{\theta}^T(\lambda^R,\lambda^T,\sigma)$ is strictly decreasing on $L^T$. Moreover, notice that $\hat{x}_1^R>\hat{x}_2^R$ implies:
+% \begin{align*}
+%   \hat{x}_D^R(\hat{\theta}_1^R|\sigma) = \hat{x}_1^R > \hat{x}_2^R = \hat{x}_D^R(\hat{\theta}_2^R|\sigma)
+% \end{align*}
+% Since $\hat{\theta}^R\mapsto \hat{x}_D^R(\hat{\theta}^R|\sigma)$ is strictly increasing, it follows that $\hat{\theta}_1^R>\hat{\theta}_2^R$. It follows that for each fixed $\lambda^R\in L^R$ and $\sigma\in \Sigma$, the map $\lambda^T\mapsto \hat{\theta}^R(\lambda^R,\lambda^T,\sigma)$ is strictly decreasing on $L^T$. 
+% \end{proof}
+
+% \begin{proof}{[\textbf{Lemma} ~\ref{lemma:OC_lbdaR}]}
+% Note that for each $\lambda\in L^R\times L^T$ and $\sigma\in \Sigma$, we have that:
+% \begin{align*}
+%   OC(\lambda,\sigma) = v^R\bar{F}_{\sigma}(\hat{x}^R(\lambda,\sigma)|\hat{\theta}^T(\lambda,\sigma)) = v^R\bar{F}\left(-\dfrac{\hat{\theta}^T(\lambda,\sigma) - \hat{\theta}^R(\lambda,\sigma)}{\sigma} + F^{-1}(1-c/v^R)\right)
+% \end{align*}
+% Since $\partial \hat{\theta}^T(\lambda,\sigma)/\partial\lambda^R>0$ and $\partial \hat{\theta}^R(\lambda,\sigma)/\partial \lambda^R<0$, the result follows immediately. 
+% \end{proof}
+
+\begin{proof}{[\textbf{Proposition} ~\ref{prop:local_asymptotic_stabilty}]} Since $(\hat{\theta}^{R,*},\hat{\theta}^{T,*})$ is a stable equilibrium and we assume strict crossings at each partial equilibrium, there exist open neighborhoods $U,V$ containing $\hat{x}^{R,*},\hat{\theta}^{T,*}$ respectively, such that the best response functions are well-defined and continuously differentiable on these neighborhoods $\hat{\theta}^T_{top}:U\rightarrow \mathbb{R}, \hat{x}^{R}_{reg}:V\rightarrow \mathbb{R}$. Now, define $F:U\times V\rightarrow \mathbb{R}^2$ by:
+\begin{align*}
+  F(\hat{x}^R,\hat{\theta}^T) = \begin{bmatrix} K_R\left(\hat{x}^R_{reg}(\hat{\theta}^T|\lambda^R,\sigma) - \hat{x}^R\right) \\ K_T\left(\hat{\theta}^T_{top}(\hat{x}^R|\lambda^T,\sigma) - \hat{\theta}^{T}\right) \end{bmatrix} \quad \forall (\hat{x}^R,\hat{\theta}^T)\in U\times V
+\end{align*}
+Its Jacobian evaluated at the equilibrium $(\hat{x}^{R,*},\hat{\theta}^{T,*})$ is given by:
+\begin{align*}
+    J = \begin{bmatrix} -K_R'(0) & K_R'(0)\dfrac{\partial \hat{x}_{reg}^R(\hat{\theta}^{T,*})}{\partial \theta} \\
+    K_T'(0)\dfrac{\partial \hat{\theta}^T_{top}(\hat{x}^{R,*})}{\partial x} & -K_T'(0)  \end{bmatrix}
+\end{align*}
+It suffices to show that $J$ admits eigenvalues with strictly negative real part. First, note that:
+\begin{gather}
+  \operatorname{tr} J = -\left(K_T'(0) + K_R'(0) \right) < 0 \label{eq:trace}\\
+  \operatorname{det} J = K_T'(0) K_R'(0) \left[1 - \dfrac{\partial \hat{\theta}^T_{top}(\hat{x}^{R,*})}{\partial x}\dfrac{\partial \hat{x}_{reg}^R(\hat{\theta}^{T,*})}{\partial \theta} \right] > 0 \label{eq:det}
+\end{gather}
+where the last inequality follows since $\hat{x}^R\mapsto \hat{\theta}^T_{top}(\hat{x}^{R})$ is strictly decreasing on $U$ and $\hat{\theta}^T\mapsto \hat{x}^R_{reg}(\hat{\theta}^T)$ is strictly increasing on $V$. There are two cases:
+\begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+  \item If the eigenvalues of $J$ are complex, then they are complex conjugates $a\pm bi$. Thus, \eqref{eq:trace} gives $2a<0$, as desired. 
+  \item If both eigenvalues of $J$ are real, then \eqref{eq:trace} and \eqref{eq:det} imply that their sum is strictly negative and their product is strictly positive. Thus, both eigenvalues are strictly negative, as desired. 
+\end{enumerate}
+Thus, the Hartman--Grobman theorem gives us local asymptotic stability of the equilibrium solution to \eqref{eq:ODE}. 
+\end{proof}
+
+\begin{proof}{[\textbf{Proposition} ~\ref{prop:stable_higherpayline_oc}]} Consider the setting as in Lemma \ref{lemma:existence_payline_toeqm}. Let $\lambda^R>\bar{\lambda}^R$ with $\lambda^R\in L^R$. Then $(\hat{\theta}^R(\lambda^R,\bar{\lambda}^T,\bar{\sigma}), \hat{\theta}^T(\lambda^R,\bar{\lambda}^T,\bar{\sigma}))$ is a new stable equilibrium consistent with this larger regular program payline. Moreover, by Lemma \ref{lemma:OC_lbdaR}, the opportunity cost of the marginal top applicant at this new stable equilibrium is strictly larger than before. This proves the result. 
+\end{proof}
+
+% \begin{proof}{[\textbf{Proposition} ~\ref{prop:topacceptance_strictlydecreasig}]}
+
+% \end{proof}
+
+% \begin{proof}{[\textbf{Proposition} ~\ref{prop:equivalence_eqm}]}
+
+% \end{proof}
+
+\begin{proof}{[\textbf{Proposition} ~\ref{prop:reg_acceptance_stable_frombelow}]}
+Consider the setting as in Lemma \ref{lemma:existence_payline_toeqm} as the initial equilibrium under consideration. By Proposition \ref{prop:equivalence_eqm}, it follows that:
+\begin{align*}
+  \forall \lambda^R\in L^R,\quad \mathcal{R}(OC(\lambda^R,\bar{\lambda}^T,\bar{\sigma}),\bar{\sigma}) = \lambda^R
+\end{align*}
+Differentiating both sides with respect to $\lambda^R$ and evaluating at $\lambda^R = \bar{\lambda}^R$, we have:
+\begin{align*}
+    \dfrac{\partial \mathcal{R}(OC(\bar{\lambda},\bar{\sigma}),\bar{\sigma})}{\partial OC} = \left[\dfrac{\partial OC(\bar{\lambda},\bar{\sigma})}{\partial \lambda^R}\right]^{-1} >0
+\end{align*}
+This establishes the result. 
+\end{proof}
+
+
+\begin{proof}{[\textbf{Proposition} ~\ref{prop:winner_redistribution}]}
+Suppose first that $r$ is convex and let $\sigma_1<\sigma_2$. Denote $H_i(\cdot)\sim (\theta-\hat{\theta}^T_{\sigma_i,OC})/(\sigma_i)|\theta>\hat{\theta}^T_{\sigma_i,OC}$. Note that:
+\begin{align*}
+  W_T^{-1}(q|\sigma_i,OC) = \bar{F}\left(-H_{i}^{-1}(q)+F^{-1}(1-OC/v^T)\right)
+\end{align*}
+Since the top program average acceptance rate is held fixed at the top program payline, before/after the rise in noise, it follows that there exists $q^*\in(0,1)$ such that $W_T^{-1}(q^*|\sigma_1,OC)= W_T^{-1}(q^*|\sigma_2,OC)$. Thus, we have that $H_1^{-1}(q^*) = H_2^{-1}(q^*)$. Since $\hat{\theta}^T_{\sigma_2,OC}<\hat{\theta}^T_{\sigma_1,OC}$, by Theorem \ref{lemma:millsratio_curvature}, we have that $u\mapsto H_1^{-1}(H_2(u))$ is convex. Thus, it is star-shaped and $u\mapsto H_1^{-1}(H_2(u))/u$ is non-decreasing. There are two cases:
+\vspace{-5pt}
+\begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+   \item ($q>q^*$): Thus, $H_2^{-1}(q)>H_2^{-1}(q^*)$ and we have that:
+    \begin{align*}
+        \dfrac{H_1^{-1}(H_2(H_2^{-1}(q)))}{H_2^{-1}(q)} \geq \dfrac{H_1^{-1}(H_2(H_2^{-1}(q^*)))}{H_2^{-1}(q^*)}
+    \end{align*}
+    We thus have $H_1^{-1}(q)\geq H_2^{-1}(q)$ and thus $W_T^{-1}(q|\sigma_2,OC)\leq W_T^{-1}(q|\sigma_1,OC)$. 
+    \item ($q<q^*$): Thus, $H_2^{-1}(q)<H_2^{-1}(q^*)$ and we have that:
+    \begin{align*}
+        \dfrac{H_1^{-1}(H_2(H_2^{-1}(q)))}{H_2^{-1}(q)} \leq \dfrac{H_1^{-1}(H_2(H_2^{-1}(q^*)))}{H_2^{-1}(q^*)}
+    \end{align*}
+    We thus have $H_1^{-1}(q)\leq H_2^{-1}(q)$ and thus $W_T^{-1}(q|\sigma_2,OC)\geq W_T^{-1}(q|\sigma_1,OC)$. 
+\end{enumerate}
+This establishes the result. 
+\end{proof}
+
+\begin{lemma}\label{lemma:ineq}
+Suppose $G$ admits a mills ratio that is convex and strictly decreasing. Define $\mathcal{D}^T = \{(\sigma,OC)\in(0,\infty)\times (c,\infty): \exists \hat{\theta}^T \text{ s.t. } \mathcal{T}(\hat{\theta}^T|\sigma,OC) = \lambda^T\}$. Then we have that:
+\begin{align*}
+    \forall (\sigma,OC)\in \mathcal{D}^T,\quad -\dfrac{r(\hat{\theta}^T_{\sigma,OC})}{\sigma r'(\hat{\theta}^T_{\sigma,OC})} \leq -\dfrac{\partial \hat{\theta}^T_{\sigma,OC}}{\partial \sigma} 
+\end{align*}
+If we also have that $\bar{\theta}<\infty$, then we have:
+\begin{align*}
+ \forall (\sigma,OC)\in \mathcal{D}^T,\quad -\dfrac{r(\hat{\theta}^T_{\sigma,OC})}{\sigma r'(\hat{\theta}^T_{\sigma,OC})} \leq -\dfrac{\partial \hat{\theta}^T_{\sigma,OC}}{\partial \sigma}  \leq \dfrac{\bar{\theta} - \hat{\theta}^T_{\sigma,OC}}{\sigma}
+\end{align*}
+When $r$ is concave, all inequalities are reversed. 
+\end{lemma}
+
+\begin{proof}{[\textbf{Lemma} ~\ref{lemma:ineq}]}
+First, note that:
+\begin{gather*}
+    \dfrac{\partial \mathcal{T}(\hat{\theta}^T|\sigma,OC)}{\partial \sigma} = \int_{0}^{\bar{\theta} - \hat{\theta}^T}-\dfrac{1}{\sigma^2}f\left(F^{-1}(1-OC/v^T)- \dfrac{u}{\sigma}\right)\dfrac{\bar{G}(u+\hat{\theta}^T)}{\bar{G}(\hat{\theta}^T)}\dfrac{u}{r(u+\hat{\theta}^T)} \,du \\
+    \dfrac{\partial \mathcal{T}(\hat{\theta}^T|\sigma,OC)}{\partial \hat{\theta}^T} = -\dfrac{1}{\sigma}\int_{0}^{\bar{\theta}-\hat{\theta}^T}f\left(F^{-1}(1-OC/v^T)-\dfrac{u}{\sigma}\right)\dfrac{\bar{G}(u+\hat{\theta}^T)}{\bar{G}(\hat{\theta}^T)}\left(\dfrac{1}{r(\hat{\theta}^T+u)} - \dfrac{1}{r(\hat{\theta}^T)}\right) \,du
+\end{gather*}
+Take arbitrary $(\sigma,OC)\in \mathcal{D}^T$. We have that:
+\begin{align}\label{eq:2}
+    -\dfrac{\partial \hat{\theta}^T_{\sigma,OC}}{\partial \sigma} &= \dfrac{\partial \mathcal{T}(\hat{\theta}^T_{\sigma,OC}|\sigma,OC)}{\partial \sigma} \left[\dfrac{\partial \mathcal{T}(\hat{\theta}^T_{\sigma,OC}|\sigma,OC)}{\partial \hat{\theta}^T}\right]^{-1} \\
+    &= \int_{0}^{\bar{\theta}-\hat{\theta}^T_{\sigma,OC}}\dfrac{ur(\hat{\theta}^T_{\sigma,OC})}{\sigma[r(\hat{\theta}^T_{\sigma,OC})-r(u+\hat{\theta}^T_{\sigma,OC})]} q(u|\sigma,OC)\,du
+\end{align}
+where:
+\begin{align*}
+    q(u|\sigma,OC) := \dfrac{f\left(F^{-1}(1-OC/v^T)-\dfrac{u}{\sigma}\right)\dfrac{\bar{G}(u+\hat{\theta}^T_{\sigma,OC})}{\bar{G}(\hat{\theta}^T_{\sigma,OC})}\left[\dfrac{1}{r(u+\hat{\theta}^T_{\sigma,OC})} - \dfrac{1}{r(\hat{\theta}^T_{\sigma,OC})}\right]}{\int_{0}^{\bar{\theta} - \hat{\theta}^T_{\sigma,OC}} f\left(F^{-1}(1-OC/v^T)-\dfrac{u}{\sigma}\right)\dfrac{\bar{G}(u+\hat{\theta}^T_{\sigma,OC})}{\bar{G}(\hat{\theta}^T_{\sigma,OC})}\left[\dfrac{1}{r(u+\hat{\theta}^T_{\sigma,OC})} - \dfrac{1}{r(\hat{\theta}^T_{\sigma,OC})}\right]\,du}
+\end{align*}
+Now, since the mills ratio $r$ is convex, we have that the following inequalities hold:
+\begin{align*}
+    \dfrac{r(\hat{\theta}^T_{\sigma,OC})}{\bar{\theta}-\hat{\theta}^T_{\sigma,OC}}\leq \dfrac{r(\hat{\theta}^T_{\sigma,OC}) - r(u+\hat{\theta}^T_{\sigma,OC})}{u}\leq - r'(\hat{\theta}^T_{\sigma,OC})
+\end{align*}
+where the left inequality holds since $r(\bar{\theta})=0$. Plugging this inequality into equation \eqref{eq:2} yields:
+\begin{align*}
+    -\dfrac{r(\hat{\theta}^T_{\sigma,OC})}{\sigma r'(\hat{\theta}^T_{\sigma,OC})}\leq -\dfrac{\partial \hat{\theta}^T_{\sigma,OC}}{\partial \sigma}  \leq \dfrac{\bar{\theta} - \hat{\theta}^T_{\sigma,OC}}{\sigma}
+\end{align*}
+which establishes the result. The proof for the case where $r$ is concave follows analogously. 
+\end{proof}
+
+\begin{proof}{[\textbf{Proposition} ~\ref{prop:regwin_likelihood}]} Suppose first that $r$ is convex (concave) and $g$ is log-concave if $\bar{\theta}=+\infty$, or $\Psi$ is non-decreasing (non-increasing) if $\bar{\theta}<+\infty$. Fix $(\sigma,OC)$. Let $\hat{\theta}^R_{\sigma,OC} := \hat{\theta}^T_{\sigma,OC}-\sigma \kappa(OC)$ and let $h(\cdot|\sigma,OC)$ denote the density of the (noise) standardized residual life distribution $(\theta - \hat{\theta}^R_{\sigma,OC})/\sigma|\theta\in (\hat{\theta}^R_{\sigma,OC}, \hat{\theta}^T_{\sigma,OC})$. We have that:
+\begin{align*}
+    h(u|\sigma,OC) := \dfrac{1(0<u<\kappa(OC))\sigma g(\sigma[u-\kappa(OC)] + \hat{\theta}^T_{\sigma,OC})}{G(\hat{\theta}^T_{\sigma,OC}) - G(\hat{\theta}^R_{\sigma,OC})}
+\end{align*}
+Denote $l = g'/g$ and let $z = \hat{\theta}^T_{\sigma,OC} - \sigma[\kappa(OC)-u]$. Notice that, for all $u\in(0,\kappa(OC))$:
+\begin{align*}
+    \dfrac{\partial \log h(u|\sigma,OC)}{\partial \sigma} &= \dfrac{1}{\sigma} - \left[\kappa(OC)-u-\dfrac{\partial \hat{\theta}^T_{\sigma,OC}}{\partial \sigma}\right]l(z) \\ 
+    &- \dfrac{\dfrac{\partial \hat{\theta}^T_{\sigma,OC}}{\partial \sigma}g(\hat{\theta}^T_{\sigma,OC}) - \left[\dfrac{\partial \hat{\theta}^T_{\sigma,OC}}{\partial \sigma} - \kappa(OC)\right]g(\hat{\theta}^R_{\sigma,OC})}{G(\hat{\theta}^T_{\sigma,OC}) - G(\hat{\theta}^R_{\sigma,OC})}
+\end{align*}
+For each $u<\kappa(OC)$, we have:
+\begin{align}\label{eq:scorederiv}
+    \dfrac{\partial^2 \log h(u|\sigma,OC)}{\partial \sigma \partial u} = l(z) - \sigma\left[\kappa(OC)-u-\dfrac{\partial \hat{\theta}^T_{\sigma,OC}}{\partial \sigma}\right]l'(z) 
+\end{align}
+First, note that convexity (concavity) of $r$ combined with Lemma \ref{lemma:ineq} imply that:
+\begin{align}\label{eq:ineq2}
+    -\dfrac{r(\hat{\theta}^T_{\sigma,OC})}{r'(\hat{\theta}^T_{\sigma,OC})} + \sigma[\kappa(OC)-u] \substack{\leq \\ (\geq)} \sigma\left[\kappa(OC)-u-\dfrac{\partial \hat{\theta}^T_{\sigma,OC}}{\partial \sigma}\right]
+\end{align}
+
+
+\noindent \textbf{Convex Mills Ratio Case}: We first prove the case when $r$ is convex and $\Psi$ is non-decreasing if $\bar{\theta}<+\infty$ (or $g$ log-concave when $\bar{\theta}=+\infty$). There are four cases to consider:
+\vspace{-5pt}
+\begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+  \item If $g$ is log-concave, then $l'\leq 0$ and we can proceed to the next cases. If instead we drop log-concavity and replace it with the assumption that $\Psi$ is non-decreasing (when $\bar{\theta}<\infty$), then it could be that $l'(z) >  0$. We now tackle this case. First, by Lemma \ref{lemma:ineq}, convexity of $r$ gives:
+  \begin{align}\label{eq:ineq22}
+  -\dfrac{r(\hat{\theta}^T_{\sigma,OC})}{r'(\hat{\theta}^T_{\sigma,OC})} + \sigma[\kappa(OC)-u] \leq \sigma\left[\kappa(OC)-u-\dfrac{\partial \hat{\theta}^T_{\sigma,OC}}{\partial \sigma}\right] \leq \bar{\theta} - z
+  \end{align}
+  We then obtain:
+  \begin{align*}
+      \dfrac{\partial^2 \log h(u|\sigma,OC)}{\partial \sigma \partial u} &\geq l(z) - (\bar{\theta} - z)l'(z)  = \Psi'(z) \geq 0
+  \end{align*}
+  The first inequality is obtained using $l'(z)\geq 0$ and inequality \eqref{eq:ineq22}. The equality follows since $\Psi'(\theta) = l(\theta) - (\bar{\theta}-\theta)l'(\theta)$. The last inequality follows by assumption that $\theta\mapsto \Psi(\theta)$ is weakly increasing. 
+  \item (Suppose that $l'(z) \leq  0 \leq l(z)$): Since $u<\kappa(OC)$ and $\partial \hat{\theta}^T_{\sigma,OC}/\partial \sigma \leq 0$ by Proposition \ref{prop:topmarginal_cost_noise}, this implies that the RHS of equation \eqref{eq:scorederiv} is non-negative. 
+  \item (Suppose that $l'(z)= 0, l(z) < 0$): Note that:
+  \begin{gather*}
+    \forall \theta\in (\underline{\theta},\bar{\theta}),\quad l(\theta) = -\dfrac{1+r'(\theta)}{r(\theta)} \quad l'(\theta) = -\dfrac{r''(\theta)r(\theta) - r'(\theta)[1+r'(\theta)]}{r(\theta)^2}
+  \end{gather*}
+  Therefore, we have:
+  \begin{align*}
+    0 \leq r''(z)r(z) = r'(z)[1+r'(z)] \leq0 
+  \end{align*}
+  where the first inequality follows since $r$ is convex and the last inequality follows since $l(z)<0$ implies $r'(z)+1>0$. Thus, it must be that $r'(z) = 0$. Then $r$ being convex implies that $z$ is a global minimum. $z$ lies within the interior of the support of $G$. Thus we may select $z<\theta<\bar{\theta}$ with $r(\theta)<r(z)$ since $r$ is strictly decreasing. This yields a contradiction of $z$ being a global minimum of $r$. 
+  \item (Suppose that $l'(z)< 0, l(z) < 0$): We first establish two key results. We first have:
+  \begin{align}\label{eq:ineq3}
+  \dfrac{l(z)}{l'(z)} &= \dfrac{[1+r'(z)]r(z)}{r''(z)r(z) - r'(z)[1+r'(z)]} = \left[\dfrac{r''(z)}{1+r'(z)} - \dfrac{r'(z)}{r(z)}\right]^{-1} \leq -\dfrac{r(z)}{r'(z)}
+  \end{align}
+  where the inequality follows since $r$ is convex and the LHS is strictly positive. Next, notice that for all $\underline{\theta}<\hat{\theta}_1\leq \hat{\theta}_2<\bar{\theta}$, we have:
+  \begin{align}\label{eq:ineq4}
+      -\dfrac{r(\hat{\theta}_1)}{r'(\hat{\theta}_1)} = \int_{\hat{\theta}_1}^{\hat{\theta}_2}\left(1-\dfrac{r''(t)r(t)}{[r'(t)]^2}\right) \,dt - \dfrac{r(\hat{\theta}_2)}{r'(\hat{\theta}_2)} \leq [\hat{\theta}_2 - \hat{\theta}_1] - \dfrac{r(\hat{\theta}_2)}{r'(\hat{\theta}_2)} 
+  \end{align}
+  where the last inequality follows since $r''\geq 0$ by convexity of $r$. We thus have:
+  \begin{align*}
+      \dfrac{l(z)}{l'(z)} \leq  -\dfrac{r(z)}{r'(z)} \leq \sigma[\kappa(OC)-u] - \dfrac{r(\hat{\theta}^T_{\sigma,OC})}{r'(\hat{\theta}^T_{\sigma,OC})} \leq \sigma\left[\kappa(OC)-u-\dfrac{\partial \hat{\theta}^T_{\sigma,OC}}{\partial \sigma}\right] 
+  \end{align*}
+  where the second inequality follows from \eqref{eq:ineq4} with $\hat{\theta}_1=z$ and $\hat{\theta}_2 = \hat{\theta}^T_{\sigma,OC}$ and the last inequality follows by inequality \eqref{eq:ineq2}. Finally, since $l'(z)<0$, we have:
+  \begin{align*}
+  \dfrac{\partial^2 \log h(u|\sigma,OC)}{\partial \sigma \partial u} &= l(z) - \sigma\left[\kappa(OC)-u-\dfrac{\partial \hat{\theta}^T_{\sigma,OC}}{\partial \sigma}\right]l'(z) \geq 0
+  \end{align*}
+\end{enumerate}
+Thus, for all $(\sigma,OC)$ and $u\in(0,\kappa(OC))$:
+\begin{align}\label{eq:ineq5}
+    \dfrac{\partial^2 \log h(u|\sigma,OC)}{\partial \sigma \partial u} \geq 0
+\end{align}
+It thus follows that:
+\begin{align*}
+  \dfrac{\theta - \hat{\theta}^T_{\sigma_2,OC}}{\sigma_2}|\theta\in (\hat{\theta}^R_{\sigma_2,OC}, \hat{\theta}^T_{\sigma_2,OC}) \geq_{lr} \dfrac{\theta - \hat{\theta}^T_{\sigma_1,OC}}{\sigma_1}|\theta\in (\hat{\theta}^R_{\sigma_1,OC}, \hat{\theta}^T_{\sigma_1,OC})
+\end{align*}
+Because stochastic orders are preserved by increasing transformations, we have:
+\begin{align*}
+  W_R(\cdot|\sigma_2,OC) &\sim \bar{F}\left(-\dfrac{\theta - \hat{\theta}^T_{\sigma_2,OC}}{\sigma_2} + F^{-1}(1-OC/v^R)\right)|\theta\in (\hat{\theta}^R_{\sigma_2,OC}, \hat{\theta}^T_{\sigma_2,OC})\\ 
+  &\geq_{st} \bar{F}\left(-\dfrac{\theta - \hat{\theta}^T_{\sigma_1,OC}}{\sigma_1}+F^{-1}(1-OC/v^R)\right)|\theta\in (\hat{\theta}^R_{\sigma_1,OC}, \hat{\theta}^T_{\sigma_1,OC}) \\
+  &\sim W_R(\cdot|\sigma_1,OC)
+\end{align*}
+\noindent \textbf{Concave Mills Ratio Case}: We now prove the case when $r$ is concave and $\Psi$ is non-increasing if $\bar{\theta} < \infty$ (or $g$ log-concave when $\bar{\theta}=+\infty$). There are four cases to consider:
+\vspace{-5pt}
+\begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+  \item If $g$ is log-concave, then $l'\leq 0$ and we can proceed to the next cases. If instead we drop log-concavity and replace it with the assumption that $\Psi$ is non-increasing (when $\bar{\theta}<\infty$), then it could be that $l'(z) >  0$. We now tackle this case. First, by Lemma \ref{lemma:ineq}, concavity of $r$ gives:
+  \begin{align}\label{eq:ineq22_concave}
+  -\dfrac{r(\hat{\theta}^T_{\sigma,OC})}{r'(\hat{\theta}^T_{\sigma,OC})} + \sigma[\kappa(OC)-u] \geq \sigma\left[\kappa(OC)-u-\dfrac{\partial \hat{\theta}^T_{\sigma,OC}}{\partial \sigma}\right] \geq \bar{\theta} - z
+  \end{align}
+  We then obtain:
+  \begin{align*}
+      \dfrac{\partial^2 \log h(u|\sigma,OC)}{\partial \sigma \partial u} &\leq l(z) - (\bar{\theta} - z)l'(z)  = \Psi'(z) \leq 0
+  \end{align*}
+  The first inequality is obtained using $l'(z)\geq 0$ and inequality \eqref{eq:ineq22_concave}. The equality follows since $\Psi'(\theta) = l(\theta) - (\bar{\theta}-\theta)l'(\theta)$. The last inequality follows by assumption that $\theta\mapsto \Psi(\theta)$ is non-increasing. 
+  \item (Suppose that $l'(z) \leq 0 \leq l(z)$):   Note that:
+  \begin{gather*}
+    \forall \theta\in (\underline{\theta},\bar{\theta}),\quad l(\theta) = -\dfrac{1+r'(\theta)}{r(\theta)} \quad l'(\theta) = -\dfrac{r''(\theta)r(\theta) - r'(\theta)[1+r'(\theta)]}{r(\theta)^2}
+  \end{gather*}
+  We thus have that:
+  \begin{align}\label{eq:spec}
+      0\geq r''(z)r(z) \geq r'(z)[1+r'(z)] \geq 0
+  \end{align}
+  where the first inequality follows since $r$ is concave, the second inequality follows since $l'(z)\leq 0$, and the third inequality follows since $l(z)\geq 0$ implies that $r'(z)+1\leq 0$. Thus, we have that $r'(z)=-1$ or $r'(z) = 0$. In the latter case, since $r'(z)+1\leq 0$ we have $1\leq0$, yielding a contradiction. Thus, it must be that $r'(z)=-1$ and $l(z)=0$. But \eqref{eq:spec} implies that $l'(z)=0$, thus we have that:
+  \begin{align*}
+      \dfrac{\partial^2 \log h(u|\sigma,OC)}{\partial \sigma \partial u} &= l(z) - \sigma\left[\kappa(OC)-u-\dfrac{\partial \hat{\theta}^T_{\sigma,OC}}{\partial \sigma}\right]l'(z) = 0
+  \end{align*}
+  \item (Suppose that $l'(z)= 0, l(z) < 0$): Then we have that:
+  \begin{align*}
+    \dfrac{\partial^2 \log h(u|\sigma,OC)}{\partial \sigma \partial u} = l(z) - \sigma\left[\kappa(OC)-u-\dfrac{\partial \hat{\theta}^T_{\sigma,OC}}{\partial \sigma}\right]l'(z) = l(z) < 0
+  \end{align*}
+  \item (Suppose that $l'(z)< 0, l(z) < 0$): We first establish two key results. We first have:
+  \begin{align}\label{eq:ineq3_concave}
+  \dfrac{l(z)}{l'(z)} &= \dfrac{[1+r'(z)]r(z)}{r''(z)r(z) - r'(z)[1+r'(z)]} = \left[\dfrac{r''(z)}{1+r'(z)} - \dfrac{r'(z)}{r(z)}\right]^{-1} \geq -\dfrac{r(z)}{r'(z)}
+  \end{align}
+  where the inequality follows since $r$ is concave and the LHS is strictly positive. Next, notice that for all $\underline{\theta}<\hat{\theta}_1\leq \hat{\theta}_2<\bar{\theta}$, we have:
+  \begin{align}\label{eq:ineq4_concave}
+      -\dfrac{r(\hat{\theta}_1)}{r'(\hat{\theta}_1)} = \int_{\hat{\theta}_1}^{\hat{\theta}_2}\left(1-\dfrac{r''(t)r(t)}{[r'(t)]^2}\right) \,dt - \dfrac{r(\hat{\theta}_2)}{r'(\hat{\theta}_2)} \geq [\hat{\theta}_2 - \hat{\theta}_1] - \dfrac{r(\hat{\theta}_2)}{r'(\hat{\theta}_2)} 
+  \end{align}
+  where the last inequality follows since $r''\leq0$ by concavity of $r$. We thus have:
+  \begin{align*}
+      \dfrac{l(z)}{l'(z)} \geq  -\dfrac{r(z)}{r'(z)} \geq \sigma[\kappa(OC)-u] - \dfrac{r(\hat{\theta}^T_{\sigma,OC})}{r'(\hat{\theta}^T_{\sigma,OC})} \geq \sigma\left[\kappa(OC)-u-\dfrac{\partial \hat{\theta}^T_{\sigma,OC}}{\partial \sigma}\right] 
+  \end{align*}
+  where the second inequality follows from \eqref{eq:ineq4_concave} with $\hat{\theta}_1=z$ and $\hat{\theta}_2 = \hat{\theta}^T_{\sigma,OC}$ and the last inequality follows by inequality \eqref{eq:ineq2}. Finally, since $l'(z)<0$, we have:
+  \begin{align*}
+  \dfrac{\partial^2 \log h(u|\sigma,OC)}{\partial \sigma \partial u} &= l(z) - \sigma\left[\kappa(OC)-u-\dfrac{\partial \hat{\theta}^T_{\sigma,OC}}{\partial \sigma}\right]l'(z) \leq 0
+  \end{align*}
+\end{enumerate}
+Thus, for all $(\sigma,OC)$ and $u\in(0,\kappa(OC))$:
+\begin{align}\label{eq:ineq5_concave}
+    \dfrac{\partial^2 \log h(u|\sigma,OC)}{\partial \sigma \partial u} \leq 0
+\end{align}
+It thus follows that:
+\begin{align*}
+  \dfrac{\theta - \hat{\theta}^T_{\sigma_2,OC}}{\sigma_2}|\theta\in (\hat{\theta}^R_{\sigma_2,OC}, \hat{\theta}^T_{\sigma_2,OC}) \leq_{lr} \dfrac{\theta - \hat{\theta}^T_{\sigma_1,OC}}{\sigma_1}|\theta\in (\hat{\theta}^R_{\sigma_1,OC}, \hat{\theta}^T_{\sigma_1,OC})
+\end{align*}
+Because stochastic orders are preserved by increasing transformations, we have:
+\begin{align*}
+  W_R(\cdot|\sigma_2,OC) &\sim \bar{F}\left(-\dfrac{\theta - \hat{\theta}^T_{\sigma_2,OC}}{\sigma_2} + F^{-1}(1-OC/v^R)\right)|\theta\in (\hat{\theta}^R_{\sigma_2,OC}, \hat{\theta}^T_{\sigma_2,OC})\\ 
+  &\leq_{st} \bar{F}\left(-\dfrac{\theta - \hat{\theta}^T_{\sigma_1,OC}}{\sigma_1}+F^{-1}(1-OC/v^R)\right)|\theta\in (\hat{\theta}^R_{\sigma_1,OC}, \hat{\theta}^T_{\sigma_1,OC}) \\
+  &\sim W_R(\cdot|\sigma_1,OC)
+\end{align*}
+This establishes the result. 
+\end{proof}
+
+\begin{proof}{[\textbf{Proposition} ~\ref{prop:noiseincrease_ratioapps}]}
+Suppose first that $r$ is convex. Fix $(\sigma,OC)$.  Define:
+\begin{align*}
+    \delta(\sigma,OC) := \dfrac{\bar{G}(\hat{\theta}^T_{\sigma,OC})}{\bar{G}(\hat{\theta}^T_{\sigma,OC}-\sigma \kappa(OC)) - \bar{G}(\hat{\theta}^T_{\sigma,OC})} 
+\end{align*} 
+We have:
+\begin{align*}
+    \dfrac{\partial \log \delta(\sigma,OC)}{\partial \sigma} 
+    &= \dfrac{r(\hat{\theta}^T_{\sigma,OC}-\sigma \kappa(OC))-r(\hat{\theta}^T_{\sigma,OC})}{\bar{G}(\hat{\theta}^T_{\sigma,OC}-\sigma \kappa(OC)) - \bar{G}(\hat{\theta}^T_{\sigma,OC})}\,\dfrac{g(\hat{\theta}^T_{\sigma,OC}-\sigma \kappa(OC))}{\sigma} \\
+    &\qquad \times \left[-\sigma \dfrac{\partial \hat{\theta}^T_{\sigma,OC}}{\partial \sigma}\dfrac{1}{r(\hat{\theta}^T_{\sigma,OC})} - \dfrac{\sigma \kappa(OC)}{r(\hat{\theta}^T_{\sigma,OC}-\sigma \kappa(OC))-r(\hat{\theta}^T_{\sigma,OC})}\right]
+\end{align*}
+Since $r$ is strictly decreasing, the first two factors are non-negative. It therefore suffices to show that the term in square brackets is non-negative. Using the expressions for $\partial \mathcal{T}/\partial \sigma$ and $\partial \mathcal{T}/\partial \hat{\theta}^T$ in the proof of Lemma \ref{lemma:ineq}, notice that:
+\begin{align*}
+    -\sigma \dfrac{\partial \hat{\theta}^T_{\sigma,OC}}{\partial \sigma}\dfrac{1}{r(\hat{\theta}^T_{\sigma,OC})} &= \int_{0}^{\bar{\theta}-\hat{\theta}^T_{\sigma,OC}}\dfrac{u}{r(\hat{\theta}^T_{\sigma,OC})-r(u+\hat{\theta}^T_{\sigma,OC})} q(u|\sigma,OC)\,du \\
+    &\geq \dfrac{\sigma \kappa(OC)}{r(\hat{\theta}^T_{\sigma,OC}-\sigma \kappa(OC))-r(\hat{\theta}^T_{\sigma,OC})}
+\end{align*}
+where $q(\cdot|\sigma,OC)$ is a density:
+\begin{align*}
+    q(u|\sigma,OC) := \dfrac{f\left(F^{-1}(1-OC/v^T)-\dfrac{u}{\sigma}\right)\dfrac{\bar{G}(u+\hat{\theta}^T_{\sigma,OC})}{\bar{G}(\hat{\theta}^T_{\sigma,OC})}\left[\dfrac{1}{r(u+\hat{\theta}^T_{\sigma,OC})} - \dfrac{1}{r(\hat{\theta}^T_{\sigma,OC})}\right]}{\int_{0}^{\bar{\theta} - \hat{\theta}^T_{\sigma,OC}} f\left(F^{-1}(1-OC/v^T)-\dfrac{u}{\sigma}\right)\dfrac{\bar{G}(u+\hat{\theta}^T_{\sigma,OC})}{\bar{G}(\hat{\theta}^T_{\sigma,OC})}\left[\dfrac{1}{r(u+\hat{\theta}^T_{\sigma,OC})} - \dfrac{1}{r(\hat{\theta}^T_{\sigma,OC})}\right]\,du}
+\end{align*}
+The inequality follows since convexity of $r$ implies that, for all $u\in(0,\bar{\theta}-\hat{\theta}^T_{\sigma,OC})$, the slope of the chord to the right of $\hat{\theta}^T_{\sigma,OC}$ is no steeper than the slope of the chord to its left:
+\begin{align*}
+    0< \dfrac{r(\hat{\theta}^T_{\sigma,OC})-r(u+\hat{\theta}^T_{\sigma,OC})}{u} \leq -r'(\hat{\theta}^T_{\sigma,OC}) \leq \dfrac{r(\hat{\theta}^T_{\sigma,OC}-\sigma \kappa(OC))-r(\hat{\theta}^T_{\sigma,OC})}{\sigma\kappa(OC)}
+\end{align*}
+Thus, the integrand is bounded below by $\sigma\kappa(OC)/[r(\hat{\theta}^T_{\sigma,OC}-\sigma \kappa(OC))-r(\hat{\theta}^T_{\sigma,OC})]$ for every $u$, and $q(\cdot|\sigma,OC)$ integrates to one. We thus have that $\partial \log \delta(\sigma,OC)/\partial \sigma \geq 0$ for all $\sigma>0$. Integrating from $\sigma_1$ to $\sigma_2$ gives $\delta(\sigma_1,OC)\leq \delta(\sigma_2,OC)$. Since $\hat{\theta}^R_{\sigma,OC} = \hat{\theta}^T_{\sigma,OC}-\sigma\kappa(OC)$ by \eqref{eq:induced_regtype}, $\delta(\sigma,OC)$ is precisely the application ratio $a^T/a^R$ in the statement of the proposition. This establishes the result. The proof for the case where $r$ is concave follows analogously, with all chord inequalities reversed.
+\end{proof}
+
+\begin{proof}{[\textbf{Propositions} ~\ref{prop:noise_oc}, \ref{prop:noise_ratio}]} Consider the setting as in Lemma \ref{lemma:existence_payline_toeqm} as the initial equilibrium under consideration. Suppose that the mills ratio is convex. By Proposition \ref{prop:reg_acceptance_stable_frombelow}, we have that:
+\begin{align*}
+    \dfrac{\partial \mathcal{R}(OC(\bar{\lambda},\bar{\sigma}),\bar{\sigma})}{\partial OC} > 0
+\end{align*}
+Thus, there exists an open neighborhood $\mathcal{C}$ containing $OC(\bar{\lambda},\bar{\sigma})$ such that $\partial \mathcal{R}(OC,\bar{\sigma})/\partial OC >0$ for all $OC\in \mathcal{C}$. There exists an open neighborhood $\tilde{\Sigma}\subseteq \Sigma$ sufficiently small such that $OC(\bar{\lambda},\sigma)\in \mathcal{C}$ for all $\sigma\in\tilde{\Sigma}$. Take arbitrary $\sigma>\bar{\sigma}$ with $\sigma\in \tilde{\Sigma}$. Lemma \ref{lemma:existence_payline_toeqm} suggests there exists a stable equilibrium $(\hat{\theta}^R(\bar{\lambda},\sigma),\hat{\theta}^T(\bar{\lambda},\sigma))$ consistent with this noise increase. Suppose by contradiction that $OC(\bar{\lambda},\sigma) > OC(\bar{\lambda},\bar{\sigma})$. Then:
+\begin{align*}
+  \bar{\lambda}^R = \mathcal{R}(OC(\bar{\lambda},\bar{\sigma}),\bar{\sigma}) < \mathcal{R}(OC(\bar{\lambda},\sigma),\bar{\sigma}) \leq \mathcal{R}(OC(\bar{\lambda},\sigma),\sigma) = \bar{\lambda}^R
+\end{align*}
+where the first inequality follows since $OC\mapsto \mathcal{R}(OC,\bar{\sigma})$ is strictly increasing on $\mathcal{C}$ and $OC(\bar{\lambda},\bar{\sigma}),\allowbreak OC(\bar{\lambda},\sigma)\in \mathcal{C}$. The second inequality follows by Proposition \ref{prop:reg_noise}. This yields a contradiction. Thus, it must be that $OC(\bar{\lambda},\sigma) \leq OC(\bar{\lambda},\bar{\sigma})$. The stable equilibrium $(\hat{\theta}^R(\bar{\lambda},\sigma),\hat{\theta}^T(\bar{\lambda},\sigma))$ is consistent with higher noise and has a lower opportunity cost. This establishes Proposition \ref{prop:noise_oc}. 
+
+\noindent First, note that $\hat{\theta}^T(\bar{\lambda},\bar{\sigma}) = \hat\theta^T_{\bar{\sigma},OC(\bar{\lambda},\bar{\sigma})}$ and $\hat{\theta}^R(\bar{\lambda},\bar{\sigma}) = \hat{\theta}^R_{\bar{\sigma},OC(\bar{\lambda},\bar{\sigma})} = \hat{\theta}^T_{\bar{\sigma},OC(\bar{\lambda},\bar{\sigma})} - \bar{\sigma}\kappa(OC(\bar{\lambda},\bar{\sigma}))$ (where $\hat{\theta}^T_{\sigma,OC}$ and $\hat{\theta}^R_{\sigma,OC}$ are defined according to \eqref{eq:induced_toptype} and \eqref{eq:induced_regtype} replacing $\lambda^T$ with $\bar{\lambda}^T$). We have that:
+\begin{align*}
+    \dfrac{\bar{G}(\hat{\theta}^T(\bar{\lambda},\bar{\sigma}) )}{\bar{G}(\hat{\theta}^R(\bar{\lambda},\bar{\sigma}) ) - \bar{G}(\hat{\theta}^T(\bar{\lambda},\bar{\sigma}) )} &= \dfrac{1}{\dfrac{\bar{G}(\hat{\theta}^T_{\bar{\sigma},OC(\bar{\lambda},\bar{\sigma})}-\bar{\sigma}\kappa(OC(\bar{\lambda},\bar{\sigma})))}{\bar{G}(\hat{\theta}^T_{\bar{\sigma},OC(\bar{\lambda},\bar{\sigma})})} - 1} \\
+    &\leq \dfrac{1}{\dfrac{\bar{G}(\hat{\theta}^T_{\bar{\sigma},OC(\bar{\lambda},\sigma)}-\bar{\sigma}\kappa(OC(\bar{\lambda},\bar{\sigma})))}{\bar{G}(\hat{\theta}^T_{\bar{\sigma},OC(\bar{\lambda},\sigma)})} - 1} \\
+    &\leq \dfrac{1}{\dfrac{\bar{G}(\hat{\theta}^T_{\bar{\sigma},OC(\bar{\lambda},\sigma)}-\bar{\sigma}\kappa(OC(\bar{\lambda},\sigma)))}{\bar{G}(\hat{\theta}^T_{\bar{\sigma},OC(\bar{\lambda},\sigma)})} - 1} \\
+    &= \dfrac{\bar{G}(\hat{\theta}^T_{\bar{\sigma},OC(\bar{\lambda},\sigma)})}{\bar{G}(\hat{\theta}^R_{\bar{\sigma},OC(\bar{\lambda},\sigma)}) - \bar{G}(\hat{\theta}^T_{\bar{\sigma},OC(\bar{\lambda},\sigma)})}
+\end{align*}
+where the first inequality follows since strictly increasing hazard rate implies that $\bar{G}$ is strictly log-concave, so that $\theta\mapsto \bar{G}(\theta-\bar{\sigma}\kappa(OC(\bar{\lambda},\bar{\sigma})))/\bar{G}(\theta)$ is increasing, and $\hat{\theta}^T_{\bar{\sigma},OC(\bar{\lambda},\sigma)}\leq \hat{\theta}^T_{\bar{\sigma},OC(\bar{\lambda},\bar{\sigma})}$ because $OC(\bar{\lambda},\sigma)\leq OC(\bar{\lambda},\bar{\sigma})$ (by Proposition \ref{prop:topmarginal_cost_noise}, a lower opportunity cost lowers $\mathcal{T}(\hat{\theta}^T|\bar{\sigma},OC)$ at every marginal top applicant $\hat{\theta}^T$, so by Proposition \ref{prop:topacceptance_strictlydecreasig} and \eqref{eq:induced_toptype} the marginal top applicant must fall to restore the payline $\bar{\lambda}^T$). The second inequality follows since $OC\mapsto\kappa(OC)$ is increasing and $\bar{G}$ is decreasing. The last equality follows from \eqref{eq:induced_regtype}.
+
+\noindent Next, applying Proposition \ref{prop:noiseincrease_ratioapps} with opportunity cost fixed at $OC(\bar{\lambda},\sigma)$ and noise rising from $\bar{\sigma}$ to $\sigma$, we have that:
+\begin{align*}
+    \dfrac{\bar{G}(\hat{\theta}^T_{\bar{\sigma},OC(\bar{\lambda},\sigma)})}{\bar{G}(\hat{\theta}^R_{\bar{\sigma},OC(\bar{\lambda},\sigma)}) - \bar{G}(\hat{\theta}^T_{\bar{\sigma},OC(\bar{\lambda},\sigma)})} &\leq \dfrac{\bar{G}(\hat{\theta}^T_{\sigma,OC(\bar{\lambda},\sigma)})}{\bar{G}(\hat{\theta}^R_{\sigma,OC(\bar{\lambda},\sigma)}) - \bar{G}(\hat{\theta}^T_{\sigma,OC(\bar{\lambda},\sigma)})} \\
+    &= \dfrac{\bar{G}(\hat{\theta}^T(\bar{\lambda},\sigma) )}{\bar{G}(\hat{\theta}^R(\bar{\lambda},\sigma) ) - \bar{G}(\hat{\theta}^T(\bar{\lambda},\sigma) )}
+\end{align*}
+where the equality follows since the stable equilibrium $(\hat{\theta}^R(\bar{\lambda},\sigma),\hat{\theta}^T(\bar{\lambda},\sigma))$ has top payline $\bar{\lambda}^T$ and opportunity cost $OC(\bar{\lambda},\sigma)$, so that $\hat{\theta}^T(\bar{\lambda},\sigma) = \hat{\theta}^T_{\sigma,OC(\bar{\lambda},\sigma)}$ and $\hat{\theta}^R(\bar{\lambda},\sigma) = \hat{\theta}^R_{\sigma,OC(\bar{\lambda},\sigma)}$. Combining both chains of inequalities, the application ratio $a^T/a^R$ at the stable equilibrium $(\hat{\theta}^R(\bar{\lambda},\sigma),\hat{\theta}^T(\bar{\lambda},\sigma))$ is at least as large as that at the initial equilibrium $(\hat{\theta}^R(\bar{\lambda},\bar{\sigma}),\hat{\theta}^T(\bar{\lambda},\bar{\sigma}))$. This establishes Proposition \ref{prop:noise_ratio}. The proof for the case where the mills ratio is concave follows analogously. 
+\end{proof}
+
+
+\begin{proof}{[\textbf{Proposition} ~\ref{prop:multifield_stability}]}
+Fix a stable proportional allocation equilibrium with paylines $(\bar{\lambda}^{R},\bar{\lambda}^{T})$ and marginal types $(\hat{\theta}^{R,*}_i, \hat{\theta}^{T,*}_i)_{i=1,2}$ with corresponding equilibrium score cutoffs $\hat{x}^{T,*}_i,\hat{x}^{R,*}_i, i=1,2$. For each field $i$, let $\lambda\mapsto \hat{\theta}^P_i(\lambda),\hat{x}^P_i(\lambda)$ for $P\in \{R,T\}$ be defined as in Lemma \ref{lemma:existence_payline_toeqm} applied to field $i$, with evaluation noise held fixed at $\sigma_i$ (we suppress the dependence on $\sigma_i$ for brevity). They are continuously differentiable on $L^R\times L^T$, where $L^R,L^T$ are open sets containing $\bar{\lambda}^R,\bar{\lambda}^T$ that are chosen sufficiently small for both fields. Now, by definition of a stable fixed payline equilibrium, we have that for each $\lambda\in L^R\times L^T$:
+\begin{gather*}
+  \int_{\hat{\theta}_i^{T}(\lambda)}^{\bar{\theta}}\bar{F}_{\sigma_i}(\hat{x}^{T}_i(\lambda)|\theta) \,dG(\theta) = \lambda^T\bar{G}(\hat{\theta}^T_i(\lambda)) \\ 
+  \int_{\hat{\theta}_i^{R}(\lambda)}^{\hat{\theta}_i^{T}(\lambda)}\bar{F}_{\sigma_i}(\hat{x}^{R}_i(\lambda)|\theta) \,dG(\theta) = \lambda^R(G(\hat{\theta}^{T}_i(\lambda)) - G(\hat{\theta}^{R}_i(\lambda)))
+\end{gather*}
+The corresponding differential equations can thus be written as:
+\begin{gather*}
+  \dfrac{\partial \lambda^R(t)}{\partial t} = \mathcal{P}_R\left(B^R -  \lambda^R(t)\sum_{i=1,2}(G(\hat{\theta}^{T}_i(\lambda(t))) - G(\hat{\theta}^{R}_i(\lambda(t))))\right) \\ 
+  \dfrac{\partial \lambda^T(t)}{\partial t} = \mathcal{P}_T\left(B^T - \lambda^T(t)\sum_{i=1,2}\bar{G}(\hat{\theta}_i^T(\lambda(t)))\right)
+\end{gather*}
+Now, define $F:L^R\times L^T\rightarrow \mathbb{R}^2$ by:
+\begin{align*}
+  F(\lambda^R,\lambda^T) := \begin{bmatrix}\mathcal{P}_R\left(B^R -  \lambda^R\sum_{i=1,2}(G(\hat{\theta}^{T}_i(\lambda)) - G(\hat{\theta}^{R}_i(\lambda)))\right)  \\ \mathcal{P}_T\left(B^T - \lambda^T\sum_{i=1,2}\bar{G}(\hat{\theta}_i^T(\lambda))\right) \end{bmatrix}
+\end{align*}
+Denote $J\in \mathbb{R}^{2\times 2}$ the Jacobian of $F$ evaluated at the equilibrium paylines $(\bar{\lambda}^R,\bar{\lambda}^T)$. It has components:
+\begin{gather*}
+  J_{11} = -\mathcal{P}_R'(0)\sum_{i=1,2}\left[a_i^{R,*} + \bar{\lambda}^R\left(\dfrac{\partial \hat{\theta}_i^T(\bar{\lambda})}{\partial \lambda^R}g(\hat{\theta}_i^{T,*}) - \dfrac{\partial \hat{\theta}^R_i(\bar{\lambda})}{\partial \lambda^R}g(\hat{\theta}^{R,*}_i)\right)\right] \\ 
+  J_{12} = -\mathcal{P}_R'(0)\bar{\lambda}^R\sum_{i=1,2}\left(\dfrac{\partial \hat{\theta}_i^T(\bar{\lambda})}{\partial \lambda^T}g(\hat{\theta}_i^{T,*}) - \dfrac{\partial \hat{\theta}^R_i(\bar{\lambda})}{\partial \lambda^T}g(\hat{\theta}^{R,*}_i)\right)\\ 
+  J_{21} = \mathcal{P}_T'(0)\bar{\lambda}^T\sum_{i=1,2}\dfrac{\partial \hat{\theta}_i^T(\bar{\lambda}) }{\partial \lambda^R}g(\hat{\theta}^{T,*}_i) \\ 
+  J_{22} = -\mathcal{P}_T'(0)\sum_{i=1,2}\left[a_i^{T,*} - \bar{\lambda}^T\dfrac{\partial \hat{\theta}_i^T(\bar{\lambda})}{\partial \lambda^T}g(\hat{\theta}_i^{T,*})\right]
+\end{gather*}
+where $a_i^{R,*} = G(\hat{\theta}^{T,*}_i) - G(\hat{\theta}^{R,*}_i)$ and $a_i^{T,*} = \bar{G}(\hat{\theta}^{T,*}_i)$. It suffices to show that $J$ admits eigenvalues with strictly negative real part. First, notice that:
+\begin{align*}
+  \operatorname{tr} J = J_{11} + J_{22}<0
+\end{align*}
+Since $\mathcal{P}_R'(0),\mathcal{P}_T'(0)>0$, we have $J_{11},J_{22}<0$ using Lemmas \ref{lemma:lbdaR_increase} and \ref{lemma:lbdaT_increase}. Next, notice that:
+\begin{align*}
+  \operatorname{det} J &= J_{11}J_{22} - J_{12}J_{21} \\
+  &= \mathcal{P}_R'(0)\mathcal{P}_T'(0)\Bigg\{\underbrace{\sum_{i=1,2}\left[a_i^{R,*} - \bar{\lambda}^R\dfrac{\partial \hat{\theta}^R_i(\bar{\lambda})}{\partial \lambda^R}g(\hat{\theta}^{R,*}_i)\right]}_{>0}\,\underbrace{\sum_{i=1,2}\left[a_i^{T,*} - \bar{\lambda}^T\dfrac{\partial \hat{\theta}_i^T(\bar{\lambda})}{\partial \lambda^T}g(\hat{\theta}_i^{T,*})\right]}_{>0} \\
+  &\hphantom{= \mathcal{P}_R'(0)\mathcal{P}_T'(0)\Bigg\{} + \bar{\lambda}^R\underbrace{\sum_{i=1,2}\dfrac{\partial \hat{\theta}_i^T(\bar{\lambda})}{\partial \lambda^R}g(\hat{\theta}^{T,*}_i)}_{>0}\,\underbrace{\sum_{i=1,2}\left[a_i^{T,*} - \bar{\lambda}^T\dfrac{\partial \hat{\theta}^R_i(\bar{\lambda})}{\partial \lambda^T}g(\hat{\theta}^{R,*}_i)\right]}_{>0}\Bigg\} > 0
+\end{align*}
+There are two cases:
+\begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+  \item If the eigenvalues of $J$ are complex, then they are complex conjugates $a\pm bi$. Thus, $\operatorname{tr} J = 2a < 0$ gives $a<0$, as desired. 
+  \item If both eigenvalues of $J$ are real, then $\operatorname{tr} J<0$ and $\operatorname{det} J>0$ imply that their sum is strictly negative and their product is strictly positive. Thus, both eigenvalues are strictly negative, as desired. 
+\end{enumerate}
+Thus, the Hartman--Grobman theorem gives us local asymptotic stability of the equilibrium paylines $(\bar{\lambda}^R,\bar{\lambda}^T)$ under \eqref{eq:rateofadjustment}.  
+\end{proof}
+
+\begin{proof}{[\textbf{Lemma} ~\ref{lemma:logconcave_implies_phi}]} Define $l(\theta) = g'(\theta)/g(\theta)$. First, note that:
+\begin{gather*}
+  \Psi'(\theta) = l(\theta) - (\bar{\theta}-\theta)l'(\theta) \\
+  l(\theta) = -\dfrac{1+r'(\theta)}{r(\theta)} \\ 
+  l'(\theta) = -\dfrac{r''(\theta)r(\theta) - r'(\theta)[1+r'(\theta)]}{r(\theta)^2}
+\end{gather*}
+Let $\tilde{\theta}\in(\underline{\theta},\bar{\theta})$. Suppose first that $r$ is convex. There are three cases:
+\vspace{-5pt}
+\begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+   \item If $l(\tilde{\theta})\geq 0$, then $\Psi'(\tilde{\theta})\geq0$ since $l'\leq 0$ by log-concavity of $g$. 
+   \item If $l(\tilde{\theta})<0 = l'(\tilde{\theta})$, then we have that:
+   \begin{align*}
+    0\leq r''(\tilde{\theta})r(\tilde{\theta}) = r'(\tilde{\theta})[1+r'(\tilde{\theta})]
+   \end{align*}
+   Since $r'\leq 0$, this implies that $r'(\tilde{\theta})\leq -1$ or $r'(\tilde{\theta})=0$. If the latter is true, then $r$ being convex implies that $\tilde{\theta}$ is a global minimum. Since $r(\bar{\theta}) = 0$, this implies that $r(\tilde{\theta})=0$, yielding a contradiction since $\tilde{\theta}$ lies in the interior of the support of $G$. Thus, it must be that $r'(\tilde{\theta})\leq -1$. But this implies that $l(\tilde{\theta})\geq 0$, yielding a contradiction. So this case cannot occur. 
+   \item Suppose that $l(\tilde{\theta})<0,l'(\tilde{\theta})<0$. Note that $l(\tilde{\theta}) = -[1+r'(\tilde{\theta})]/r(\tilde{\theta})$ and $r'(\tilde{\theta})<0$ (if $r'(\tilde{\theta})=0$, then since $r$ is convex this implies that $r$ has reached its global minimum. Since $r(\bar{\theta})=0$, we have that $r(\tilde{\theta})=0$, yielding a contradiction since $\tilde{\theta}$ lies in the interior of the support of $G$). We have that:
+   \begin{align*}
+    \dfrac{l(\tilde{\theta})}{l'(\tilde{\theta})} &= \dfrac{r(\tilde{\theta})[1+r'(\tilde{\theta})]}{r''(\tilde{\theta})r(\tilde{\theta}) - r'(\tilde{\theta})[1+r'(\tilde{\theta})]} = \left[\dfrac{r''(\tilde{\theta})}{1+r'(\tilde{\theta})} - \dfrac{r'(\tilde{\theta})}{r(\tilde{\theta})}\right]^{-1} \leq -\dfrac{r(\tilde{\theta})}{r'(\tilde{\theta})} \leq \bar{\theta}-\tilde{\theta}
+   \end{align*}
+   where the first inequality follows since $r''\geq 0$ and $l(\tilde{\theta})<0$. The last inequality follows since $r$ is convex and $r(\bar{\theta})=0$. We thus have $\Psi'(\tilde{\theta})\geq 0$. 
+\end{enumerate}
+Thus, in all cases we have that $\Psi'(\tilde{\theta})\geq 0$. We now prove the result when $r$ is concave. There are again three cases:
+\vspace{-5pt}
+\begin{enumerate}[label=(\arabic*),ref=\thelemma(\arabic*)]
+   \item If $l(\tilde{\theta})\geq 0$, then $r'(\tilde{\theta})\leq -1$. Since $g$ is log-concave, we have that $l'\leq0$ and thus: 
+   \begin{align*}
+      r''(\tilde{\theta})r(\tilde{\theta})\geq r'(\tilde{\theta})[1+r'(\tilde{\theta})] \geq 0
+   \end{align*}
+   But $r''\leq 0$ implies that $r''(\tilde{\theta}) = 0$. Consequently, $r'(\tilde{\theta}) = 0$ or $r'(\tilde{\theta})=-1$. The former yields a contradiction with $r'(\tilde{\theta})\leq -1$, thus the latter must hold. Consequently, $l(\tilde{\theta})=l'(\tilde{\theta})=0$, implying that $\Psi'(\tilde{\theta})=0$. 
+   \item If $l(\tilde{\theta})<0,l'(\tilde{\theta})=0$, then $\Psi'(\tilde{\theta})<0$. 
+   \item Suppose that $l(\tilde{\theta})<0,l'(\tilde{\theta})<0$. Note that if $r'(\tilde{\theta})=0$, then $l'(\tilde{\theta}) = -r''(\tilde{\theta})/r(\tilde{\theta})\geq 0$, yielding a contradiction. Thus, it must be that $r'(\tilde{\theta})<0$. Next, notice that:
+   \begin{align*}
+      \dfrac{l(\tilde{\theta})}{l'(\tilde{\theta})} &= \dfrac{r(\tilde{\theta})[1+r'(\tilde{\theta})]}{r''(\tilde{\theta})r(\tilde{\theta}) - r'(\tilde{\theta})[1+r'(\tilde{\theta})]} = \left[\dfrac{r''(\tilde{\theta})}{[1+r'(\tilde{\theta})]} - \dfrac{r'(\tilde{\theta})}{r(\tilde{\theta})}\right]^{-1} \geq -\dfrac{r(\tilde{\theta})}{r'(\tilde{\theta})} \geq \bar{\theta}-\tilde{\theta}
+   \end{align*}
+   where the first inequality follows since $r''\leq 0$ and $l(\tilde{\theta})<0$. The second inequality follows since $r$ is concave and $r(\bar{\theta})=0$. We thus have that $\Psi'(\tilde{\theta})\leq0$. 
+\end{enumerate}
+Thus, in all cases we have that $\Psi'(\tilde{\theta})\leq0$. 
+\end{proof}
+
+\begin{proof}{[\textbf{Lemma} ~\ref{lemma:phi_characterization}]}
+Fix $\hat{\theta}_1<\hat{\theta}_2$ and let $h(\cdot|\hat{\theta})\sim (\theta - \hat{\theta})/(\bar{\theta} - \hat{\theta})|\theta > \hat{\theta}$. We have that:
+\begin{align*}
+  h(u|\hat{\theta}) = \dfrac{(\bar{\theta} - \hat{\theta})g((\bar{\theta}-\hat{\theta})u + \hat{\theta})}{\bar{G}(\hat{\theta})}1(0<u<1)
+\end{align*}
+Defining $v(u|\hat{\theta}_1,\hat{\theta}_2) := \log h(u|\hat{\theta}_1) - \log h(u|\hat{\theta}_2)$, we have that:
+\begin{align*}
+  v'(u) &= \dfrac{(\bar{\theta} - [\bar{\theta}u + \hat{\theta}_1[1-u]])\dfrac{\partial \log g(\bar{\theta}u + \hat{\theta}_1[1-u])}{\partial \theta} - (\bar{\theta} - [\bar{\theta}u + \hat{\theta}_2[1-u]])\dfrac{\partial \log g(\bar{\theta}u + \hat{\theta}_2[1-u])}{\partial \theta}}{1-u} \\
+  &= \dfrac{\Psi(\bar{\theta}u + \hat{\theta}_2[1-u]) - \Psi(\bar{\theta}u + \hat{\theta}_1[1-u])}{1-u}
+\end{align*}
+Suppose first that $\Psi$ is non-decreasing, then $v'(u|\hat{\theta}_1,\hat{\theta}_2)\geq 0$ for all $u\in(0,1)$ and thus $h(\cdot|\hat{\theta}_1)\geq_{lr} h(\cdot|\hat{\theta}_2)$, as desired. Now suppose conversely that $h(\cdot|\hat{\theta}_1)\geq_{lr} h(\cdot|\hat{\theta}_2)$ for all $\hat{\theta}_1<\hat{\theta}_2$. Let $z_1<z_2$ be arbitrary. Fix $u^*\in(0,1)$ sufficiently small such that $\hat{\theta}_i = (z_i-\bar{\theta}u^*)/(1-u^*)>\underline{\theta}$ for $i=1,2$, so that $\bar{\theta}u^* + \hat{\theta}_i[1-u^*] = z_i$. Since $\hat{\theta}_1<\hat{\theta}_2$, we have that $h(\cdot|\hat{\theta}_1)\geq_{lr} h(\cdot|\hat{\theta}_2)$ and thus $[\Psi(z_2) - \Psi(z_1)]/(1-u^*) = v'(u^*|\hat{\theta}_1,\hat{\theta}_2)\geq 0$. Thus $\Psi(z_1)\leq\Psi(z_2)$, proving the converse result. 
+\end{proof}

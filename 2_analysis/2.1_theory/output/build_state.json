@@ -1,0 +1,146 @@
+{
+  "br_shift": {
+    "files": [
+      "br_shift.tex"
+    ],
+    "fingerprint": "a0d29d48fb972a6f"
+  },
+  "br_shift_arrows": {
+    "files": [
+      "br_shift_arrows.tex"
+    ],
+    "fingerprint": "e04abc5d2cc19156"
+  },
+  "densities": {
+    "files": [
+      "density_after.tex",
+      "density_before.tex"
+    ],
+    "fingerprint": "d6001a2bf6147109"
+  },
+  "field_pair": {
+    "files": [
+      "field_pair.tex"
+    ],
+    "fingerprint": "11bf4e910c43eb05"
+  },
+  "general_eq": {
+    "files": [
+      "general_eq.tex"
+    ],
+    "fingerprint": "cbf4bfc7b27b63b1"
+  },
+  "misc_acceptance": {
+    "files": [
+      "misc_acceptance.tex"
+    ],
+    "fingerprint": "1e8acf8f2d8e6902"
+  },
+  "misc_eq1": {
+    "files": [
+      "misc_eq1.tex"
+    ],
+    "fingerprint": "a9b95d0a28d0c0d8"
+  },
+  "misc_eq2": {
+    "files": [
+      "misc_eq2.tex"
+    ],
+    "fingerprint": "04dc774d8894fae9"
+  },
+  "misc_params": {
+    "files": [
+      "misc_params.tex"
+    ],
+    "fingerprint": "3ff5526ec1e24251"
+  },
+  "noise_rotation": {
+    "files": [
+      "noise_rotation_a.tex",
+      "noise_rotation_b.tex",
+      "noise_rotation_c.tex"
+    ],
+    "fingerprint": "bf8e7651a0987369"
+  },
+  "oc_acceptance": {
+    "files": [
+      "oc_acceptance.tex"
+    ],
+    "fingerprint": "28c128e4bce34c0f"
+  },
+  "oc_noise_shift": {
+    "files": [
+      "oc_noise_shift.tex"
+    ],
+    "fingerprint": "e37b9752f0e47c12"
+  },
+  "partial_eq": {
+    "files": [
+      "partial_eq.tex"
+    ],
+    "fingerprint": "70ba5cfbfed9de13"
+  },
+  "payline_rise": {
+    "files": [
+      "payline_rise.tex"
+    ],
+    "fingerprint": "945869a8ffa3636c"
+  },
+  "qq_equilibrium": {
+    "files": [
+      "qq_equilibrium.tex"
+    ],
+    "fingerprint": "c11a5be6b6bb4a37"
+  },
+  "qq_orders": {
+    "files": [
+      "qq_orders.tex"
+    ],
+    "fingerprint": "d5eb731a87ab92f9"
+  },
+  "qq_proof12": {
+    "files": [
+      "qq_proof12.tex"
+    ],
+    "fingerprint": "25d23a74f90c7459"
+  },
+  "qq_rays": {
+    "files": [
+      "qq_rays.tex"
+    ],
+    "fingerprint": "0a4cac50ec2848a1"
+  },
+  "qq_top": {
+    "files": [
+      "qq_top.tex"
+    ],
+    "fingerprint": "e1964f1e86663eaf"
+  },
+  "qq_transfer": {
+    "files": [
+      "payline_restore.tex",
+      "qq_diagonal.tex",
+      "qq_pair.tex",
+      "qq_residual.tex"
+    ],
+    "fingerprint": "4c711f2fd005c9a6"
+  },
+  "regular_eq": {
+    "files": [
+      "regular_eq.tex"
+    ],
+    "fingerprint": "756bb5138a286511"
+  },
+  "top_acceptance": {
+    "files": [
+      "top_acceptance.tex"
+    ],
+    "fingerprint": "f44dcb37e817a18f"
+  },
+  "top_tradeoff": {
+    "files": [
+      "top_tradeoff.tex"
+    ],
+    "fingerprint": "ce3f3e11431445a3"
+  }
+}

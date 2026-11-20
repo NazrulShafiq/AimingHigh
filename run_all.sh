@@ -1,21 +1,10 @@
-#!/bin/bash   
+#!/usr/bin/env bash
+# Rebuild the project from the raw data to the paper, one module after another.
+# Run setup.sh once first, and activate the environment: source .venv/bin/activate
+set -euo pipefail
+cd "$(dirname "${BASH_SOURCE[0]}")"
 
-# Trap to handle shell script errors 
-trap 'error_handler' ERR
-error_handler() {
-    error_time=$(date '+%Y-%m-%d %H:%M:%S')
-    echo -e "\n\033[0;31mWarning\033[0m: run_all.sh failed at ${error_time}. Check above for details." # display warning in terminal
-    exit 1 # early exit with error code
-}
-
-# Replace with name of your project
-PROJECT_NAME="template"
-
-# Tell user what we're doing
-echo -e "Making \033[35m${PROJECT_NAME}\033[0m with shell: ${SHELL}"
-
-# Run makefiles of each module
-${SHELL} 1_data/make.sh
-${SHELL} 2_analysis/make.sh
-${SHELL} 3_slides/make.sh
-${SHELL} 4_paper/make.sh
+bash 1_data/make.sh
+bash 2_analysis/2.1_theory/make.sh
+bash 2_analysis/2.2_descriptives/make.sh
+bash 4_paper/make.sh

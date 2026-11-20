@@ -1,17 +1,28 @@
 ### Overview
-Provide a brief overview of the purpose of the directory.
+Raw MSCA data: application counts for the Global (GF) and European (EF) Fellowships by
+scientific panel, and the individual reviewer scores of Individual Fellowship proposals.
+These files are never modified; `1_data` reads them and writes clean tables.
+
+### Files
+| File | Original name | Contents used by the code |
+| --- | --- | --- |
+| `MSCA_Data_and_Institutional_Changes.xlsx` | `MSCA_Data_and_Institutional_Changes (2).xlsx` | Sheet `Data`: eligible EF and GF proposals by call year and panel, 2017–2025. Sheet `Reviewer scores`: the three reviewer scores (0–100) of each of the 43,164 Individual Fellowship proposals in the 2014–2018 calls (Pina et al. 2021, eLife, Supplementary file 1). |
+| `Percentiles_MSCA.xlsx` | `Percentiles MSCA.xlsx` | One sheet per call year, 2016–2024, transcribing the European Commission's published score percentiles; the row `Number of eligible proposals` gives the 2016 counts, which the main workbook lacks. |
+
+The main workbook holds many more sheets (budgets, institutional dates, funded projects,
+reports, ...) that the current code does not use.
 
 ### Source
-Give contact information, url, etc. for the source of the data.
+Every source behind the main workbook is listed, with URLs and retrieval dates, in its sheet
+`Sources and citations`; the sheet `Data` also gives the source URLs and provenance notes
+for each row.
 
 ### When/where obtained & original form of files
-Give detailed information on when the files were obtained, how they were obtained (e.g., downloaded from www.xxx.edu, by e-mail, on a hard drive, etc.), and the form they came in (e.g., a single zip archive called "rawdata.zip"). The goal is that anyone who follows these instructions exactly and has the right access should be able to obtain the dataset.
-
-### Description
-Briefly describe the contents of the subdirectories and files. You do not necessarily need to describe each file separately, but a user should be able to look at the directory and understand the organization and purpose of the files.
-
-### Terms of Use
-What are the terms or restrictions for using the data or publishing findings? Either state these here or state where they can be found within this directory.
+TODO: record when and how each workbook was obtained.
 
 ### Notes
-Note anything else you think we should record about the raw data.
+- The main workbook is 89 MB. GitHub warns above 50 MB and rejects files above 100 MB, so
+  consider tracking it with Git LFS (`git lfs track "0_raw/*.xlsx"`).
+- Known quirks handled by `1_data/source/build_msca_data.py`: the 2023 percentile sheet
+  labels the GF environment column `GF-ENY` instead of `GF-ENV`, and row labels vary slightly
+  between years.

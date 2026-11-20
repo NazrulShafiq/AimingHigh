@@ -1,52 +1,27 @@
-#!/bin/bash   
+#!/usr/bin/env bash
+# Module 4_paper: compile the paper into output/, from the LaTeX sources in source/ and the
+# figures and tables in 2_analysis/2.1_theory/output and 2_analysis/2.2_descriptives/output.
+#   Writeup.tex          the paper
+#   Writeup_format.tex   the same text in the Econometrica working-paper format
+# latexmk keeps its auxiliary files in output/aux/ (ignored by git) and reruns only the steps
+# that changed sources or figures require; delete output/aux/ to compile from scratch.
+# The full LaTeX log of each document goes to output/make.log.
+set -euo pipefail
 
-# Trap to handle shell script errors 
-trap 'error_handler' ERR
-error_handler() {
-    error_time=$(date '+%Y-%m-%d %H:%M:%S')
-    echo -e "\n\033[0;31mWarning\033[0m: make.sh failed at ${error_time}. Check above for details." # display warning in terminal
-    exit 1 # early exit with error code
-}
+MODULE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LOG="${MODULE_DIR}/output/make.log"
+DOCS=(Writeup Writeup_format)
 
-# Set paths
-# (Make sure REPO_ROOT is set to point to the root of the repository!)
-MAKE_SCRIPT_DIR="$(cd "$(dirname -- "$0")" && pwd -P)"
-REPO_ROOT="$(git rev-parse --show-toplevel)"
-MODULE=$(basename "$MAKE_SCRIPT_DIR")
-LOGFILE="${MAKE_SCRIPT_DIR}/output/make.log"
+mkdir -p "${MODULE_DIR}/output"
+echo "Making 4_paper: started $(date '+%Y-%m-%d %H:%M:%S')" | tee "${LOG}"
 
-# Check setup
-source "${REPO_ROOT}/lib/shell/check_setup.sh"
+cd "${MODULE_DIR}/source"          # where .latexmkrc sends everything to ../output
+for doc in "${DOCS[@]}"; do
+    echo "  compiling ${doc}.tex" | tee -a "${LOG}"
+    if ! latexmk -interaction=nonstopmode -halt-on-error "${doc}.tex" >> "${LOG}" 2>&1; then
+        echo "  ${doc}.tex failed; see output/aux/${doc}/${doc}.log" | tee -a "${LOG}"
+        exit 1
+    fi
+done
 
-# Tell user what we're doing
-echo -e "\n\nMaking module \033[35m${MODULE}\033[0m with shell ${SHELL}"
-
-# Load settings & tools
-source "${REPO_ROOT}/local_env.sh"
-source "${REPO_ROOT}/lib/shell/run_shell.sh"
-#source "${REPO_ROOT}/lib/shell/run_xxx.sh"
-
-# Clear output directory
-# (Guarantees that all output is produced from a clean run of the code)
-rm -rf "${MAKE_SCRIPT_DIR}/output"
-mkdir -p "${MAKE_SCRIPT_DIR}/output"
-
-# Add symlink input files to local /input/ directory
-# (Make sure get_inputs.sh is updated to pull in all needed input files!)
-(   cd "${MAKE_SCRIPT_DIR}"
-    source "${MAKE_SCRIPT_DIR}/get_inputs.sh"
-)
-
-# Run scripts
-# (Do this in a subshell so we return to the original working directory
-# after scripts are run)
- echo -e "\nmake.sh started at $(date '+%Y-%m-%d %H:%M:%S')"
-
-(
-cd "${MAKE_SCRIPT_DIR}/source"
-
-run_shell my_shell_script.sh "${LOGFILE}" || exit 1
-# run_xxx my_script.xx "${LOGFILE}" || exit 1
-) || false
-
-echo -e "\nmake.sh finished at $(date '+%Y-%m-%d %H:%M:%S')" | tee -a "${LOGFILE}"
+echo "Making 4_paper: finished $(date '+%Y-%m-%d %H:%M:%S')" | tee -a "${LOG}"

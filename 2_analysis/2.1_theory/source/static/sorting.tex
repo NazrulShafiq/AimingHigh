@@ -1,0 +1,117 @@
+% Sorting of applicants across programs, on the merit scale theta.
+% Shared primitives: F standard normal, sigma=2.0, v^R=0.35, v^T=1.0, c=0.24, thetabar=1.6.
+% Panel (a): xhat^R=-0.6997, xhat^T=1.1243 -> crossing theta=-0.7998 (payoff 0.1680 < c),
+%            red curve meets c at theta=-0.2883, thetahat^R=0.2678; slope ratio at crossing 1.80
+% Panel (b): xhat^R=-1.5673, xhat^T=1.6166 -> thetahat^R=-0.5998 < thetahat^T=0.5678 (payoff 0.3000 > c)
+\pgfplotsset{sortaxis/.style={
+  width=14.8cm, height=7.6cm,
+  xmin=-1.70, xmax=2.35, ymin=0, ymax=0.66,
+  axis x line=bottom, axis y line=left,
+  axis line style={-{Stealth[length=7pt]},black},
+  clip=false, axis on top,
+  xlabel={$\theta$},
+  every axis x label/.style={at={(current axis.right of origin)},anchor=west,xshift=10pt},
+  tick label style={font=\small}, label style={font=\small},
+  title style={font=\small},
+  ytick=\empty, xtick=\empty, tick style={black},
+}}
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[sortaxis, title={(a) $\hat{\theta}^R\geq\hat{\theta}^T$: Regular program attracts no applicants}]
+  % --- applicant regions (drawn first, beneath everything) ---
+  \addplot[draw=none,fill=gray!14,forget plot] coordinates {(-1.6,0) (-1.6,0.66) (-0.28831,0.66) (-0.28831,0)} \closedcycle;
+  \addplot[draw=none,fill=red!9,forget plot] coordinates {(-0.28831,0) (-0.28831,0.66) (1.6,0.66) (1.6,0)} \closedcycle;
+  \node[anchor=north,font=\footnotesize,text=black!65] at (axis cs:-0.9442,0.648) {Non-Applicants};
+  \node[anchor=north,font=\footnotesize,text=red!60!black] at (axis cs:0.6558,0.648) {Top Applicants};
+  \draw[gray,dashed] (axis cs:-1.70,0.24) -- (axis cs:1.6,0.24);
+  \draw[gray,dashed] (axis cs:-0.79976,0) -- (axis cs:-0.79976,0.16802);
+  \draw[gray,dashed] (axis cs:-0.28831,-0.08) -- (axis cs:-0.28831,0.24000);
+  \draw[gray,dashed] (axis cs:0.26778,0) -- (axis cs:0.26778,0.24000);
+  \draw[gray,dashed] (axis cs:1.6,0) -- (axis cs:1.6,0.59400);
+  \node[anchor=east,font=\small] at (axis cs:-1.74,0.24) {$c$};
+  \node[anchor=north,font=\small] at (axis cs:1.6,-0.012) {$\bar{\theta}$};
+  \node[anchor=north,font=\small] at (axis cs:-0.79976,-0.012) {$\hat{\theta}^T$};
+  \node[anchor=north,font=\small] at (axis cs:0.26778,-0.012) {$\hat{\theta}^R$};
+  \addplot[blue,very thick,smooth] coordinates {
+(-1.6000,0.1142) (-1.5333,0.1184) (-1.4667,0.1227) (-1.4000,0.1271) (-1.3333,0.1315) (-1.2667,0.1359)
+(-1.2000,0.1404) (-1.1333,0.1450) (-1.0667,0.1495) (-1.0000,0.1541) (-0.9333,0.1587) (-0.8667,0.1634)
+(-0.8000,0.1680) (-0.7333,0.1727) (-0.6667,0.1773) (-0.6000,0.1820) (-0.5333,0.1866) (-0.4667,0.1912)
+(-0.4000,0.1958) (-0.3333,0.2004) (-0.2667,0.2050) (-0.2000,0.2095) (-0.1333,0.2140) (-0.0667,0.2185)
+(0.0000,0.2229) (0.0667,0.2272) (0.1333,0.2315) (0.2000,0.2358) (0.2667,0.2399) (0.3333,0.2440)
+(0.4000,0.2481) (0.4667,0.2520) (0.5333,0.2559) (0.6000,0.2597) (0.6667,0.2635) (0.7333,0.2671)
+(0.8000,0.2707) (0.8667,0.2741) (0.9333,0.2775) (1.0000,0.2808) (1.0667,0.2840) (1.1333,0.2871)
+(1.2000,0.2901) (1.2667,0.2930) (1.3333,0.2959) (1.4000,0.2986) (1.4667,0.3012) (1.5333,0.3038)
+(1.6000,0.3062)};
+  \addplot[red,very thick,smooth] coordinates {
+(-1.6000,0.0866) (-1.5333,0.0920) (-1.4667,0.0976) (-1.4000,0.1034) (-1.3333,0.1096) (-1.2667,0.1159)
+(-1.2000,0.1226) (-1.1333,0.1295) (-1.0667,0.1367) (-1.0000,0.1441) (-0.9333,0.1518) (-0.8667,0.1598)
+(-0.8000,0.1680) (-0.7333,0.1765) (-0.6667,0.1853) (-0.6000,0.1943) (-0.5333,0.2036) (-0.4667,0.2132)
+(-0.4000,0.2230) (-0.3333,0.2331) (-0.2667,0.2434) (-0.2000,0.2539) (-0.1333,0.2647) (-0.0667,0.2758)
+(0.0000,0.2870) (0.0667,0.2985) (0.1333,0.3101) (0.2000,0.3220) (0.2667,0.3340) (0.3333,0.3462)
+(0.4000,0.3586) (0.4667,0.3711) (0.5333,0.3838) (0.6000,0.3966) (0.6667,0.4095) (0.7333,0.4225)
+(0.8000,0.4356) (0.8667,0.4488) (0.9333,0.4620) (1.0000,0.4752) (1.0667,0.4885) (1.1333,0.5018)
+(1.2000,0.5151) (1.2667,0.5284) (1.3333,0.5416) (1.4000,0.5548) (1.4667,0.5680) (1.5333,0.5810)
+(1.6000,0.5940)};
+  \node[red,anchor=west,font=\small]  at (axis cs:1.70,0.5940) {$\theta\mapsto v^T\bar{F}_{\sigma}(\hat{x}^T|\theta)$};
+  \node[blue,anchor=west,font=\small] at (axis cs:1.70,0.3062) {$\theta\mapsto v^R\bar{F}_{\sigma}(\hat{x}^R|\theta)$};
+\end{axis}
+\end{tikzpicture}
+\phantomsubcaption
+\label{fig:sorting_a}
+\end{subfigure}
+
+\vspace{1.6em}
+
+\begin{subfigure}{\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[sortaxis, title={(b) $\hat{\theta}^R<\hat{\theta}^T$: Full sorting on merit}]
+  % --- applicant regions (drawn first, beneath everything) ---
+  \addplot[draw=none,fill=gray!14,forget plot] coordinates {(-1.6,0) (-1.6,0.66) (-0.59982,0.66) (-0.59982,0)} \closedcycle;
+  \addplot[draw=none,fill=blue!9,forget plot] coordinates {(-0.59982,0) (-0.59982,0.66) (0.56779,0.66) (0.56779,0)} \closedcycle;
+  \addplot[draw=none,fill=red!9,forget plot] coordinates {(0.56779,0) (0.56779,0.66) (1.6,0.66) (1.6,0)} \closedcycle;
+  \node[anchor=north,font=\footnotesize,text=black!65] at (axis cs:-1.0999,0.648) {Non-Applicants};
+  \node[anchor=north,font=\footnotesize,text=blue!60!black] at (axis cs:-0.0160,0.648) {Regular Applicants};
+  \node[anchor=north,font=\footnotesize,text=red!60!black] at (axis cs:1.0839,0.648) {Top Applicants};
+  \draw[gray,dashed] (axis cs:-1.70,0.24) -- (axis cs:1.6,0.24);
+  \draw[gray,dashed] (axis cs:-0.59982,0) -- (axis cs:-0.59982,0.24000);
+  \draw[gray,dashed] (axis cs:0.56779,0) -- (axis cs:0.56779,0.30000);
+  \draw[gray,dashed] (axis cs:1.6,0) -- (axis cs:1.6,0.49669);
+  \node[anchor=east,font=\small] at (axis cs:-1.74,0.24) {$c$};
+  \node[anchor=north,font=\small] at (axis cs:1.6,-0.012) {$\bar{\theta}$};
+  \node[anchor=north,font=\small] at (axis cs:-0.59982,-0.012) {$\hat{\theta}^R$};
+  \node[anchor=north,font=\small] at (axis cs:0.56779,-0.012) {$\hat{\theta}^T$};
+  \addplot[blue,very thick,smooth] coordinates {
+(-1.6000,0.1727) (-1.5333,0.1774) (-1.4667,0.1820) (-1.4000,0.1867) (-1.3333,0.1913) (-1.2667,0.1959)
+(-1.2000,0.2005) (-1.1333,0.2051) (-1.0667,0.2096) (-1.0000,0.2141) (-0.9333,0.2185) (-0.8667,0.2229)
+(-0.8000,0.2273) (-0.7333,0.2316) (-0.6667,0.2358) (-0.6000,0.2400) (-0.5333,0.2441) (-0.4667,0.2481)
+(-0.4000,0.2521) (-0.3333,0.2560) (-0.2667,0.2598) (-0.2000,0.2635) (-0.1333,0.2672) (-0.0667,0.2707)
+(0.0000,0.2742) (0.0667,0.2776) (0.1333,0.2808) (0.2000,0.2840) (0.2667,0.2871) (0.3333,0.2902)
+(0.4000,0.2931) (0.4667,0.2959) (0.5333,0.2986) (0.6000,0.3013) (0.6667,0.3038) (0.7333,0.3062)
+(0.8000,0.3086) (0.8667,0.3109) (0.9333,0.3130) (1.0000,0.3151) (1.0667,0.3171) (1.1333,0.3190)
+(1.2000,0.3209) (1.2667,0.3226) (1.3333,0.3243) (1.4000,0.3259) (1.4667,0.3274) (1.5333,0.3288)
+(1.6000,0.3302)};
+  \addplot[red,very thick,smooth] coordinates {
+(-1.6000,0.0539) (-1.5333,0.0576) (-1.4667,0.0616) (-1.4000,0.0657) (-1.3333,0.0701) (-1.2667,0.0747)
+(-1.2000,0.0795) (-1.1333,0.0846) (-1.0667,0.0899) (-1.0000,0.0954) (-0.9333,0.1012) (-0.8667,0.1072)
+(-0.8000,0.1135) (-0.7333,0.1200) (-0.6667,0.1268) (-0.6000,0.1339) (-0.5333,0.1412) (-0.4667,0.1488)
+(-0.4000,0.1567) (-0.3333,0.1648) (-0.2667,0.1732) (-0.2000,0.1819) (-0.1333,0.1908) (-0.0667,0.2000)
+(0.0000,0.2095) (0.0667,0.2192) (0.1333,0.2292) (0.2000,0.2394) (0.2667,0.2498) (0.3333,0.2606)
+(0.4000,0.2715) (0.4667,0.2827) (0.5333,0.2940) (0.6000,0.3056) (0.6667,0.3174) (0.7333,0.3294)
+(0.8000,0.3415) (0.8667,0.3538) (0.9333,0.3663) (1.0000,0.3789) (1.0667,0.3917) (1.1333,0.4045)
+(1.2000,0.4175) (1.2667,0.4306) (1.3333,0.4437) (1.4000,0.4569) (1.4667,0.4701) (1.5333,0.4834)
+(1.6000,0.4967)};
+  \node[red,anchor=west,font=\small]  at (axis cs:1.70,0.4967) {$\theta\mapsto v^T\bar{F}_{\sigma}(\hat{x}^T|\theta)$};
+  \node[blue,anchor=west,font=\small] at (axis cs:1.70,0.3302) {$\theta\mapsto v^R\bar{F}_{\sigma}(\hat{x}^R|\theta)$};
+\end{axis}
+\end{tikzpicture}
+\phantomsubcaption
+\label{fig:sorting_b}
+\end{subfigure}
+\caption{\footnotesize Sorting of researchers across programs. In panel (a), $\hat{\theta}^R\geq\hat{\theta}^T$: every researcher for whom applying is worthwhile prefers the top program, and the regular program attracts no applicants. In panel (b), $\hat{\theta}^R<\hat{\theta}^T$ and researchers fully sort on merit.}
+\label{fig:sorting}
+\end{figure}

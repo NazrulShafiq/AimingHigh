@@ -1,4 +1,4 @@
-make.sh started at 2024-08-12 17:38:54
-Executing: zsh my_shell_script.sh
-Hello world!
-make.sh finished at 2024-08-12 17:38:54
+Making 1_data: started 2026-11-19 19:49:33
+  wrote 1_data/output/msca_applications.csv (80 rows)
+  wrote 1_data/output/msca_reviewer_scores.csv (43164 rows)
+Making 1_data: finished 2026-11-19 19:49:41

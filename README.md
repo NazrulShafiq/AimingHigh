@@ -1,48 +1,46 @@
-This repository is built on the [GentzkowLabTemplate](https://github.com/gentzkowlab/GentzkowLabTemplate), © 2024 by Matthew Gentzkow and distributed under the [MIT license](https://github.com/gentzkow/GentzkowLabTemplate/blob/main/LICENSE.txt). 
+# Aiming High Under Noisy Evaluation
 
-## External links
+*Sorting into Programs Across Fields in Grantmaking.* Code, data and LaTeX sources of the
+paper. The repository is organized on the
+[GentzkowLabTemplate](https://github.com/gentzkowlab/GentzkowLabTemplate), © 2024 by Matthew
+Gentzkow and distributed under the MIT license.
 
-Use this section to document resources external to this repository that are part of the project.
+## Organization
 
-## Running the repository
+Each module reads only the raw data or the `output/` of earlier modules, runs the code in its
+`source/`, and writes everything it produces to its own `output/`, logging to
+`output/make.log`. Builds are incremental where they are slow: `2.1_theory` rebuilds only the
+figures that are new or whose code changed, and `4_paper` lets latexmk rerun only what changed.
+The fast modules (`1_data`, `2.2_descriptives`, under a minute each) rebuild from scratch.
 
-To get started, follow the steps below. For complete documentation, see the [GentzkowLabTemplate Docs](https://gentzkowlab.github.io/GentzkowLabTemplate/).
+| Module | Contents |
+| --- | --- |
+| `0_raw/` | Raw MSCA workbooks, never modified (provenance in `0_raw/README.md`). |
+| `1_data/` | `build_msca_data.py` cleans the raw workbooks into two CSV tables: eligible GF/EF applications by year and panel, and the reviewer scores of each proposal. |
+| `2_analysis/2.1_theory/` | `generate_figures.py` computes every theory figure of the paper from the model; `static/` holds the distributions table and two figures without generating code. |
+| `2_analysis/2.2_descriptives/` | `msca_figures.py` draws the data figures of the paper (Figures 1 and 2); `msca_noise_pages.py` checks the robustness of Figure 2 to the measure of reviewer noise. |
+| `3_slides/` | Template placeholder, not yet used. |
+| `4_paper/` | LaTeX sources of the paper (`Writeup.tex`) and of its Econometrica-format version, compiled into `4_paper/output/`. |
 
-### Getting started
+## Running
 
-1. Clone the repository and move into its directory:
-
-    ```sh
-    git clone https://github.com/YourUsername/YourRepoName.git
-    cd YourRepoName
-    ```
-
-2. Run the setup script to create the local settings file (`local_env.sh`), verify that local executables are correctly installed, and populate input files:
-
-    ```sh
-    bash setup.sh
-    ```
-
-3. Run the `run_all.sh` script to check that the template runs without error:
-    ```
-    bash run_all.sh
-    ```
-
-### Running modules
-
-This repository is organized into modules, each located in a subdirectory like `1_data/`, `2_analysis/`, etc. Each module contains a `make.sh` script that runs the code in that module from beginning to end.
-
-To run a module, navigate into its folder and run:  
+Set up once (Python virtual environment in `.venv`; LaTeX must be installed separately):
 
 ```sh
-bash make.sh
+bash setup.sh
+source .venv/bin/activate
 ```
 
-Each module:
-- Reads inputs from its `/input/` directory (populated automatically via `get_inputs.sh`)
-- Runs code from its `/source/` directory
-- Writes outputs to its `/output/` directory
+Bring everything up to date, from the raw data to the paper:
 
-## Notes
+```sh
+bash run_all.sh
+```
 
-Use this section for additional information.
+Or one module, e.g. `bash 4_paper/make.sh`. To add a theory figure, write its builder and add it
+to `TARGETS` in `generate_figures.py`; `bash 2_analysis/2.1_theory/make.sh` then builds that
+figure alone. `bash 2_analysis/2.1_theory/make.sh --all` rebuilds every theory figure from
+scratch (about 15 minutes), and `bash 2_analysis/2.1_theory/make.sh <name> ...` just the named
+ones (`python3 generate_figures.py --list` shows the names).
+
+Generated files (`output/`) are never edited by hand: change the code that writes them.

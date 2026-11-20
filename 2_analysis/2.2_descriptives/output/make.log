@@ -1,0 +1,51 @@
+Making 2.2_descriptives: started 2026-11-19 19:57:28
+  wrote output/msca_gf_share.tex
+  SOC: 2016 13.2%  2017 13.3%  2018 13.1%  2019 15.4%  2020 15.8%  2021 17.5%  2022 17.0%  2023 20.1%  2024 18.6%  2025 14.2%
+  ECO: 2016 11.7%  2017 10.6%  2018 13.1%  2019 6.1%  2020 8.4%  2021 6.8%  2022 9.2%  2023 6.2%  2024 8.5%  2025 5.7%
+  CHE: 2016 6.5%  2017 6.6%  2018 5.5%  2019 5.2%  2020 4.8%  2021 5.8%  2022 4.4%  2023 5.0%  2024 4.0%  2025 2.8%
+  wrote output/msca_noise_share.tex
+  Gwet's AC (all panels): CHE 0.512 (0.005)  ECO 0.450 (0.011)  ENG 0.457 (0.005)  ENV 0.475 (0.004)  LIF 0.499 (0.003)  MAT 0.492 (0.011)  PHY 0.558 (0.005)  SOC 0.405 (0.003)
+  GF share 2016-20: CHE 5.7%  ECO 10.0%  ENG 9.8%  ENV 12.4%  LIF 8.8%  MAT 6.9%  PHY 8.4%  SOC 14.3%
+  fit all: slope 44.2, R2 0.52, p 0.043, 2.0 pp per SD of disagreement
+  fit nophy: slope 70.0, R2 0.72, p 0.016, 3.2 pp per SD of disagreement
+  fit nosoc: slope 28.9, R2 0.23, p 0.271, 1.3 pp per SD of disagreement
+  percent agreement: SOC 0.565 (0.002)  ECO 0.594 (0.007)  ENG 0.599 (0.003)  ENV 0.607 (0.003)  MAT 0.616 (0.007)  LIF 0.621 (0.002)  CHE 0.631 (0.003)  PHY 0.658 (0.003)
+  Gwet's AC: SOC 0.405 (0.003)  ECO 0.450 (0.011)  ENG 0.457 (0.005)  ENV 0.475 (0.004)  MAT 0.492 (0.011)  LIF 0.499 (0.003)  CHE 0.512 (0.005)  PHY 0.558 (0.005)
+  Gwet's AC: SOC 0.395 (0.004)  ECO 0.429 (0.013)  ENG 0.454 (0.006)  ENV 0.458 (0.006)  LIF 0.482 (0.004)  MAT 0.495 (0.014)  CHE 0.498 (0.006)  PHY 0.545 (0.006)
+  Gwet's AC: SOC 0.449 (0.003)  ENV 0.459 (0.005)  LIF 0.468 (0.003)  ENG 0.473 (0.005)  CHE 0.484 (0.005)  ECO 0.488 (0.011)  PHY 0.488 (0.006)  MAT 0.488 (0.012)
+  noise-to-signal ratio: MAT 1.201 (0.074)  CHE 1.203 (0.030)  ECO 1.204 (0.069)  PHY 1.220 (0.034)  ENG 1.255 (0.030)  ENV 1.299 (0.033)  LIF 1.332 (0.026)  SOC 1.399 (0.028)
+  ICC: SOC 0.338 (0.009)  LIF 0.361 (0.009)  ENV 0.372 (0.012)  ENG 0.388 (0.011)  PHY 0.402 (0.013)  ECO 0.408 (0.027)  CHE 0.409 (0.012)  MAT 0.409 (0.030)
+  ICC: SOC 0.291 (0.007)  LIF 0.308 (0.007)  ENV 0.312 (0.010)  MAT 0.313 (0.022)  ENG 0.345 (0.009)  CHE 0.348 (0.009)  PHY 0.351 (0.010)  ECO 0.358 (0.021)
+  wrote output/MSCA_noise_a_pa_g5.pdf
+    all panels: slope 8.25, R2 0.47, p 0.059
+    without PHY: slope 13.67, R2 0.70, p 0.018
+  wrote output/MSCA_noise_a_gwet_g5.pdf (paper style)
+    GF share on disagreement, all panels: slope 44.2 pp per unit, R2 0.52, p 0.043
+  wrote output/MSCA_noise_a_gwet1618_g5.pdf
+    all panels: slope 5.12, R2 0.52, p 0.045
+    without PHY: slope 8.16, R2 0.74, p 0.013
+  wrote output/MSCA_noise_a_gwetrs_g5rs.pdf
+    all panels: slope 17.05, R2 0.60, p 0.023
+    without PHY: slope 18.56, R2 0.63, p 0.033
+  wrote output/MSCA_noise_a_ns_raw.pdf
+    all panels: slope 3.37, R2 0.56, p 0.034
+    without PHY: slope 3.45, R2 0.55, p 0.055
+  wrote output/MSCA_noise_a_icc_raw.pdf
+    all panels: slope 9.29, R2 0.56, p 0.033
+    without PHY: slope 9.49, R2 0.56, p 0.054
+  wrote output/MSCA_noise_a_iccr_rank.pdf
+    all panels: slope 6.18, R2 0.22, p 0.240
+    without PHY: slope 6.49, R2 0.21, p 0.296
+  wrote output/MSCA_noise_c_pa_g5.pdf
+  wrote output/MSCA_noise_c_gwet_g5.pdf
+  wrote output/MSCA_noise_c_gwet1618_g5.pdf
+  wrote output/MSCA_noise_c_gwetrs_g5rs.pdf
+  wrote output/MSCA_noise_c_ns_raw.pdf
+  wrote output/MSCA_noise_c_icc_raw.pdf
+  wrote output/MSCA_noise_c_iccr_rank.pdf
+  wrote output/Pages_MSCA_Gwet1618.tex
+  wrote output/Pages_MSCA_GwetRescaled.tex
+  wrote output/Pages_MSCA_SNR.tex
+  wrote output/Pages_MSCA_ICC.tex
+  wrote output/Pages_MSCA_ICCrank.tex
+Making 2.2_descriptives: finished 2026-11-19 19:58:01
