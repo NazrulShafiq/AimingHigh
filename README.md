@@ -15,10 +15,10 @@ The fast modules (`1_data`, `2.2_descriptives`, under a minute each) rebuild fro
 
 | Module | Contents |
 | --- | --- |
-| `0_raw/` | Raw MSCA workbooks, never modified (provenance in `0_raw/README.md`). |
-| `1_data/` | `build_msca_data.py` cleans the raw workbooks into two CSV tables: eligible GF/EF applications by year and panel, and the reviewer scores of each proposal. |
+| `0_raw/` | Raw MSCA workbooks and SSHRC Insight Grants statistics, never modified (provenance in `0_raw/README.md`). |
+| `1_data/` | `build_msca_data.py` cleans the MSCA workbooks into two CSV tables: eligible GF/EF applications by year and panel, and the reviewer scores of each proposal. `build_sshrc_data.py` cleans the SSHRC workbooks into eligible applications and awards by year, stream and committee. |
 | `2_analysis/2.1_theory/` | `generate_figures.py` computes every theory figure of the paper from the model; `static/` holds the distributions table and two figures without generating code. |
-| `2_analysis/2.2_descriptives/` | `msca_figures.py` draws the data figures of the paper (Figures 1 and 2); `msca_noise_pages.py` checks the robustness of Figure 2 to the measure of reviewer noise. |
+| `2_analysis/2.2_descriptives/` | `msca_figures.py` draws the data figures of the paper (Figures 1 and 2); `msca_noise_pages.py` checks the robustness of Figure 2 to the measure of reviewer noise; `sshrc_figures.py` draws the figures on success-rate equalization across SSHRC committees. |
 | `3_slides/` | Template placeholder, not yet used. |
 | `4_paper/` | `source/` holds only the LaTeX code of the paper (`Writeup.tex`) and of its Econometrica-format version (`Writeup_format.tex`); they input the figures and tables directly from `2_analysis/2.1_theory/output` and `2_analysis/2.2_descriptives/output`, and compile into `4_paper/output/` with the settings in `4_paper/latexmkrc`. |
 

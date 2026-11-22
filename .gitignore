@@ -3,8 +3,10 @@
 __pycache__/
 *.pyc
 
-# LaTeX auxiliary files: 4_paper keeps them in output/aux/; the patterns catch other builds
+# LaTeX auxiliary files: 4_paper and the issue writeups keep them in output/aux/; the patterns
+# catch other builds
 4_paper/output/aux/
+-1_Issues/*/output/aux/
 4_paper/source/*.pdf
 4_paper/source/*.log
 *.aux

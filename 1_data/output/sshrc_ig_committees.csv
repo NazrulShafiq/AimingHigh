@@ -1,0 +1,607 @@
+year,stream,code,committee,apps,awards,requested,awarded
+2017,AB,21,Aboriginal research,29,12,8076506,2810880
+2017,AB,13,Anthropology and archaeology,53,22,13489739,4089182
+2017,AB,14A,"Business, management and related fields 1",88,37,12979922,4274348
+2017,AB,14B,"Business, management and related fields 2",83,30,13380841,3794061
+2017,AB,16,"Communications, media studies, library and information science, related fields",63,24,11923261,3245258
+2017,AB,07,Economics,69,29,8855140,2908572
+2017,AB,12A,Education and social work 1,100,34,21239140,6027597
+2017,AB,12B,Education and social work 2,98,42,22942686,7103676
+2017,AB,03,"Fine Arts, Research-Creation",66,23,14427801,4081606
+2017,AB,09,"Geography, urban planning and related fields",84,36,20385101,6596765
+2017,AB,02,History,92,32,13097341,3721185
+2017,AB,17,Law and criminology,60,25,11735724,3954136
+2017,AB,15,Linguistics and translation,40,17,8575771,2752099
+2017,AB,04,Literature,72,30,9611675,2864172
+2017,AB,05,"Medieval, classics and religious studies",39,16,6365287,2314424
+2017,AB,22,Multidisciplinary Humanities,44,18,7948573,2688833
+2017,AB,23,Multidisciplinary Social Sciences,99,42,24861841,8433190
+2017,AB,01,Philosophy,53,22,5904542,1888366
+2017,AB,11,Political science and public administration 1,84,36,16379385,5367172
+2017,AB,10A,Psychology 1,49,21,10896592,3704490
+2017,AB,10B,Psychology 2,79,27,18462032,5235620
+2017,AB,08,"Sociology, demography and related fields",70,30,13396619,4930723
+2018,AB,21,Aboriginal research,31,16,7699460,3455400
+2018,AB,13,Anthropology and archaeology,51,24,10606790,4277143
+2018,AB,14A,"Business, management and related fields 1",95,53,13681365,5920278
+2018,AB,14B,"Business, management and related fields 2",74,43,10271530,4702130
+2018,AB,16,"Communications, media studies, gender studies, library and information science, related fields",69,26,10668559,3452820
+2018,AB,07,Economics,86,47,9906299,4615417
+2018,AB,12A,Education and social work 1,73,34,14392680,5848606
+2018,AB,12B,Education and social work 2,61,27,11051959,4234086
+2018,AB,12C,Education and social work 3,73,34,14453331,5820770
+2018,AB,03,"Fine Arts, Research-Creation",74,37,15725552,6470463
+2018,AB,09,"Geography, urban planning and related fields",71,34,15446443,5562213
+2018,AB,02,History,86,35,10219943,3707370
+2018,AB,17,Law and criminology,73,32,12559434,4357138
+2018,AB,15,Linguistics and translation,39,18,7359903,2773785
+2018,AB,04,Literature,65,35,8177972,3480154
+2018,AB,05,"Medieval, classics, religious studies",37,19,5924143,2413238
+2018,AB,22,Multidisciplinary Humanities,40,16,5670553,1917362
+2018,AB,23,Multidisciplinary Social Sciences,89,35,19262570,6047236
+2018,AB,01,Philosophy,48,22,4645596,1564950
+2018,AB,11,Political science and public administration,79,41,13563696,5551239
+2018,AB,10A,Psychology 1,61,21,10316827,3343843
+2018,AB,10B,Psychology 2,86,41,16789084,6697500
+2018,AB,08,"Sociology, demography and related fields",75,37,12487535,5449899
+2018,A,21,Aboriginal research,7,4,640404,353335
+2018,A,13,Anthropology and archaeology,17,9,1519780,728221
+2018,A,14A,"Business, management and related fields 1",50,30,4063335,2235977
+2018,A,14B,"Business, management and related fields 2",40,25,3417827,1827756
+2018,A,16,"Communications, media studies, gender studies, library and information science, related fields",33,14,2733801,1076775
+2018,A,07,Economics,61,35,4875740,2817058
+2018,A,12A,Education and social work 1,27,14,2526285,1191912
+2018,A,12B,Education and social work 2,24,12,2011685,864870
+2018,A,12C,Education and social work 3,25,13,2230426,1190230
+2018,A,03,"Fine Arts, Research-Creation",27,15,2280812,1280523
+2018,A,09,"Geography, urban planning and related fields",22,12,2047017,1023554
+2018,A,02,History,60,26,4685217,1829495
+2018,A,17,Law and criminology,35,17,3009320,1342055
+2018,A,15,Linguistics and translation,16,8,1298947,632050
+2018,A,04,Literature,42,24,3135301,1673130
+2018,A,05,"Medieval, classics, religious studies",20,11,1514123,807464
+2018,A,22,Multidisciplinary Humanities,22,9,1545411,701593
+2018,A,23,Multidisciplinary Social Sciences,30,12,2499824,916602
+2018,A,01,Philosophy,40,19,3233877,1212704
+2018,A,11,Political science and public administration,35,20,2713889,1379464
+2018,A,10A,Psychology 1,29,11,2557718,1034899
+2018,A,10B,Psychology 2,32,17,2937417,1529392
+2018,A,08,"Sociology, demography and related fields",35,19,3095945,1654590
+2018,B,21,Aboriginal research,24,12,7059056,3102065
+2018,B,13,Anthropology and archaeology,34,15,9087010,3548922
+2018,B,14A,"Business, management and related fields 1",45,23,9618030,3684301
+2018,B,14B,"Business, management and related fields 2",34,18,6853703,2874374
+2018,B,16,"Communications, media studies, gender studies, library and information science, related fields",36,12,7934758,2376045
+2018,B,07,Economics,25,12,5030559,1798359
+2018,B,12A,Education and social work 1,46,20,11866395,4656694
+2018,B,12B,Education and social work 2,37,15,9040274,3369216
+2018,B,12C,Education and social work 3,48,21,12222905,4630540
+2018,B,03,"Fine Arts, Research-Creation",47,22,13444740,5189940
+2018,B,09,"Geography, urban planning and related fields",49,22,13399426,4538659
+2018,B,02,History,26,9,5534726,1877875
+2018,B,17,Law and criminology,38,15,9550114,3015083
+2018,B,15,Linguistics and translation,23,10,6060956,2141735
+2018,B,04,Literature,23,11,5042671,1807024
+2018,B,05,"Medieval, classics, religious studies",17,8,4410020,1605774
+2018,B,22,Multidisciplinary Humanities,18,7,4125142,1215769
+2018,B,23,Multidisciplinary Social Sciences,59,23,16762746,5130634
+2018,B,01,Philosophy,8,3,1411719,352246
+2018,B,11,Political science and public administration,44,21,10849807,4171775
+2018,B,10A,Psychology 1,32,10,7759109,2308944
+2018,B,10B,Psychology 2,54,24,13851667,5168108
+2018,B,08,"Sociology, demography and related fields",40,18,9391590,3795309
+2019,AB,21,Aboriginal research,21,10,5781560,2422950
+2019,AB,13,Anthropology and archaeology,43,20,9943685,3649492
+2019,AB,14A,"Business, management and related fields 1",74,40,10683096,4997885
+2019,AB,14B,"Business, management and related fields 2",75,40,10589078,4658516
+2019,AB,16,"Communications, media studies, gender studies, library and information science, related fields",59,26,9710253,3270705
+2019,AB,07,Economics,68,37,9053925,4317229
+2019,AB,12A,Education and social work 1,84,35,15816844,5506896
+2019,AB,12B,Education and social work 2,105,41,20878409,7009134
+2019,AB,03,"Fine Arts, Research-Creation",79,35,16209417,5638671
+2019,AB,09,"Geography, urban planning and related fields",63,25,14098180,4846564
+2019,AB,02,History,76,34,10296060,3623030
+2019,AB,17,Law and criminology,59,25,10688229,3586433
+2019,AB,15,Linguistics and translation,34,16,5844836,2133937
+2019,AB,04,Literature,73,36,9295670,3424263
+2019,AB,05,"Medieval, classics, religious studies",31,15,4697941,1959794
+2019,AB,22,Multidisciplinary Humanities,29,14,4884446,1660529
+2019,AB,23,Multidisciplinary Social Sciences,73,34,14769222,5620769
+2019,AB,01,Philosophy,39,19,3919265,1652740
+2019,AB,11,Political science and public administration,71,37,11876892,6281803
+2019,AB,10A,Psychology 1,61,24,13197974,4525747
+2019,AB,10B,Psychology 2,64,26,13875658,5001909
+2019,AB,08,"Sociology, demography and related fields",84,37,14365945,5220867
+2019,A,21,Aboriginal research,4,2,362527,164818
+2019,A,13,Anthropology and archaeology,9,5,869355,446505
+2019,A,14A,"Business, management and related fields 1",39,23,3416801,2014823
+2019,A,14B,"Business, management and related fields 2",40,23,3345300,1873798
+2019,A,16,"Communications, media studies, gender studies, library and information science, related fields",27,13,2301202,908880
+2019,A,07,Economics,45,26,3670127,2076846
+2019,A,12A,Education and social work 1,32,15,2923246,1300587
+2019,A,12B,Education and social work 2,35,16,3079918,1352206
+2019,A,03,"Fine Arts, Research-Creation",30,15,2511618,1212625
+2019,A,09,"Geography, urban planning and related fields",19,9,1755802,770139
+2019,A,02,History,43,21,3294971,1455229
+2019,A,17,Law and criminology,25,12,2267376,980214
+2019,A,15,Linguistics and translation,16,8,1329086,647249
+2019,A,04,Literature,46,24,3463711,1639688
+2019,A,05,"Medieval, classics, religious studies",19,10,1309769,589329
+2019,A,22,Multidisciplinary Humanities,15,8,1277279,566196
+2019,A,23,Multidisciplinary Social Sciences,27,14,2204518,1072316
+2019,A,01,Philosophy,32,16,2776209,1236141
+2019,A,11,Political science and public administration,36,18,3045615,1463545
+2019,A,10A,Psychology 1,18,7,1726586,669063
+2019,A,10B,Psychology 2,19,9,1791085,786311
+2019,A,08,"Sociology, demography and related fields",39,19,3326595,1519151
+2019,B,21,Aboriginal research,17,8,5419033,2258132
+2019,B,13,Anthropology and archaeology,34,15,9074330,3202987
+2019,B,14A,"Business, management and related fields 1",35,17,7266295,2983062
+2019,B,14B,"Business, management and related fields 2",35,17,7243778,2784718
+2019,B,16,"Communications, media studies, gender studies, library and information science, related fields",32,13,7409051,2361825
+2019,B,07,Economics,23,11,5383798,2240383
+2019,B,12A,Education and social work 1,52,20,12893598,4206309
+2019,B,12B,Education and social work 2,70,25,17798491,5656928
+2019,B,03,"Fine Arts, Research-Creation",49,20,13697799,4426046
+2019,B,09,"Geography, urban planning and related fields",44,16,12342378,4076425
+2019,B,02,History,33,13,7001089,2167801
+2019,B,17,Law and criminology,34,13,8420853,2606219
+2019,B,15,Linguistics and translation,18,8,4515750,1486688
+2019,B,04,Literature,27,12,5831959,1784575
+2019,B,05,"Medieval, classics, religious studies",12,5,3388172,1370465
+2019,B,22,Multidisciplinary Humanities,14,6,3607167,1094333
+2019,B,23,Multidisciplinary Social Sciences,46,20,12564704,4548453
+2019,B,01,Philosophy,7,3,1143056,416599
+2019,B,11,Political science and public administration,35,19,8831277,4818258
+2019,B,10A,Psychology 1,43,17,11471388,3856684
+2019,B,10B,Psychology 2,45,17,12084573,4215598
+2019,B,08,"Sociology, demography and related fields",45,18,11039350,3701716
+2020,AB,01,Philosophy,51,23,5934372,2329321
+2020,AB,02,History,79,32,10115801,3756748
+2020,AB,03,"Fine Arts, Research-Creation",61,22,13728188,4470102
+2020,AB,04,Literature,70,30,8232363,2955454
+2020,AB,05,"Medieval, classics, religious studies",32,14,4307153,1625881
+2020,AB,07,Economics,70,30,9832678,3226142
+2020,AB,08,"Sociology, demography and related fields",76,28,14821629,4652536
+2020,AB,09,"Geography, urban planning and related fields",51,18,10252553,3269739
+2020,AB,10A,Psychology,73,28,14586912,4661679
+2020,AB,10B,Psychology,73,29,15705437,5672671
+2020,AB,11,Political science and public administration,89,35,15122065,5445311
+2020,AB,12A,Education,91,34,20839745,7106049
+2020,AB,12B,Education and social work,92,34,19994463,6735616
+2020,AB,13,Anthropology and archaeology,39,16,10864068,3728760
+2020,AB,14A,"Business, management and related fields",80,36,11804382,4358190
+2020,AB,14B,"Business, management and related fields",79,36,12315522,4564895
+2020,AB,15,Linguistics and translation,37,15,6903881,2416460
+2020,AB,16,"Communications, media studies, gender studies, library and information science, related fields",60,26,11960530,4029707
+2020,AB,17,Law and criminology,66,26,12206034,4364653
+2020,AB,21,Indigenous research,24,10,6833944,2548889
+2020,AB,22,Multidisciplinary or interdisciplinary humanities,47,20,8404418,3023740
+2020,AB,23,Multidisciplinary or interdisciplinary social sciences,85,38,18928964,6740561
+2020,A,01,Philosophy,43,20,3802492,1724608
+2020,A,02,History,55,24,4490203,1829544
+2020,A,03,"Fine Arts, Research-Creation",14,6,1135967,473443
+2020,A,04,Literature,56,25,4424953,1776519
+2020,A,05,"Medieval, classics, religious studies",20,9,1450250,680181
+2020,A,07,Economics,41,19,3392750,1443148
+2020,A,08,"Sociology, demography and related fields",26,11,2223157,987223
+2020,A,09,"Geography, urban planning and related fields",14,6,1186261,531509
+2020,A,10A,Psychology,25,11,2221198,1011897
+2020,A,10B,Psychology,24,11,2129823,990752
+2020,A,11,Political science and public administration,35,16,2844374,1269419
+2020,A,12A,Education,23,10,2056508,919871
+2020,A,12B,Education and social work,26,11,2247523,1008698
+2020,A,13,Anthropology and archaeology,6,3,583138,290136
+2020,A,14A,"Business, management and related fields",40,19,3491834,1662353
+2020,A,14B,"Business, management and related fields",35,17,2806824,1299492
+2020,A,15,Linguistics and translation,15,7,1285070,621972
+2020,A,16,"Communications, media studies, gender studies, library and information science, related fields",26,12,2394229,1042308
+2020,A,17,Law and criminology,27,12,2168570,976338
+2020,A,21,Indigenous research,1,1,99766,99766
+2020,A,22,Multidisciplinary or interdisciplinary humanities,23,11,1887226,839031
+2020,A,23,Multidisciplinary or interdisciplinary social sciences,27,13,2466046,1224868
+2020,B,01,Philosophy,8,3,2131880,604713
+2020,B,02,History,24,8,5625598,1927204
+2020,B,03,"Fine Arts, Research-Creation",47,16,12592221,3996659
+2020,B,04,Literature,14,5,3807410,1178935
+2020,B,05,"Medieval, classics, religious studies",12,5,2856903,945700
+2020,B,07,Economics,29,11,6439928,1782994
+2020,B,08,"Sociology, demography and related fields",50,17,12598472,3665313
+2020,B,09,"Geography, urban planning and related fields",37,12,9066292,2738230
+2020,B,10A,Psychology,48,17,12365714,3649782
+2020,B,10B,Psychology,49,18,13575614,4681919
+2020,B,11,Political science and public administration,54,19,12277691,4175892
+2020,B,12A,Education,68,24,18783237,6186178
+2020,B,12B,Education and social work,66,23,17746940,5726918
+2020,B,13,Anthropology and archaeology,33,13,10280930,3438624
+2020,B,14A,"Business, management and related fields",40,17,8312548,2695837
+2020,B,14B,"Business, management and related fields",44,19,9508698,3265403
+2020,B,15,Linguistics and translation,22,8,5618811,1794488
+2020,B,16,"Communications, media studies, gender studies, library and information science, related fields",34,14,9566301,2987399
+2020,B,17,Law and criminology,39,14,10037464,3388315
+2020,B,21,Indigenous research,23,9,6734178,2449123
+2020,B,22,Multidisciplinary or interdisciplinary humanities,24,9,6517192,2184709
+2020,B,23,Multidisciplinary or interdisciplinary social sciences,58,25,16462918,5515693
+2021,AB,01,Philosophy,33,18,3108433,1562852
+2021,AB,02,History,53,29,7435895,4027800
+2021,AB,03,"Fine Arts, Research-Creation",79,41,14305470,6450636
+2021,AB,04,Literature,47,23,5950807,2430756
+2021,AB,05,"Medieval, classics, religious studies",36,19,5688394,2749457
+2021,AB,07,Economics,56,32,7888995,3689057
+2021,AB,08,"Sociology, demography and related fields",62,32,11825829,5284262
+2021,AB,09,"Geography, urban planning and related fields",46,23,9513284,4497327
+2021,AB,10A,Psychology,62,33,12811525,5791829
+2021,AB,10B,Psychology,60,31,13192203,6192286
+2021,AB,11,Political science and public administration,72,37,12051819,5530769
+2021,AB,12A,Education,55,26,11090668,4565887
+2021,AB,12B,Education and social work,55,27,11549783,4979382
+2021,AB,12C,Education and social work,55,28,12253373,5440563
+2021,AB,13,Anthropology and archaeology,31,15,8059228,3917077
+2021,AB,14A,"Business, management and related fields",49,27,7640644,3497953
+2021,AB,14B,"Business, management and related fields",49,27,7344520,3574020
+2021,AB,14C,"Business, management and related fields",49,29,7523368,3498261
+2021,AB,15,Linguistics and translation,26,13,5135149,2445043
+2021,AB,16,"Communications, media studies, gender studies, library and information science, related fields",49,26,8825019,3909847
+2021,AB,17,Law and criminology,47,26,8378578,4323530
+2021,AB,21,Indigenous research,22,13,5198471,2554294
+2021,AB,22,Multidisciplinary or interdisciplinary humanities,23,12,4728782,2082631
+2021,AB,23,Multidisciplinary or interdisciplinary social sciences,97,50,23244739,11005513
+2021,A,01,Philosophy,30,17,2494194,1325833
+2021,A,02,History,34,19,2706318,1534659
+2021,A,03,"Fine Arts, Research-Creation",34,19,2731818,1611927
+2021,A,04,Literature,32,17,2620092,1340791
+2021,A,05,"Medieval, classics, religious studies",20,11,1737789,1039302
+2021,A,07,Economics,31,18,2244751,1148965
+2021,A,08,"Sociology, demography and related fields",22,12,1880905,1043971
+2021,A,09,"Geography, urban planning and related fields",9,5,735955,451362
+2021,A,10A,Psychology,20,11,1810336,1021611
+2021,A,10B,Psychology,18,10,1636607,902760
+2021,A,11,Political science and public administration,31,17,2535233,1347527
+2021,A,12A,Education,16,9,1388383,717360
+2021,A,12B,Education and social work,15,8,1262966,657805
+2021,A,12C,Education and social work,14,8,1234190,691636
+2021,A,13,Anthropology and archaeology,6,3,581048,288578
+2021,A,14A,"Business, management and related fields",22,13,1845663,1001291
+2021,A,14B,"Business, management and related fields",24,14,2109968,1235632
+2021,A,14C,"Business, management and related fields",24,15,1933571,1120738
+2021,A,15,Linguistics and translation,11,6,966133,574980
+2021,A,16,"Communications, media studies, gender studies, library and information science, related fields",23,13,2031812,1065993
+2021,A,17,Law and criminology,21,13,1909751,1135144
+2021,A,21,Indigenous research,8,5,687941,440929
+2021,A,22,Multidisciplinary or interdisciplinary humanities,7,4,539512,278770
+2021,A,23,Multidisciplinary or interdisciplinary social sciences,24,14,2080582,1206721
+2021,B,01,Philosophy,3,1,614239,237019
+2021,B,02,History,19,10,4729577,2493141
+2021,B,03,"Fine Arts, Research-Creation",45,22,11573652,4838709
+2021,B,04,Literature,15,6,3330715,1089965
+2021,B,05,"Medieval, classics, religious studies",16,8,3950605,1710155
+2021,B,07,Economics,25,14,5644244,2540092
+2021,B,08,"Sociology, demography and related fields",40,20,9944924,4240291
+2021,B,09,"Geography, urban planning and related fields",37,18,8777329,4045965
+2021,B,10A,Psychology,42,22,11001189,4770218
+2021,B,10B,Psychology,42,21,11555596,5289526
+2021,B,11,Political science and public administration,41,20,9516586,4183242
+2021,B,12A,Education,39,17,9702285,3848527
+2021,B,12B,Education and social work,40,19,10286817,4321577
+2021,B,12C,Education and social work,41,20,11019183,4748927
+2021,B,13,Anthropology and archaeology,25,12,7478180,3628499
+2021,B,14A,"Business, management and related fields",27,14,5794981,2496662
+2021,B,14B,"Business, management and related fields",25,13,5234552,2338388
+2021,B,14C,"Business, management and related fields",25,14,5589797,2377523
+2021,B,15,Linguistics and translation,15,7,4169016,1870063
+2021,B,16,"Communications, media studies, gender studies, library and information science, related fields",26,13,6793207,2843854
+2021,B,17,Law and criminology,26,13,6468827,3188386
+2021,B,21,Indigenous research,14,8,4510530,2113365
+2021,B,22,Multidisciplinary or interdisciplinary humanities,16,8,4189270,1803861
+2021,B,23,Multidisciplinary or interdisciplinary social sciences,73,36,21164157,9798792
+2022,AB,01,Philosophy,29,15,2761757,1292676
+2022,AB,02,History,40,21,6110873,2763205
+2022,AB,03,"Fine Arts, Research-Creation",53,27,11846520,4917393
+2022,AB,04,Literature,41,21,5668866,2559573
+2022,AB,05,"Medieval, classics, religious studies",28,15,4543096,1937110
+2022,AB,07,Economics,53,30,6796695,2956680
+2022,AB,08,"Sociology, demography and related fields",49,25,10015370,4347679
+2022,AB,09,"Geography, urban planning and related fields",39,20,9558187,4696946
+2022,AB,10A,Psychology,49,23,11243926,4987912
+2022,AB,10B,Psychology,53,25,13218822,5455074
+2022,AB,11,Political science and public administration,54,28,10195929,4214375
+2022,AB,12A,Education,47,23,10952582,5055132
+2022,AB,12B,Education and social work,47,23,9656153,4719329
+2022,AB,12C,Education and social work,47,24,9952947,5016318
+2022,AB,13,Anthropology and archaeology,36,16,8973608,3648577
+2022,AB,14A,"Business, management and related fields",51,28,8129780,4073816
+2022,AB,14B,"Business, management and related fields",52,29,8396966,4134132
+2022,AB,14C,"Business, management and related fields",51,29,7549405,3355097
+2022,AB,15,Linguistics and translation,35,16,7756740,3424900
+2022,AB,16,"Communications, media studies, gender studies, library and information science, related fields",56,27,11132582,4692247
+2022,AB,17,Law and criminology,47,23,7226104,2884827
+2022,AB,21,Indigenous research,7,6,2501665,2350514
+2022,AB,22,Multidisciplinary or interdisciplinary humanities,27,15,4899071,2200456
+2022,AB,23A,Multidisciplinary or interdisciplinary social sciences,40,23,10425328,5164821
+2022,AB,23B,Multidisciplinary or interdisciplinary social sciences,37,21,8491198,4460876
+2022,AB,24,Tri-Agency Interdisciplinary Peer Review Committee,16,7,2910880,1133350
+2022,A,01,Philosophy,26,14,2277083,1070516
+2022,A,02,History,19,11,1427041,765474
+2022,A,03,"Fine Arts, Research-Creation",18,10,1499906,852032
+2022,A,04,Literature,28,15,2166087,1133218
+2022,A,05,"Medieval, classics, religious studies",13,7,999058,541045
+2022,A,07,Economics,33,20,2634611,1348875
+2022,A,08,"Sociology, demography and related fields",19,11,1769968,1019411
+2022,A,09,"Geography, urban planning and related fields",7,4,687410,394815
+2022,A,10A,Psychology,13,7,1230160,646763
+2022,A,10B,Psychology,11,6,980907,549759
+2022,A,11,Political science and public administration,23,13,1950242,1035420
+2022,A,12A,Education,11,6,1052840,538139
+2022,A,12B,Education and social work,13,7,1179520,585329
+2022,A,12C,Education and social work,12,7,1041398,647016
+2022,A,13,Anthropology and archaeology,8,4,740596,348176
+2022,A,14A,"Business, management and related fields",24,14,1980080,1159182
+2022,A,14B,"Business, management and related fields",25,15,2246718,1309561
+2022,A,14C,"Business, management and related fields",26,16,2140753,1079382
+2022,A,15,Linguistics and translation,14,7,1306033,624455
+2022,A,16,"Communications, media studies, gender studies, library and information science, related fields",19,10,1552991,767958
+2022,A,17,Law and criminology,25,13,2141215,1037460
+2022,A,22,Multidisciplinary or interdisciplinary humanities,13,8,1041913,585930
+2022,A,23A,Multidisciplinary or interdisciplinary social sciences,9,6,761664,534774
+2022,A,23B,Multidisciplinary or interdisciplinary social sciences,10,6,857367,483601
+2022,A,24,Tri-Agency Interdisciplinary Peer Review Committee,8,4,683760,346252
+2022,B,01,Philosophy,3,1,484674,222160
+2022,B,02,History,21,10,4683832,1997731
+2022,B,03,"Fine Arts, Research-Creation",35,17,10346614,4065361
+2022,B,04,Literature,13,6,3502779,1426355
+2022,B,05,"Medieval, classics, religious studies",15,8,3544038,1396065
+2022,B,07,Economics,20,10,4162084,1607805
+2022,B,08,"Sociology, demography and related fields",30,14,8245402,3328268
+2022,B,09,"Geography, urban planning and related fields",32,16,8870777,4302131
+2022,B,10A,Psychology,36,16,10013766,4341149
+2022,B,10B,Psychology,42,19,12237915,4905315
+2022,B,11,Political science and public administration,31,15,8245687,3178955
+2022,B,12A,Education,36,17,9899742,4516993
+2022,B,12B,Education and social work,34,16,8476633,4134000
+2022,B,12C,Education and social work,35,17,8911549,4369302
+2022,B,13,Anthropology and archaeology,28,12,8233012,3300401
+2022,B,14A,"Business, management and related fields",27,14,6149700,2914634
+2022,B,14B,"Business, management and related fields",27,14,6150248,2824571
+2022,B,14C,"Business, management and related fields",25,13,5408652,2275715
+2022,B,15,Linguistics and translation,21,9,6450707,2800445
+2022,B,16,"Communications, media studies, gender studies, library and information science, related fields",37,17,9579591,3924289
+2022,B,17,Law and criminology,22,10,5084889,1847367
+2022,B,21,Indigenous research,7,6,2501665,2350514
+2022,B,22,Multidisciplinary or interdisciplinary humanities,14,7,3857158,1614526
+2022,B,23A,Multidisciplinary or interdisciplinary social sciences,31,17,9663664,4630047
+2022,B,23B,Multidisciplinary or interdisciplinary social sciences,27,15,7633831,3977275
+2022,B,24,Tri-Agency Interdisciplinary Peer Review Committee,8,3,2227120,787098
+2023,AB,01,Philosophy,31,14,3687306,1302981
+2023,AB,02,History,41,19,6296047,2592680
+2023,AB,03,"Fine Arts, Research-Creation",48,23,11164753,4448819
+2023,AB,04,Literature,43,20,5879034,2421505
+2023,AB,05,"Medieval, classics, religious studies",30,14,5098209,2128987
+2023,AB,07,Economics,69,33,9920671,3647756
+2023,AB,08,"Sociology, demography and related fields",45,20,10320344,3871945
+2023,AB,09,"Geography, urban planning and related fields",52,22,12430534,4460092
+2023,AB,10A,Psychology,58,23,14228906,5035181
+2023,AB,10B,Psychology,62,25,14200499,5371506
+2023,AB,11,Political science and public administration,59,24,11574282,3820668
+2023,AB,12A,Education,52,22,11761153,4093267
+2023,AB,12B,Education and social work,51,21,11927658,4223681
+2023,AB,12C,Education and social work,51,22,11011226,4115976
+2023,AB,13,Anthropology and archaeology,28,10,7871696,2573333
+2023,AB,14A,"Business, management and related fields",49,24,7451664,2942983
+2023,AB,14B,"Business, management and related fields",51,24,8456140,3220618
+2023,AB,14C,"Business, management and related fields",48,22,7306706,3058307
+2023,AB,15,Linguistics and translation,31,13,7510755,2897028
+2023,AB,16,"Communications, media studies, gender studies, library and information science, related fields",53,24,9714083,3968011
+2023,AB,17,Law and criminology,46,21,8168657,3328050
+2023,AB,21,Indigenous research,16,8,4466037,2088290
+2023,AB,22,Multidisciplinary or interdisciplinary humanities,29,15,6045402,2587772
+2023,AB,23A,Multidisciplinary or interdisciplinary social sciences,40,18,10276740,4295978
+2023,AB,23B,Multidisciplinary or interdisciplinary social sciences,38,19,9453706,4171528
+2023,AB,24,Tri-Agency Interdisciplinary Peer Review Committee,24,10,6914114,2803079
+2023,A,01,Philosophy,26,12,2267383,995958
+2023,A,02,History,24,12,2021629,900977
+2023,A,03,"Fine Arts, Research-Creation",14,9,1232541,768966
+2023,A,04,Literature,27,13,2118394,1023623
+2023,A,05,"Medieval, classics, religious studies",12,6,954604,471351
+2023,A,07,Economics,41,21,3577231,1736336
+2023,A,08,"Sociology, demography and related fields",9,5,780378,403311
+2023,A,09,"Geography, urban planning and related fields",11,5,1030243,441336
+2023,A,10A,Psychology,13,6,1237814,520841
+2023,A,10B,Psychology,17,8,1604457,775634
+2023,A,11,Political science and public administration,24,11,2019094,818735
+2023,A,12A,Education,16,8,1438449,688592
+2023,A,12B,Education and social work,14,7,1286793,647009
+2023,A,12C,Education and social work,14,7,1256667,618937
+2023,A,13,Anthropology and archaeology,3,1,277102,99932
+2023,A,14A,"Business, management and related fields",24,13,2146462,1109847
+2023,A,14B,"Business, management and related fields",23,12,1991288,1020744
+2023,A,14C,"Business, management and related fields",22,11,2034616,951854
+2023,A,15,Linguistics and translation,6,3,541066,236793
+2023,A,16,"Communications, media studies, gender studies, library and information science, related fields",24,12,2092680,938360
+2023,A,17,Law and criminology,20,10,1517087,671468
+2023,A,21,Indigenous research,3,2,260587,161725
+2023,A,22,Multidisciplinary or interdisciplinary humanities,10,6,747894,416239
+2023,A,23A,Multidisciplinary or interdisciplinary social sciences,7,3,622600,278120
+2023,A,23B,Multidisciplinary or interdisciplinary social sciences,6,4,589371,386412
+2023,A,24,Tri-Agency Interdisciplinary Peer Review Committee,3,2,208922,160759
+2023,B,01,Philosophy,5,2,1419923,307023
+2023,B,02,History,17,7,4274418,1691703
+2023,B,03,"Fine Arts, Research-Creation",34,14,9932212,3679853
+2023,B,04,Literature,16,7,3760640,1397882
+2023,B,05,"Medieval, classics, religious studies",18,8,4143605,1657636
+2023,B,07,Economics,28,12,6343440,1911420
+2023,B,08,"Sociology, demography and related fields",36,15,9539966,3468634
+2023,B,09,"Geography, urban planning and related fields",41,17,11400291,4018756
+2023,B,10A,Psychology,45,17,12991092,4514340
+2023,B,10B,Psychology,45,17,12596042,4595872
+2023,B,11,Political science and public administration,35,13,9555188,3001933
+2023,B,12A,Education,36,14,10322704,3404675
+2023,B,12B,Education and social work,37,14,10640865,3576672
+2023,B,12C,Education and social work,37,15,9754559,3497039
+2023,B,13,Anthropology and archaeology,25,9,7594594,2473401
+2023,B,14A,"Business, management and related fields",25,11,5305202,1833136
+2023,B,14B,"Business, management and related fields",28,12,6464852,2199874
+2023,B,14C,"Business, management and related fields",26,11,5272090,2106453
+2023,B,15,Linguistics and translation,25,10,6969689,2660235
+2023,B,16,"Communications, media studies, gender studies, library and information science, related fields",29,12,7621403,3029651
+2023,B,17,Law and criminology,26,11,6651570,2656582
+2023,B,21,Indigenous research,13,6,4205450,1926565
+2023,B,22,Multidisciplinary or interdisciplinary humanities,19,9,5297508,2171533
+2023,B,23A,Multidisciplinary or interdisciplinary social sciences,33,15,9654140,4017858
+2023,B,23B,Multidisciplinary or interdisciplinary social sciences,32,15,8864335,3785116
+2023,B,24,Tri-Agency Interdisciplinary Peer Review Committee,21,8,6705192,2642320
+2024,AB,01,Philosophy,45,17,5289505,1553928
+2024,AB,02,History,51,16,7967168,2080018
+2024,AB,03,"Fine Arts, Research-Creation",72,21,16910987,4298739
+2024,AB,04,Literature,45,16,7268992,2267319
+2024,AB,05,"Medieval, classics, religious studies",40,16,6594126,1783951
+2024,AB,07,Economics,89,36,13654252,4687570
+2024,AB,08,"Sociology, demography and related fields",59,18,13450846,2977739
+2024,AB,09,"Geography, urban planning and related fields",62,17,16129764,3490226
+2024,AB,10A,Psychology,69,22,17619409,4467021
+2024,AB,10B,Psychology,78,24,19633816,5051102
+2024,AB,11,Political science and public administration,91,28,20090082,5317600
+2024,AB,12A,Education,62,21,14312051,4227279
+2024,AB,12B,Education and social work,61,19,16199690,4121366
+2024,AB,12C,Education and social work,61,19,14676268,3723921
+2024,AB,13,Anthropology and archaeology,48,14,12591458,3025351
+2024,AB,14A,"Business, management and related fields",68,26,10600723,3521650
+2024,AB,14B,"Business, management and related fields",69,26,11632380,3366618
+2024,AB,14C,"Business, management and related fields",66,25,11014397,3223600
+2024,AB,15,Linguistics and translation,37,12,8069462,2159797
+2024,AB,16,"Communications, media studies, gender studies, library and information science, related fields",80,25,16470657,3974909
+2024,AB,17,Law and criminology,50,16,9896030,2061701
+2024,AB,21,Indigenous research,23,10,7146767,2366060
+2024,AB,22,Multidisciplinary or interdisciplinary humanities,31,13,6350243,1886438
+2024,AB,23A,Multidisciplinary or interdisciplinary social sciences,46,18,11719783,3918510
+2024,AB,23B,Multidisciplinary or interdisciplinary social sciences,45,18,11348862,3833475
+2024,AB,24,Tri-Agency Interdisciplinary Peer Review Committee,29,10,8210824,2929365
+2024,A,01,Philosophy,36,14,2935126,955469
+2024,A,02,History,31,11,2279467,834817
+2024,A,03,"Fine Arts, Research-Creation",20,7,1691959,541426
+2024,A,04,Literature,23,9,1965267,727795
+2024,A,05,"Medieval, classics, religious studies",19,9,1482765,602253
+2024,A,07,Economics,55,24,4775691,1942169
+2024,A,08,"Sociology, demography and related fields",16,6,1365825,484239
+2024,A,09,"Geography, urban planning and related fields",12,4,1157723,394566
+2024,A,10A,Psychology,15,6,1466421,560425
+2024,A,10B,Psychology,17,7,1623598,635568
+2024,A,11,Political science and public administration,30,11,2554340,901572
+2024,A,12A,Education,15,6,1398119,569620
+2024,A,12B,Education and social work,11,4,1046109,395956
+2024,A,12C,Education and social work,14,5,1286789,460051
+2024,A,13,Anthropology and archaeology,10,4,909361,359829
+2024,A,14A,"Business, management and related fields",28,12,2372008,949959
+2024,A,14B,"Business, management and related fields",30,13,2529069,995914
+2024,A,14C,"Business, management and related fields",27,12,2321360,1009369
+2024,A,15,Linguistics and translation,9,3,832780,286992
+2024,A,16,"Communications, media studies, gender studies, library and information science, related fields",27,11,2466047,971311
+2024,A,17,Law and criminology,19,8,1691442,649140
+2024,A,21,Indigenous research,3,2,217871,174445
+2024,A,22,Multidisciplinary or interdisciplinary humanities,13,6,1188307,422445
+2024,A,23A,Multidisciplinary or interdisciplinary social sciences,13,6,1031035,521150
+2024,A,23B,Multidisciplinary or interdisciplinary social sciences,12,6,1023823,482689
+2024,A,24,Tri-Agency Interdisciplinary Peer Review Committee,3,1,280812,100000
+2024,B,01,Philosophy,9,3,2354379,598459
+2024,B,02,History,20,5,5687701,1245201
+2024,B,03,"Fine Arts, Research-Creation",52,14,15219028,3757313
+2024,B,04,Literature,22,7,5303725,1539524
+2024,B,05,"Medieval, classics, religious studies",21,7,5111361,1181698
+2024,B,07,Economics,34,12,8878561,2745401
+2024,B,08,"Sociology, demography and related fields",43,12,12085021,2493500
+2024,B,09,"Geography, urban planning and related fields",50,13,14972041,3095660
+2024,B,10A,Psychology,54,16,16152988,3906596
+2024,B,10B,Psychology,61,17,18010218,4415534
+2024,B,11,Political science and public administration,61,17,17535742,4416028
+2024,B,12A,Education,47,15,12913932,3657659
+2024,B,12B,Education and social work,50,15,15153581,3725410
+2024,B,12C,Education and social work,47,14,13389479,3263870
+2024,B,13,Anthropology and archaeology,38,10,11682097,2665522
+2024,B,14A,"Business, management and related fields",40,14,8228715,2571691
+2024,B,14B,"Business, management and related fields",39,13,9103311,2370704
+2024,B,14C,"Business, management and related fields",39,13,8693037,2214231
+2024,B,15,Linguistics and translation,28,9,7236682,1872805
+2024,B,16,"Communications, media studies, gender studies, library and information science, related fields",53,14,14004610,3003598
+2024,B,17,Law and criminology,31,8,8204588,1412561
+2024,B,21,Indigenous research,20,8,6928896,2191615
+2024,B,22,Multidisciplinary or interdisciplinary humanities,18,7,5161936,1463993
+2024,B,23A,Multidisciplinary or interdisciplinary social sciences,33,12,10688748,3397360
+2024,B,23B,Multidisciplinary or interdisciplinary social sciences,33,12,10325039,3350786
+2024,B,24,Tri-Agency Interdisciplinary Peer Review Committee,26,9,7930012,2829365
+2025,AB,01,Philosophy,45,18,5316676,1865598
+2025,AB,02,History,66,26,10062401,3365894
+2025,AB,03,"Fine Arts, Research-Creation",93,34,21812584,7257295
+2025,AB,04,Literature,65,25,9519037,3091332
+2025,AB,05,"Medieval, classics, religious studies",47,19,7543734,2916754
+2025,AB,07,Economics,104,49,13554025,5536490
+2025,AB,08,"Sociology, demography and related fields",78,29,18200540,5793064
+2025,AB,09,"Geography, urban planning and related fields",73,28,18474315,6757421
+2025,AB,10A,Psychology,87,33,22541975,7723665
+2025,AB,10B,Psychology,86,33,23431290,7969032
+2025,AB,11,Political science and public administration,109,41,20975163,6927276
+2025,AB,12A,Education,73,28,15879670,5736091
+2025,AB,12B,Education and social work,76,28,18021344,5972948
+2025,AB,12C,Education and social work,77,29,17032778,5959617
+2025,AB,13,Anthropology and archaeology,55,20,13597474,4223803
+2025,AB,14A,"Business, management and related fields",82,37,13437306,4895355
+2025,AB,14B,"Business, management and related fields",81,36,13701610,4814969
+2025,AB,14C,"Business, management and related fields",82,36,12852912,5053360
+2025,AB,15,Linguistics and translation,39,15,8185863,3011824
+2025,AB,16,"Communications, media studies, gender studies, library and information science, related fields",72,27,15032549,4494627
+2025,AB,17,Law and criminology,56,22,10330974,3732720
+2025,AB,21,Indigenous research,19,9,5895746,2396051
+2025,AB,22,Multidisciplinary or interdisciplinary humanities,26,12,6428167,2492663
+2025,AB,23A,Multidisciplinary or interdisciplinary social sciences,47,23,11810195,5668182
+2025,AB,23B,Multidisciplinary or interdisciplinary social sciences,44,21,11910900,5021934
+2025,AB,24,Tri-Agency Interdisciplinary Peer Review Committee,38,15,11639578,5003665
+2025,A,01,Philosophy,34,14,2819712,1178341
+2025,A,02,History,38,16,2887265,1185886
+2025,A,03,"Fine Arts, Research-Creation",22,9,1876645,730666
+2025,A,04,Literature,36,15,3004687,1316857
+2025,A,05,"Medieval, classics, religious studies",25,11,2056365,876398
+2025,A,07,Economics,71,35,6282625,2943289
+2025,A,08,"Sociology, demography and related fields",28,12,2537149,1008262
+2025,A,09,"Geography, urban planning and related fields",13,6,1205790,544907
+2025,A,10A,Psychology,16,7,1508398,642978
+2025,A,10B,Psychology,18,8,1711351,697716
+2025,A,11,Political science and public administration,37,16,3267923,1354886
+2025,A,12A,Education,23,10,2062603,852383
+2025,A,12B,Education and social work,22,10,2009124,918306
+2025,A,12C,Education and social work,27,12,2455677,1101582
+2025,A,13,Anthropology and archaeology,12,5,1111885,436194
+2025,A,14A,"Business, management and related fields",41,20,3758617,1704758
+2025,A,14B,"Business, management and related fields",38,18,3467159,1437961
+2025,A,14C,"Business, management and related fields",40,19,3359391,1526118
+2025,A,15,Linguistics and translation,14,6,1235480,544305
+2025,A,16,"Communications, media studies, gender studies, library and information science, related fields",26,11,2180369,847561
+2025,A,17,Law and criminology,26,11,2291125,964478
+2025,A,21,Indigenous research,2,1,182869,99886
+2025,A,22,Multidisciplinary or interdisciplinary humanities,6,3,525601,266125
+2025,A,23A,Multidisciplinary or interdisciplinary social sciences,12,7,1164972,658172
+2025,A,23B,Multidisciplinary or interdisciplinary social sciences,11,6,1045509,498789
+2025,A,24,Tri-Agency Interdisciplinary Peer Review Committee,4,0,396030,0
+2025,B,01,Philosophy,11,4,2496964,687257
+2025,B,02,History,28,10,7175136,2180008
+2025,B,03,"Fine Arts, Research-Creation",71,25,19935939,6526629
+2025,B,04,Literature,29,10,6514350,1774475
+2025,B,05,"Medieval, classics, religious studies",22,8,5487369,2040356
+2025,B,07,Economics,33,14,7271400,2593201
+2025,B,08,"Sociology, demography and related fields",50,17,15663391,4784802
+2025,B,09,"Geography, urban planning and related fields",60,22,17268525,6212514
+2025,B,10A,Psychology,71,26,21033577,7080687
+2025,B,10B,Psychology,68,25,21719939,7271316
+2025,B,11,Political science and public administration,72,25,17707240,5572390
+2025,B,12A,Education,50,18,13817067,4883708
+2025,B,12B,Education and social work,54,18,16012220,5054642
+2025,B,12C,Education and social work,50,17,14577101,4858035
+2025,B,13,Anthropology and archaeology,43,15,12485589,3787609
+2025,B,14A,"Business, management and related fields",41,17,9678689,3190597
+2025,B,14B,"Business, management and related fields",43,18,10234451,3377008
+2025,B,14C,"Business, management and related fields",42,17,9493521,3527242
+2025,B,15,Linguistics and translation,25,9,6950383,2467519
+2025,B,16,"Communications, media studies, gender studies, library and information science, related fields",46,16,12852180,3647066
+2025,B,17,Law and criminology,30,11,8039849,2768242
+2025,B,21,Indigenous research,17,8,5712877,2296165
+2025,B,22,Multidisciplinary or interdisciplinary humanities,20,9,5902566,2226538
+2025,B,23A,Multidisciplinary or interdisciplinary social sciences,35,16,10645223,5010010
+2025,B,23B,Multidisciplinary or interdisciplinary social sciences,33,15,10865391,4523145
+2025,B,24,Tri-Agency Interdisciplinary Peer Review Committee,34,15,11243548,5003665
