@@ -1,15 +1,24 @@
 {
-    // LaTeX Workshop. The paper sources name this recipe in their first line
-    // (% !LW recipe = latexmk (Output folder)). Compiling Writeup.tex or Writeup_format.tex
-    // compiles both documents into 4_paper/output with the settings in 4_paper/latexmkrc,
-    // exactly as 4_paper/make.sh does. The tools run in the root file's folder, 4_paper/source.
+    // LaTeX Workshop. Two recipes:
+    //   "latexmk (this file)", the default (first in the list), compiles the root file it is run
+    //       from, e.g. -1_Issues/issue1/source/issue1_writeup.tex, into the output/ folder next to
+    //       its source/ folder, with the auxiliary files in output/aux/.
+    //   "latexmk (Output folder)", named in the first line of the paper sources
+    //       (% !LW recipe = latexmk (Output folder)). Compiling Writeup.tex or Writeup_format.tex
+    //       compiles both documents into 4_paper/output with the settings in 4_paper/latexmkrc,
+    //       exactly as 4_paper/make.sh does.
+    // The tools run in the root file's folder (for the paper, 4_paper/source).
     "latex-workshop.latex.tools": [
+        { "name": "latexmk: this file", "command": "latexmk",
+          "args": ["-pdf", "-synctex=1", "-interaction=nonstopmode", "-file-line-error",
+                   "-outdir=%OUTDIR%", "-auxdir=%OUTDIR%/aux", "%DOCFILE%"] },
         { "name": "paper: Writeup", "command": "latexmk", "args": ["-r", "../latexmkrc", "Writeup.tex"] },
         { "name": "paper: Writeup_format", "command": "latexmk", "args": ["-r", "../latexmkrc", "Writeup_format.tex"] }
     ],
     "latex-workshop.latex.recipes": [
+        { "name": "latexmk (this file)", "tools": ["latexmk: this file"] },
         { "name": "latexmk (Output folder)", "tools": ["paper: Writeup", "paper: Writeup_format"] }
     ],
-    // where the viewer and SyncTeX find Writeup.pdf and Writeup.synctex.gz
+    // where latexmk writes, and the viewer and SyncTeX find, the PDF and .synctex.gz
     "latex-workshop.latex.outDir": "%DIR%/../output"
 }
