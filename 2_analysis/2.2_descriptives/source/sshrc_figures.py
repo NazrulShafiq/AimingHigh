@@ -14,6 +14,8 @@ supplies the figure or table environment, the caption and the label.
 
 Writes to output/:
   sshrc_committees.tex       tabular of the committees of each group: code and name.
+  sshrc_rates_both_{A,B}.tex success rate of every committee of both groups, coloured by group,
+                             by stream and year (no lines).
   sshrc_rates_common_A.tex   Stream A: success rate of each committee at the common rate, by year,
                              with the pooled success rate of the group.
   sshrc_awards_common_A.tex  Stream A: awards of each of these committees minus the awards at the
@@ -43,8 +45,10 @@ OUTDIR = MODULE / "output"
 YEARS = list(range(2018, 2026))           # results years with a stream split (2018 = 2018-19)
 SELECT_YEARS = range(2020, 2026)          # years over which the committees are grouped
 VLINE_YEAR = 2020                         # every figure marks 2020-21 with a grey dashed line
+SLOT_HALF_WIDTH = 0.1                     # committee dots spread over +-0.1 of a year around it
 AWARDS_HEIGHT = "5.6cm"                   # tallest at which three fit on a page below text
-T_DROP = 2.5                              # drop a committee while its |t| is at least this
+T_DROP = 3.0                              # drop a committee while its |t| is at least this; about 50
+                                          # tests (committees x streams), so stricter than 2-2.5
 SPECIAL = {"21": "Indigenous research", "24": "Tri-Agency interdisciplinary"}
 SHORT = {"01": "Philosophy", "02": "History", "03": "Fine arts", "04": "Literature",
          "05": "Medieval, classics and religious studies", "07": "Economics",
@@ -55,6 +59,11 @@ SHORT = {"01": "Philosophy", "02": "History", "03": "Fine arts", "04": "Literatu
 STREAMS = ["A", "B"]
 COLOR = {"A": "2A78D6", "B": "EB6834"}    # categorical slots 1 and 2, as in msca_figures.py
 MARK = {"A": "*", "B": "square*"}
+# figures with both groups: colour (and marker) follows the group, in categorical slots 3 and 7,
+# so as not to reuse the stream colours; the pair passes the dataviz palette validator
+GROUP_COLOR = {"common": "1BAF7A", "above": "6250D6"}
+GROUP_MARK = {"common": "*", "above": "triangle*"}
+GROUP_MARK_SIZE = {"common": "1.8pt", "above": "2.4pt"}   # a triangle looks smaller than a circle
 
 
 def load():
@@ -156,8 +165,9 @@ def vline(ylo, yhi):
 
 
 def slots(codes):
-    """Horizontal offset of each committee within a year, the same in every figure of a group."""
-    return {c: -0.3 + 0.6 * i / (len(codes) - 1) for i, c in enumerate(codes)}
+    """Horizontal offset of each committee within a year, the same in every figure of a group:
+    evenly spaced within +-SLOT_HALF_WIDTH of the year."""
+    return {c: SLOT_HALF_WIDTH * (2 * i / (len(codes) - 1) - 1) for i, c in enumerate(codes)}
 
 
 def write(name, lines):
@@ -201,6 +211,36 @@ def figure_rates(group, stream):
     def build(rows, common, above):
         rate_figure(rows, common if group == "common" else above, stream,
                     rate_limits(rows, [common, above]), f"sshrc_rates_{group}_{stream}")
+    return build
+
+
+def both_rate_figure(rows, common, above, stream, ylim, name):
+    """One stream: each committee's success rate by year, both groups in one plot, coloured by
+    group, without lines; within each year Group 1's committees sit left of Group 2's."""
+    slot = slots(common + above)
+    groups = (("common", common, f"Group 1 ({len(common)} committees)"),
+              ("above", above, f"Group 2 ({len(above)} committees)"))
+    lines = [f"% Stream {stream}. Group 1: {names(common)}. Group 2: {names(above)}."]
+    lines += [f"\\definecolor{{sshrc{g}}}{{HTML}}{{{GROUP_COLOR[g]}}}" for g, _, _ in groups]
+    lines += axis_head(*ylim, "Success rate")
+    lines += ["  ytick distance=10, yticklabel={\\pgfmathprintnumber{\\tick}\\%},",
+              "  legend style={font=\\footnotesize, draw=none, fill=none, at={(0.5,1.02)}, anchor=south,",
+              "    legend columns=2, /tikz/every even column/.append style={column sep=1em}},",
+              "  legend cell align=left,", "]", vline(*ylim)]
+    for g, codes, entry in groups:
+        dots = [(y + slot[c], 100 * k / n) for y in YEARS for c, n, k in cells(rows, codes, stream, y)]
+        lines += [f"\\addplot[only marks, mark={GROUP_MARK[g]}, mark size={GROUP_MARK_SIZE[g]}, "
+                  f"color=sshrc{g},", "  mark options={fill opacity=0.5, draw opacity=0}]",
+                  f"  coordinates {{{coords(dots)}}};",
+                  f"\\addlegendentry{{{entry}}}"]
+    lines += ["\\end{axis}", "\\end{tikzpicture}"]
+    write(name, lines)
+
+
+def figure_rates_both(stream):
+    def build(rows, common, above):
+        both_rate_figure(rows, common, above, stream, rate_limits(rows, [common, above]),
+                         f"sshrc_rates_both_{stream}")
     return build
 
 
@@ -313,6 +353,8 @@ def table_committees(rows, common, above):
 
 
 TARGETS = {"sshrc_committees": table_committees}
+for _s in STREAMS:
+    TARGETS[f"sshrc_rates_both_{_s}"] = figure_rates_both(_s)
 for _g in ("common", "above"):
     for _s in STREAMS:
         TARGETS[f"sshrc_rates_{_g}_{_s}"] = figure_rates(_g, _s)

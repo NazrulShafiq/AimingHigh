@@ -118,11 +118,10 @@
 \newpage
 \section{Background}
 
-\noindent In this document, I investigate if we observe success rate equalization across different committees in the same stream for the CA Insight Grants Program. 
+\noindent In this document, I investigate if we observe success rate equalization across different committees within the same stream for the CA Insight Grants Program. 
 
-\noindent There are 25 committees (equivalent to fields in our model) listed in the Table below. I split the committees into two groups: Group 1 and 2 containing 16 and 9 commitees respectively. In this document, I argue that there is evidence of (approximate) within stream success rate equalization across commitees \textit{within the same group} for competition years from 2020-2021 onwards. 
+\noindent There are 25 committees (equivalent to fields in our model) listed in the Table below. I split the committees into two groups: Group 1 and 2 containing 17 and 8 commitees respectively. In this document, I argue that there is evidence of (approximate) within stream success rate equalization across commitees \textit{within the same group} for competition years from 2020-2021 onwards. 
 
-\noindent For example, consider Philosophy and Literature in Group 1 in any given competition year after 2020-2021. For stream A, the success rate of both commitees is approximately equal. Similarly, for stream B, the success rate of both commitees will also be approximately equal. However, we do not necessarily observe within stream success rate equalization across commitees in \textit{different} groups. 
 
 % The table is built by 2_analysis/2.2_descriptives/source/sshrc_figures.py; [H] keeps it here.
 \floatplacement{table}{H}
@@ -174,6 +173,22 @@
 \label{fig:sshrc_rates_above_B}
 \end{figure}
 
+\noindent In the two figures below, I plot the success rates of committees in group 1 with those of group 2 for each stream. In general, within stream success rates of committees in group 2 are larger than the success rates of committees in group 1. 
+
+\begin{figure}
+\centering
+\input{../../../2_analysis/2.2_descriptives/output/sshrc_rates_both_A.tex}
+\caption{\footnotesize Groups 1 and 2, Stream~A}
+\label{fig:sshrc_rates_both_A}
+\end{figure}
+
+\begin{figure}
+\centering
+\input{../../../2_analysis/2.2_descriptives/output/sshrc_rates_both_B.tex}
+\caption{\footnotesize Groups 1 and 2, Stream~B}
+\label{fig:sshrc_rates_both_B}
+\end{figure}
+
 \noindent 
 
 
@@ -215,7 +230,7 @@
 % \end{figure}
 
 \newpage
-\section{Another way to see success rate equalization}
+\section{Another way to see within stream success rate equalization}
 
 \noindent Let $a^P_{c,t}$ and $s^P_{c,t}$ be the number of eligible and succesful applicants, respectively,s in commitee $c$, year $t$, stream $P\in\{A,B\}$. The pooled success rate in group $g$, year $t$, stream $P$ is given by:
 \begin{align*}
